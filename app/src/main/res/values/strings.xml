@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Arkasis</string>
+    <string name="item_menu_home">Inicio</string>
+    <string name="item_menu_buscar">Buscar</string>
+    <string name="item_menu_registrar">Registrar</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+</resources>
