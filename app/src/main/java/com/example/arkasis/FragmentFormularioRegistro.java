@@ -25,6 +25,7 @@ import com.google.android.material.textfield.TextInputEditText;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+import java.util.TimeZone;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -103,14 +104,12 @@ public class FragmentFormularioRegistro extends Fragment {
         builder.setTitleText("Seleccione fecha");
 
         dpFechaNacimiento = builder.build();
-
         txtFechaNacimiento.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dpFechaNacimiento.show(getActivity().getSupportFragmentManager(), "datePicker");
             }
         });
-
         txtFechaNacimiento.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
@@ -119,16 +118,17 @@ public class FragmentFormularioRegistro extends Fragment {
                 }
             }
         });
-
         dpFechaNacimiento.addOnPositiveButtonClickListener(new MaterialPickerOnPositiveButtonClickListener() {
             @Override
             public void onPositiveButtonClick(Object selection) {
-                datFechaNacimiento = new Date((Long) selection);
+                TimeZone timeZoneUTC = TimeZone.getDefault();
+                int offsetFromUTC = timeZoneUTC.getOffset(new Date().getTime()) * -1;
+
+                datFechaNacimiento = new Date((Long) selection + offsetFromUTC);
                 SimpleDateFormat dateFormat = new SimpleDateFormat("dd 'de' MMMM 'de' yyyy", new Locale("es", "ES"));
                 txtFechaNacimiento.setText(dateFormat.format(datFechaNacimiento));
             }
         });
-
     }
 
     public void inicializarDialogEstadoCivil() {
@@ -167,6 +167,7 @@ public class FragmentFormularioRegistro extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if(position < adaptadorEstadoCivil.getCount()) {
                     txtEstadoCivil.setText(adaptadorEstadoCivil.getItem(position));
+                    dialogEstadoCivil.dismiss();
                 } else {
                     txtEstadoCivil.setText("");
                     dialogEstadoCivil.dismiss();
