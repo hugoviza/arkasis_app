@@ -12,12 +12,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:startIconDrawable="@drawable/ic_baseline_person_24"
-        android:hint="Nombre / CURP / Clave elector">
+        android:hint="Nombre / CURP / Clave elector"
+        app:endIconMode="clear_text"
+        >
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/txtCURP"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="text">
+            android:inputType="textCapCharacters">
         </com.google.android.material.textfield.TextInputEditText>
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -29,11 +31,13 @@
         android:layout_marginTop="5sp">
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/layoutCiudadOrigen"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:startIconDrawable="@drawable/ic_baseline_location_on_24"
             app:endIconMode="custom"
             app:endIconDrawable="@drawable/ic_baseline_arrow_drop_down_24"
+            app:endIconContentDescription="Seleccionar ciudad"
             android:hint="Ciudad origen"
             android:layout_marginRight="5sp"
             android:layout_weight="2">

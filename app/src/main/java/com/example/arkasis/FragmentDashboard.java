@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.arkasis.config.Config;
 import com.example.arkasis.models.Usuario;
 
 /**
@@ -68,26 +69,12 @@ public class FragmentDashboard extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         fragmentDashboardView = inflater.inflate(R.layout.fragment_dashboard, container, false);
-        usuario = obtenerSesion();
-
+        usuario = Config.USUARIO_SESION;
 
         TextView tvBienvenida = fragmentDashboardView.findViewById(R.id.tvBienvenida);
         tvBienvenida.setText("Bienvenido " + usuario.getNombre());
         return fragmentDashboardView;
     }
 
-    public Usuario obtenerSesion() {
-        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("sesion", Context.MODE_PRIVATE);
 
-        Usuario usuario = new Usuario();
-        usuario.setUser(sharedPreferences.getString("user", null));
-        usuario.setPassword(sharedPreferences.getString("password", null));
-        usuario.setNombre(sharedPreferences.getString("name", null));
-
-        if(usuario.getUser() != null) {
-            return usuario;
-        } else {
-            return null;
-        }
-    }
 }

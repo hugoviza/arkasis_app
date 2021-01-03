@@ -75,7 +75,7 @@ public class AdaptadorListaMunicipios extends RecyclerView.Adapter<AdaptadorList
     @NonNull
     @Override
     public AdaptadorListaMunicipios.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = layoutInflater.inflate(R.layout.item_ciudad, null);
+        View view = layoutInflater.inflate(R.layout.item_ciudad, parent, false);
 
         return new AdaptadorListaMunicipios.ViewHolder(view);
     }
@@ -126,7 +126,7 @@ public class AdaptadorListaMunicipios extends RecyclerView.Adapter<AdaptadorList
 
     public List<Municipio> selectMunicipios(String filtro) {
         TableMunicipios tableMunicipios = new TableMunicipios(context);
-        return tableMunicipios.findAll(filtro, 100);
+        return (List<Municipio>)(Object)tableMunicipios.findAll(filtro, 100);
     }
 
     public void reiniciar() {

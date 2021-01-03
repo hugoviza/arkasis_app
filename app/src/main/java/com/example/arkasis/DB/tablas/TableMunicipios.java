@@ -7,12 +7,13 @@ import androidx.annotation.NonNull;
 
 import com.example.arkasis.DB.ConexionSQLiteHelper;
 import com.example.arkasis.DB.MigracionesSQL;
+import com.example.arkasis.interfaces.TableSQLite;
 import com.example.arkasis.models.Municipio;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class TableMunicipios extends Conexion {
+public class TableMunicipios extends Conexion implements TableSQLite {
     public static final String table = "catalogoMunicipios";
     public static final String col_idEstado_idMunicipio = "idEstado_idMunicipio";
     public static final String col_idEstado = "idEstado";
@@ -24,22 +25,25 @@ public class TableMunicipios extends Conexion {
         super(context);
     }
 
-    public void Insertar(Municipio municipio) {
+    @Override
+    public void insertar(Object o) {
+        Municipio item = (Municipio)o;
         String query = "INSERT INTO "+table
                 +" ("+col_idEstado_idMunicipio+", "+col_idEstado+", "+col_strEstado+", "+col_idMunicipio+", "+col_strMunicipio+" )"
                 + " values"
-                + " ('"+municipio.getIdEstado_IdMunicipio()+"', '"+municipio.getIdEstado()+"', '"+municipio.getStrEstado()+"', '"+municipio.getIdMunicipio()+"', '"+municipio.getStrMunicipio()+"')";
+                + " ('"+item.getIdEstado_IdMunicipio()+"', '"+item.getIdEstado()+"', '"+item.getStrEstado()+"', '"+item.getIdMunicipio()+"', '"+item.getStrMunicipio()+"')";
         this.dbWrite.execSQL(query);
     }
 
-    public void InsertarBatch(List<Municipio> list) {
-        for (Municipio municipio: list) {
-            this.Insertar(municipio);
+    @Override
+    public void insertarBatch(List<Object> objectList) {
+        for (Object item: objectList) {
+            this.insertar(item);
         };
     }
 
-    public Integer getCount() {
-        Cursor cursor = dbRead.rawQuery("Select count(*) as totalRegistros from "+table, null);
+    public int getCount() {
+        Cursor cursor = dbRead.rawQuery("Select count(*) as totalRegistros from "+ table, null);
         cursor.moveToFirst();
 
         return cursor.getInt(0);
@@ -50,17 +54,15 @@ public class TableMunicipios extends Conexion {
         this.dbWrite.execSQL(query);
     }
 
-    public List<Municipio> findAll(String buscar, Integer limit) {
-        List<Municipio> listaMunicipio = new ArrayList<>();
-        //WHERE CONCAT("+col_strMunicipio+", ' ' ,"+col_strEstado+") like '%"+buscar+"%'
+    public List<Object> findAll(String buscar, Integer limit) {
+        List<Object> list = new ArrayList<>();
         String query = "SELECT "+col_idEstado+", "+col_strEstado+", "+col_idMunicipio+", "+col_strMunicipio+" FROM "+table+" WHERE ("+col_strMunicipio+" || ' ' || "+col_strEstado+") like '%"+buscar+"%' ORDER BY "+col_strMunicipio+" limit "+limit;
         Cursor cursor = dbRead.rawQuery( query , null);
 
         while (cursor.moveToNext()) {
-            // String idEstado, String strEstado, String idMunicipio, String strMunicipio
-            listaMunicipio.add(new Municipio(cursor.getString(0), cursor.getString(1), cursor.getString(2),cursor.getString(3)));
+            list.add(new Municipio(cursor.getString(0), cursor.getString(1), cursor.getString(2),cursor.getString(3)));
         }
 
-        return listaMunicipio;
+        return list;
     }
 }

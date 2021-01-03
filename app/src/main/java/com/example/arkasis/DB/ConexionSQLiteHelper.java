@@ -14,7 +14,11 @@ public class ConexionSQLiteHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
+
+        db.execSQL(MigracionesSQL.CREAR_TABLA_ACTIVIDADES);
         db.execSQL(MigracionesSQL.CREAR_TABLA_MUNICIPIOS);
+        db.execSQL(MigracionesSQL.CREAR_TABLA_SUCURSALES);
+        db.execSQL(MigracionesSQL.CREAR_TABLA_COORDINADORES);
     }
 
     @Override

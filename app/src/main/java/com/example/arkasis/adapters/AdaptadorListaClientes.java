@@ -16,7 +16,6 @@ import com.example.arkasis.BottomBarActivity;
 import com.example.arkasis.R;
 import com.example.arkasis.config.Config;
 import com.example.arkasis.interfaces.APIClientesInterface;
-import com.example.arkasis.interfaces.APIMunicipiosInterface;
 import com.example.arkasis.models.Cliente;
 import com.example.arkasis.models.Municipio;
 import com.example.arkasis.models.ResponseAPI;

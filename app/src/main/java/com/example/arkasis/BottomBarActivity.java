@@ -2,18 +2,30 @@ package com.example.arkasis;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.example.arkasis.DB.tablas.TableActividades;
+import com.example.arkasis.DB.tablas.TableCoordinadores;
 import com.example.arkasis.DB.tablas.TableMunicipios;
+import com.example.arkasis.DB.tablas.TableSucursal;
 import com.example.arkasis.config.Config;
-import com.example.arkasis.interfaces.APIMunicipiosInterface;
+import com.example.arkasis.interfaces.APICatalogosInterface;
+import com.example.arkasis.models.Actividad;
+import com.example.arkasis.models.Coordinador;
 import com.example.arkasis.models.Municipio;
 import com.example.arkasis.models.ResponseAPI;
+import com.example.arkasis.models.Sucursal;
+import com.example.arkasis.models.Usuario;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.gson.internal.LinkedTreeMap;
 
@@ -27,9 +39,11 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class BottomBarActivity extends AppCompatActivity {
 
-    FragmentDashboard fragmentDashboard = new FragmentDashboard();
-    FragmentBuscarCliente fragmentBuscarCliente = new FragmentBuscarCliente();
-    FragmentFormularioRegistro fragmentFormularioRegistro = new FragmentFormularioRegistro();
+    FragmentDashboard fragmentDashboard;
+    FragmentBuscarCliente fragmentBuscarCliente;
+    FragmentFormularioRegistro fragmentFormularioRegistro;
+
+    DialogFragmentLoading dialogFragmentLoading;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,8 +52,19 @@ public class BottomBarActivity extends AppCompatActivity {
 
         BottomNavigationView bottom_navigation = findViewById(R.id.bottom_navigation);
 
-        cargarFragmento(fragmentDashboard);
-        validarListaMunicipios();
+        try {
+            getUsuarioSesion();
+
+            fragmentDashboard = new FragmentDashboard();
+            fragmentBuscarCliente = new FragmentBuscarCliente();
+            fragmentFormularioRegistro = new FragmentFormularioRegistro();
+
+            cargarFragmento(fragmentDashboard);
+            validarCatalogoActividades();
+
+        } catch (Exception e) {
+            Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
 
         bottom_navigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -56,7 +81,6 @@ public class BottomBarActivity extends AppCompatActivity {
                     case R.id.itemRegistrar:
                         cargarFragmento(fragmentFormularioRegistro);
                         return true;
-
                 }
                 return false;
             }
@@ -69,13 +93,132 @@ public class BottomBarActivity extends AppCompatActivity {
         fragmentTransaction.commit();
     }
 
-    public void validarListaMunicipios() {
+    public void abrirLoading(String mensaje) {
+        if(dialogFragmentLoading == null) {
+            dialogFragmentLoading = DialogFragmentLoading.newInstance(mensaje);
+        } else {
+            dialogFragmentLoading.actualizarMensaje(mensaje);
 
-        TableMunicipios tableMunicipios = new TableMunicipios(BottomBarActivity.this);
-        Integer totalMunicipiosLocal = tableMunicipios.getCount();
+            //new TaskUpdateMensajeLoading().execute(mensaje,"", "");
+        }
 
-        if(totalMunicipiosLocal == 0) {
-            descargarListaMunicipios();
+        dialogFragmentLoading.show(this.getSupportFragmentManager(), "loading");
+    }
+
+    public void cerrarLoading() {
+        if(dialogFragmentLoading != null) {
+            dialogFragmentLoading.dismiss();
+        }
+    }
+
+    public void getUsuarioSesion() {
+        SharedPreferences sharedPreferences = getSharedPreferences("sesion", Context.MODE_PRIVATE);
+
+        Usuario usuario = new Usuario();
+        usuario.setUser(sharedPreferences.getString("user", null));
+        usuario.setPassword(sharedPreferences.getString("password", null));
+        usuario.setNombre(sharedPreferences.getString("name", null));
+
+        Config.USUARIO_SESION = usuario;
+    }
+
+    public void validarCatalogoActividades() {
+
+        TableActividades table = new TableActividades(BottomBarActivity.this);
+        Integer totalRegistrosLocal = table.getCount();
+
+        if(totalRegistrosLocal.intValue() == 0) {
+            descargarCatalogoActividades();
+            return;
+        }
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(Config.URL_API)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        APICatalogosInterface api = retrofit.create(APICatalogosInterface.class);
+        Call<ResponseAPI> apiCall = api.getTotalActividades();
+        apiCall.enqueue(new Callback<ResponseAPI>() {
+            @Override
+            public void onResponse(Call<ResponseAPI> call, Response<ResponseAPI> response) {
+                if(response.body().getResultado() == null) {
+                    //No hay nada por hacer
+                    validarCatalogoMunicipios();
+                } else {
+                    Integer totalRegistrosAPI = Integer.parseInt(response.body().getResultado().toString().trim());
+                    if(totalRegistrosLocal.intValue() != totalRegistrosAPI.intValue()) {
+                        descargarCatalogoActividades();
+                    } else {
+                        validarCatalogoMunicipios();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseAPI> call, Throwable t) {
+            }
+        });
+    }
+
+    public void descargarCatalogoActividades() {
+        try {
+
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl(Config.URL_API)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
+
+            APICatalogosInterface api = retrofit.create(APICatalogosInterface.class);
+            Call<ResponseAPI> apiCall = api.getAllActividades();
+            abrirLoading("Actualizando catálogo de actividades");
+
+            apiCall.enqueue(new Callback<ResponseAPI>() {
+                @Override
+                public void onResponse(Call<ResponseAPI> call, Response<ResponseAPI> response) {
+                    if(response.body() == null || response.body().getResultado() == null) {
+                        //No hay nada por hacer
+                    } else {
+                        //limpiamos la tabla antes de insertar nuevos datos
+                        TableActividades table = new TableActividades(BottomBarActivity.this);
+                        table.truncate();
+                        int totalErrores = 0;
+
+                        if(response.body().getSuccess()) {
+                            for (LinkedTreeMap<Object, Object> treeMap : (ArrayList<LinkedTreeMap<Object, Object>>)response.body().getResultado()) {
+                                try {
+                                    table.insertar(new Actividad(treeMap));
+                                } catch (Exception e) {
+                                    totalErrores++;
+                                }
+                            }
+                        }
+
+                        if(totalErrores > 0) {
+                            Toast.makeText(BottomBarActivity.this, "Se han encontrado errores en " + totalErrores + " registros de actividades", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                    cerrarLoading();
+                    validarCatalogoMunicipios();
+                }
+
+                @Override
+                public void onFailure(Call<ResponseAPI> call, Throwable t) {
+                    Toast.makeText(BottomBarActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            });
+        } catch (Exception e) {
+            Toast.makeText(this, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public void validarCatalogoMunicipios() {
+
+        TableMunicipios table = new TableMunicipios(BottomBarActivity.this);
+        Integer totalRegistrosLocal = table.getCount();
+
+        if(totalRegistrosLocal.intValue() == 0) {
+            descargarCatalogoMunicipios();
             return;
         }
         Retrofit retrofit = new Retrofit.Builder()
@@ -83,19 +226,109 @@ public class BottomBarActivity extends AppCompatActivity {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
-        APIMunicipiosInterface apiMunicipiosInterface = retrofit.create(APIMunicipiosInterface.class);
-        Call<ResponseAPI> apiCall = apiMunicipiosInterface.getTotalMunicipios();
+        APICatalogosInterface api = retrofit.create(APICatalogosInterface.class);
+        Call<ResponseAPI> apiCall = api.getTotalMunicipios();
+        apiCall.enqueue(new Callback<ResponseAPI>() {
+            @Override
+            public void onResponse(Call<ResponseAPI> call, Response<ResponseAPI> response) {
+                if(response.body().getResultado() == null) {
+                    //No hay nada por hacer
+                    validarCatalogoSucursales();
+                } else {
+                    Integer totalRegistrosAPI = Integer.parseInt(response.body().getResultado().toString().trim());
+                    if(totalRegistrosAPI.intValue() != totalRegistrosLocal.intValue()) {
+                        descargarCatalogoMunicipios();
+                    } else {
+                        validarCatalogoSucursales();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseAPI> call, Throwable t) {
+            }
+        });
+    }
+
+    public void descargarCatalogoMunicipios() {
+        try {
+
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl(Config.URL_API)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
+
+            APICatalogosInterface api = retrofit.create(APICatalogosInterface.class);
+            Call<ResponseAPI> apiCall = api.getAllMunicipios();
+            abrirLoading("Actualizando catálogo de municipios");
+
+            apiCall.enqueue(new Callback<ResponseAPI>() {
+                @Override
+                public void onResponse(Call<ResponseAPI> call, Response<ResponseAPI> response) {
+                    if(response.body() == null || response.body().getResultado() == null) {
+                        //No hay nada por hacer
+                    } else {
+                        //limpiamos la tabla antes de insertar nuevos datos
+                        TableMunicipios table = new TableMunicipios(BottomBarActivity.this);
+                        table.truncate();
+                        int totalErrores = 0;
+
+                        if(response.body().getSuccess()) {
+                            for (LinkedTreeMap<Object, Object> treeMap : (ArrayList<LinkedTreeMap<Object, Object>>)response.body().getResultado()) {
+                                try {
+                                    table.insertar(new Municipio(treeMap));
+                                } catch (Exception e) {
+                                    totalErrores++;
+                                }
+                            }
+                        }
+
+                        if(totalErrores > 0) {
+                            Toast.makeText(BottomBarActivity.this, "Se han encontrado errores en " + totalErrores + " registros de municipios", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                    cerrarLoading();
+                    validarCatalogoSucursales();
+                }
+
+                @Override
+                public void onFailure(Call<ResponseAPI> call, Throwable t) {
+                    Toast.makeText(BottomBarActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            });
+        } catch (Exception e) {
+            Toast.makeText(this, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public void validarCatalogoSucursales() {
+
+        TableSucursal table = new TableSucursal(BottomBarActivity.this);
+        Integer totalRegistrosLocal = table.getCount();
+
+        if(totalRegistrosLocal.intValue() == 0) {
+            descargarCatalogoSucursales();
+            return;
+        }
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(Config.URL_API)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        APICatalogosInterface api = retrofit.create(APICatalogosInterface.class);
+        Call<ResponseAPI> apiCall = api.getTotalSucursales();
         apiCall.enqueue(new Callback<ResponseAPI>() {
             @Override
             public void onResponse(Call<ResponseAPI> call, Response<ResponseAPI> response) {
                 if(response.body().getResultado() == null) {
                     //No hay nada por hacer
                 } else {
-                    Integer totalMunicipiosAPI = Integer.parseInt(response.body().getResultado().toString().trim());
-                    //Toast.makeText(BottomBarActivity.this, "Total municipios: " + totalMunicipiosAPI + " : " + totalMunicipiosLocal, Toast.LENGTH_SHORT).show();
-
-                    if(totalMunicipiosAPI.intValue() != totalMunicipiosLocal.intValue()) {
-                        descargarListaMunicipios();
+                    Integer totalRegistrosAPI = Integer.parseInt(response.body().getResultado().toString().trim());
+                    if(totalRegistrosLocal.intValue() != totalRegistrosAPI.intValue()) {
+                        descargarCatalogoSucursales();
+                    } else {
+                        validarCatalogoCoordinadores();
                     }
                 }
             }
@@ -107,15 +340,18 @@ public class BottomBarActivity extends AppCompatActivity {
         });
     }
 
-    public void descargarListaMunicipios() {
+    public void descargarCatalogoSucursales() {
         try {
+
             Retrofit retrofit = new Retrofit.Builder()
                     .baseUrl(Config.URL_API)
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
 
-            APIMunicipiosInterface apiMunicipiosInterface = retrofit.create(APIMunicipiosInterface.class);
-            Call<ResponseAPI> apiCall = apiMunicipiosInterface.getAllMunicipios();
+            APICatalogosInterface api = retrofit.create(APICatalogosInterface.class);
+            Call<ResponseAPI> apiCall = api.getAllSucursales();
+            abrirLoading("Actualizando catálogo de sucursales");
+
             apiCall.enqueue(new Callback<ResponseAPI>() {
                 @Override
                 public void onResponse(Call<ResponseAPI> call, Response<ResponseAPI> response) {
@@ -123,28 +359,125 @@ public class BottomBarActivity extends AppCompatActivity {
                         //No hay nada por hacer
                     } else {
                         //limpiamos la tabla antes de insertar nuevos datos
-                        TableMunicipios tableMunicipios = new TableMunicipios(BottomBarActivity.this);
-                        tableMunicipios.truncate();
+                        TableSucursal table = new TableSucursal(BottomBarActivity.this);
+                        table.truncate();
+                        int totalErrores = 0;
 
                         if(response.body().getSuccess()) {
                             for (LinkedTreeMap<Object, Object> treeMap : (ArrayList<LinkedTreeMap<Object, Object>>)response.body().getResultado()) {
-                                tableMunicipios.Insertar(new Municipio(treeMap));
+                                try {
+                                    table.insertar(new Sucursal(treeMap));
+                                } catch (Exception e) {
+                                    totalErrores++;
+                                }
                             }
                         }
 
-                        Integer totalRegistrosInsertados = tableMunicipios.getCount();
-                        Toast.makeText(BottomBarActivity.this, "Municipios actualizados: "+ totalRegistrosInsertados, Toast.LENGTH_SHORT).show();
+                        if(totalErrores > 0) {
+                            Toast.makeText(BottomBarActivity.this, "Se han encontrado errores en " + totalErrores + " registros de sucursal", Toast.LENGTH_SHORT).show();
+                        }
                     }
+                    cerrarLoading();
+                    validarCatalogoCoordinadores();
                 }
 
                 @Override
                 public void onFailure(Call<ResponseAPI> call, Throwable t) {
-
+                    Toast.makeText(BottomBarActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             });
         } catch (Exception e) {
             Toast.makeText(this, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
         }
-
     }
+
+
+    public void validarCatalogoCoordinadores() {
+
+        TableCoordinadores table = new TableCoordinadores(BottomBarActivity.this);
+        Integer totalRegistrosLocal = table.getCount();
+
+        if(totalRegistrosLocal.intValue() == 0) {
+            descargarCatalogoCoordinadores();
+            return;
+        }
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(Config.URL_API)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        APICatalogosInterface api = retrofit.create(APICatalogosInterface.class);
+        Call<ResponseAPI> apiCall = api.getTotalCoordinadores();
+        apiCall.enqueue(new Callback<ResponseAPI>() {
+            @Override
+            public void onResponse(Call<ResponseAPI> call, Response<ResponseAPI> response) {
+                if(response.body().getResultado() == null) {
+                    //No hay nada por hacer
+                } else {
+                    Integer totalRegistrosAPI = Integer.parseInt(response.body().getResultado().toString().trim());
+                    if(totalRegistrosLocal.intValue() != totalRegistrosAPI.intValue()) {
+                        descargarCatalogoCoordinadores();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseAPI> call, Throwable t) {
+
+            }
+        });
+    }
+
+    public void descargarCatalogoCoordinadores() {
+        try {
+
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl(Config.URL_API)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
+
+            APICatalogosInterface api = retrofit.create(APICatalogosInterface.class);
+            Call<ResponseAPI> apiCall = api.getAllCoordinadores();
+            abrirLoading("Actualizando catálogo de coordinadores");
+
+            apiCall.enqueue(new Callback<ResponseAPI>() {
+                @Override
+                public void onResponse(Call<ResponseAPI> call, Response<ResponseAPI> response) {
+                    if(response.body() == null || response.body().getResultado() == null) {
+                        //No hay nada por hacer
+                    } else {
+                        //limpiamos la tabla antes de insertar nuevos datos
+                        TableCoordinadores table = new TableCoordinadores(BottomBarActivity.this);
+                        table.truncate();
+                        int totalErrores = 0;
+
+                        if(response.body().getSuccess()) {
+                            for (LinkedTreeMap<Object, Object> treeMap : (ArrayList<LinkedTreeMap<Object, Object>>)response.body().getResultado()) {
+                                try {
+                                    table.insertar(new Coordinador(treeMap));
+                                } catch (Exception e) {
+                                    totalErrores++;
+                                }
+                            }
+                        }
+
+                        if(totalErrores > 0) {
+                            Toast.makeText(BottomBarActivity.this, "Se han encontrado errores en " + totalErrores + " registros de coordinadores", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                    cerrarLoading();
+                }
+
+                @Override
+                public void onFailure(Call<ResponseAPI> call, Throwable t) {
+                    Toast.makeText(BottomBarActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            });
+        } catch (Exception e) {
+            Toast.makeText(this, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+
 }

@@ -33,6 +33,7 @@ import com.example.arkasis.adapters.AdaptadorListaMunicipios;
 import com.example.arkasis.models.Cliente;
 import com.example.arkasis.models.Municipio;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 import com.toptoche.searchablespinnerlibrary.SearchableSpinner;
 
 import java.util.ArrayList;
@@ -50,6 +51,9 @@ public class FragmentBuscarCliente extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
+    private final String LIMPIAR_CAMPO = "Limpiar campo";
+    private final String SELECCIONAR_CIUDAD = "Seleccionar ciudad";
+
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
@@ -57,6 +61,7 @@ public class FragmentBuscarCliente extends Fragment {
 
     //Componentes
     private View viewFragmentBuscarCliente;
+    private TextInputLayout layoutCiudadOrigen;
     private TextInputEditText txtBuscarCiudad, txtCURP;
     private Button btnBuscarCliente;
     private Dialog dialog;
@@ -114,6 +119,7 @@ public class FragmentBuscarCliente extends Fragment {
         btnBuscarCliente = viewFragmentBuscarCliente.findViewById(R.id.btnBuscarCliente);
         txtCURP = viewFragmentBuscarCliente.findViewById(R.id.txtCURP);
         rvList_clientes = viewFragmentBuscarCliente.findViewById(R.id.rvList_clientes);
+        layoutCiudadOrigen = viewFragmentBuscarCliente.findViewById(R.id.layoutCiudadOrigen);
 
         incializarListaClientes();
 
@@ -145,6 +151,19 @@ public class FragmentBuscarCliente extends Fragment {
                 closeKeyBoard();
             }
         });
+
+        layoutCiudadOrigen.setEndIconOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(layoutCiudadOrigen.getEndIconContentDescription() == LIMPIAR_CAMPO) {
+                    setMunicipioSeleccionado(null);
+                } else {
+                    abrirDialogSeleccionMunicipio();
+                }
+            }
+        });
+
+
         return viewFragmentBuscarCliente;
     }
 
@@ -175,10 +194,24 @@ public class FragmentBuscarCliente extends Fragment {
         });
     }
 
+    public void setMunicipioSeleccionado(Municipio municipioSeleccionado) {
+        this.municipioSeleccionado = municipioSeleccionado;
+        if(municipioSeleccionado == null) {
+            txtBuscarCiudad.setText("");
+            layoutCiudadOrigen.setEndIconDrawable(R.drawable.ic_baseline_arrow_drop_down_24);
+            layoutCiudadOrigen.setEndIconContentDescription(SELECCIONAR_CIUDAD);
+        } else {
+            txtBuscarCiudad.setText(municipioSeleccionado.getStrMunicipio());
+            layoutCiudadOrigen.setEndIconDrawable(R.drawable.ic_baseline_cancel_24);
+            layoutCiudadOrigen.setEndIconContentDescription(LIMPIAR_CAMPO);
+        }
+
+        closeKeyBoard();
+    }
+
     public void abrirDialogSeleccionMunicipio() {
         if(dialog != null) {
             if(!dialog.isShowing()) {
-                //adaptadorListaMunicipios.reiniciar();
                 txtBuscarCiudadDialog.setText("");
                 dialog.show();
                 return;
@@ -227,11 +260,10 @@ public class FragmentBuscarCliente extends Fragment {
             @Override
             public void onItemClick(int position) {
                 if (position != RecyclerView.NO_POSITION) {
-                    municipioSeleccionado = adaptadorListaMunicipios.getItem(position);
-                    txtBuscarCiudad.setText(municipioSeleccionado.getStrMunicipio());
+                    setMunicipioSeleccionado(adaptadorListaMunicipios.getItem(position));
                     dialog.dismiss();
                 } else {
-                    municipioSeleccionado = null;
+                    setMunicipioSeleccionado(null);
                 }
             }
         });

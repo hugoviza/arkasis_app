@@ -35,7 +35,7 @@
                 android:layout_marginLeft="15dp"
                 android:fontFamily="sans-serif"
                 android:gravity="center_vertical"
-                android:text="Detalle de cliente"
+                android:text="Datos generales"
                 android:textColor="@color/font_primary"
                 android:textStyle="bold"
                 android:layout_weight="2"/>

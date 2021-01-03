@@ -4,6 +4,7 @@ import com.google.gson.internal.LinkedTreeMap;
 
 public class Municipio {
     private String idEstado_idMunicipio, idEstado, strEstado, idMunicipio, strMunicipio;
+    private int totalClientes;
 
     public Municipio() {
         idEstado = "";
@@ -37,6 +38,10 @@ public class Municipio {
     public void setIdEstado(String idEstado) {
         this.idEstado = idEstado;
     }
+
+    public int getTotalClientes() { return totalClientes; }
+
+    public void setTotalClientes(int totalClientes) { this.totalClientes = totalClientes; }
 
     public String getStrEstado() {
         return strEstado;

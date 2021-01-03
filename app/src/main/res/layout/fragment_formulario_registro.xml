@@ -58,6 +58,50 @@
             android:divider="@drawable/divider"
             android:padding="16dp">
 
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Promotor">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/txtPromotor"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:editable="false"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layoutSucursal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Sucursal"
+                app:endIconMode="custom"
+                app:endIconDrawable="@drawable/ic_baseline_arrow_drop_down_24"
+                app:endIconContentDescription="@string/seleccionar">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/txtSucursal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:editable="false"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layoutCoordinador"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Coordinador"
+                app:endIconMode="custom"
+                app:endIconDrawable="@drawable/ic_baseline_arrow_drop_down_24"
+                app:endIconContentDescription="@string/seleccionar">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/txtCoordinador"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -178,12 +222,16 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Estado civil">
-                <com.google.android.material.textfield.TextInputEditText
+                android:hint="Estado civil"
+                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu">
+
+                <AutoCompleteTextView
                     android:id="@+id/txtEstadoCivil"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="text"/>
+                    android:inputType="none"
+                />
+
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
