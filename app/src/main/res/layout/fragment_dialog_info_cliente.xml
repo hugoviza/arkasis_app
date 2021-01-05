@@ -41,9 +41,12 @@
                 android:layout_weight="2"/>
 
             <Button
+                android:id="@+id/btnNuevaSolicitud"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Editar"
+                android:text="Nueva solicitud"
+                app:icon="@drawable/ic_baseline_add_24"
+                app:iconTint="@color/white"
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:textColor="@color/font_primary"/>
 

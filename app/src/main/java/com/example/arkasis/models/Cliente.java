@@ -16,6 +16,7 @@ public class Cliente implements Serializable {
     private String strNombre2 = "";
     private String datFechaNacimiento = "";
     private String strEdoCivil = "";
+    private String idEdoCivil = "";
     private String strTelefono = "";
     private String strCelular = "";
     private String strCodigoPostal = "";
@@ -54,6 +55,7 @@ public class Cliente implements Serializable {
         this.strNombre2 = treeMap.get("strNombre2").toString().trim();
         this.datFechaNacimiento = treeMap.get("datFechaNacimiento").toString().trim();
         this.strEdoCivil = treeMap.get("strEdoCivil").toString().trim();
+        this.idEdoCivil = treeMap.get("idEdoCivil").toString().trim();
         this.strTelefono = treeMap.get("strTelefono").toString().trim();
         this.strCelular = treeMap.get("strCelular").toString().trim();
         this.strCodigoPostal = treeMap.get("strCodigoPostal").toString().trim();
@@ -168,6 +170,14 @@ public class Cliente implements Serializable {
 
     public void setStrEdoCivil(String strEdoCivil) {
         this.strEdoCivil = strEdoCivil;
+    }
+
+    public String getIdEdoCivil() {
+        return idEdoCivil;
+    }
+
+    public void setIdEdoCivil(String idEdoCivil) {
+        this.idEdoCivil = idEdoCivil;
     }
 
     public String getStrTelefono() {

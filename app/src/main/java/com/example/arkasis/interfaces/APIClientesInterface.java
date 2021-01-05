@@ -17,4 +17,11 @@ public interface APIClientesInterface {
     })
     @POST("api/clientes")
     Call<ResponseAPI> getClientes(@Body Cliente cliente);
+
+    @Headers({
+            "x-api-key: " + Config.API_KEY,
+            "Content-Type: application/json"
+    })
+    @POST("api/clientes/curp")
+    Call<ResponseAPI> getClienteByCurp(@Body Cliente cliente);
 }

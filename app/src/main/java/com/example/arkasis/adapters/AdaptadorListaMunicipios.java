@@ -21,7 +21,6 @@ import java.util.List;
 
 public class AdaptadorListaMunicipios extends RecyclerView.Adapter<AdaptadorListaMunicipios.ViewHolder> implements Filterable {
     private List<Municipio> listaMunicipios;
-    //private List<Municipio> listaMunicipiosFull;
 
     private LayoutInflater layoutInflater;
     private Context context;
@@ -58,17 +57,9 @@ public class AdaptadorListaMunicipios extends RecyclerView.Adapter<AdaptadorList
         }
     }
 
-    /*public AdaptadorListaMunicipios(List<Municipio> listaMunicipios, Context context) {
-        this.context = context;
-        this.listaMunicipios = listaMunicipios;
-        this.listaMunicipiosFull = new ArrayList<>(listaMunicipios);
-        this.layoutInflater = LayoutInflater.from(context);
-    }*/
-
     public AdaptadorListaMunicipios(Context context) {
         this.context = context;
         this.listaMunicipios = selectMunicipios("");
-        //this.listaMunicipiosFull = new ArrayList<>(listaMunicipios);
         this.layoutInflater = LayoutInflater.from(context);
     }
 
@@ -101,7 +92,6 @@ public class AdaptadorListaMunicipios extends RecyclerView.Adapter<AdaptadorList
 
             String filtro = constraint.toString().toLowerCase().trim();
             FilterResults filterResults = new FilterResults();
-            //filterResults.values = listaMunicipiosEncontrados;
             filterResults.values = selectMunicipios(filtro);
             return filterResults;
         }

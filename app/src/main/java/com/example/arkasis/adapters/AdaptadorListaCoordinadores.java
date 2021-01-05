@@ -41,7 +41,10 @@ public class AdaptadorListaCoordinadores extends RecyclerView.Adapter<AdaptadorL
             String filtro = constraint.toString().toLowerCase().trim();
             FilterResults filterResults = new FilterResults();
             //filterResults.values = listaMunicipiosEncontrados;
-            filterResults.values = buscarCoordinador(filtro);
+            Coordinador coordinador = new Coordinador(0, 0, filtro.toUpperCase());
+            List<Coordinador> list = buscarCoordinador(filtro);
+            list.add(coordinador);
+            filterResults.values = list;
             return filterResults;
         }
 

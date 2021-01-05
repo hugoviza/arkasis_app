@@ -1,40 +1,24 @@
 package com.example.arkasis;
 
-import android.app.Dialog;
 import android.content.Context;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.Spinner;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.arkasis.adapters.AdaptadorListaClientes;
-import com.example.arkasis.adapters.AdaptadorListaMunicipios;
+import com.example.arkasis.componentes.DialogBuscadorMunicipios;
 import com.example.arkasis.models.Cliente;
 import com.example.arkasis.models.Municipio;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
-import com.toptoche.searchablespinnerlibrary.SearchableSpinner;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,16 +42,14 @@ public class FragmentBuscarCliente extends Fragment {
     private String mParam1;
     private String mParam2;
 
+    public static final String CANAL_DATA_CLIENTE = "data_cliente";
 
     //Componentes
     private View viewFragmentBuscarCliente;
     private TextInputLayout layoutCiudadOrigen;
     private TextInputEditText txtBuscarCiudad, txtCURP;
     private Button btnBuscarCliente;
-    private Dialog dialog;
-    private Dialog dialogInfoCliente;
-    private AdaptadorListaMunicipios adaptadorListaMunicipios;
-    private EditText txtBuscarCiudadDialog;
+    private DialogBuscadorMunicipios dialogBuscadorMunicipios;
 
     //Lista clientes
     private AdaptadorListaClientes adaptadorListaClientes;
@@ -111,58 +93,33 @@ public class FragmentBuscarCliente extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        // Inflate the layout for this fragment
-        viewFragmentBuscarCliente = inflater.inflate(R.layout.fragment_buscar_cliente, container, false);
-        // inicializarListaMunicipios(viewFragmentBuscarCliente);
+        if(viewFragmentBuscarCliente == null) {
+            // Inflate the layout for this fragment
+            viewFragmentBuscarCliente = inflater.inflate(R.layout.fragment_buscar_cliente, container, false);
+            // inicializarListaMunicipios(viewFragmentBuscarCliente);
 
-        txtBuscarCiudad = viewFragmentBuscarCliente.findViewById(R.id.txtBuscarCiudad);
-        btnBuscarCliente = viewFragmentBuscarCliente.findViewById(R.id.btnBuscarCliente);
-        txtCURP = viewFragmentBuscarCliente.findViewById(R.id.txtCURP);
-        rvList_clientes = viewFragmentBuscarCliente.findViewById(R.id.rvList_clientes);
-        layoutCiudadOrigen = viewFragmentBuscarCliente.findViewById(R.id.layoutCiudadOrigen);
+            txtBuscarCiudad = viewFragmentBuscarCliente.findViewById(R.id.txtBuscarCiudad);
+            btnBuscarCliente = viewFragmentBuscarCliente.findViewById(R.id.btnBuscarCliente);
+            txtCURP = viewFragmentBuscarCliente.findViewById(R.id.txtCURP);
+            rvList_clientes = viewFragmentBuscarCliente.findViewById(R.id.rvList_clientes);
+            layoutCiudadOrigen = viewFragmentBuscarCliente.findViewById(R.id.layoutCiudadOrigen);
 
-        incializarListaClientes();
+            incializarListaClientes();
+            inicializarSelectorMunicipio();
 
-        txtBuscarCiudad.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if(hasFocus) {
-                    abrirDialogSeleccionMunicipio();
+            btnBuscarCliente.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Cliente cliente =  new Cliente();
+                    cliente.setStrMunicipio(municipioSeleccionado != null ? municipioSeleccionado.getStrMunicipio() : "");
+                    cliente.setStrEstado(municipioSeleccionado != null ? municipioSeleccionado.getStrEstado() : "");
+                    cliente.setStrNombre1(txtCURP.getText().toString().trim());
+
+                    adaptadorListaClientes.buscarClientes(cliente);
+                    closeKeyBoard();
                 }
-            }
-        });
-
-        txtBuscarCiudad.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                abrirDialogSeleccionMunicipio();
-            }
-        });
-
-        btnBuscarCliente.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Cliente cliente =  new Cliente();
-                cliente.setStrMunicipio(municipioSeleccionado != null ? municipioSeleccionado.getStrMunicipio() : "");
-                cliente.setStrEstado(municipioSeleccionado != null ? municipioSeleccionado.getStrEstado() : "");
-                cliente.setStrNombre1(txtCURP.getText().toString().trim());
-
-                adaptadorListaClientes.buscarClientes(cliente);
-                closeKeyBoard();
-            }
-        });
-
-        layoutCiudadOrigen.setEndIconOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(layoutCiudadOrigen.getEndIconContentDescription() == LIMPIAR_CAMPO) {
-                    setMunicipioSeleccionado(null);
-                } else {
-                    abrirDialogSeleccionMunicipio();
-                }
-            }
-        });
-
+            });
+        }
 
         return viewFragmentBuscarCliente;
     }
@@ -198,6 +155,7 @@ public class FragmentBuscarCliente extends Fragment {
         this.municipioSeleccionado = municipioSeleccionado;
         if(municipioSeleccionado == null) {
             txtBuscarCiudad.setText("");
+            dialogBuscadorMunicipios.limpiar();
             layoutCiudadOrigen.setEndIconDrawable(R.drawable.ic_baseline_arrow_drop_down_24);
             layoutCiudadOrigen.setEndIconContentDescription(SELECCIONAR_CIUDAD);
         } else {
@@ -205,85 +163,62 @@ public class FragmentBuscarCliente extends Fragment {
             layoutCiudadOrigen.setEndIconDrawable(R.drawable.ic_baseline_cancel_24);
             layoutCiudadOrigen.setEndIconContentDescription(LIMPIAR_CAMPO);
         }
-
         closeKeyBoard();
     }
 
-    public void abrirDialogSeleccionMunicipio() {
-        if(dialog != null) {
-            if(!dialog.isShowing()) {
-                txtBuscarCiudadDialog.setText("");
-                dialog.show();
-                return;
-            }
-        }
+    public void inicializarSelectorMunicipio() {
+        txtBuscarCiudad.setText("");
+        dialogBuscadorMunicipios = new DialogBuscadorMunicipios(getContext(), viewFragmentBuscarCliente);
 
-        dialog = new Dialog(getActivity());
-        dialog.setContentView(R.layout.list_buscar_ciudad);
-        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        dialog.show();
-        dialog.getWindow().setLayout(viewFragmentBuscarCliente.getMeasuredWidth() - 32, LinearLayout.LayoutParams.WRAP_CONTENT);
-        txtBuscarCiudadDialog = dialog.findViewById(R.id.txtBuscarCiudad);
-        Button btnCerrar = dialog.findViewById(R.id.btnCerrar);
-
-        adaptadorListaMunicipios = new AdaptadorListaMunicipios(dialog.getContext());
-        RecyclerView list_ciudades = dialog.findViewById(R.id.list_ciudades);
-        list_ciudades.setHasFixedSize(true);
-        list_ciudades.setLayoutManager(new LinearLayoutManager(dialog.getContext()));
-        list_ciudades.setAdapter(adaptadorListaMunicipios);
-
-        btnCerrar.setOnClickListener(new View.OnClickListener() {
+        txtBuscarCiudad.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dialog.dismiss();
+                dialogBuscadorMunicipios.show();
             }
         });
 
-        txtBuscarCiudadDialog.addTextChangedListener(new TextWatcher() {
+        txtBuscarCiudad.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                adaptadorListaMunicipios.getFilter().filter(s);
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(hasFocus) {
+                    dialogBuscadorMunicipios.show();
+                }
             }
         });
 
-        adaptadorListaMunicipios.setOnItemClickListener(new AdaptadorListaMunicipios.OnItemClickListener() {
+        dialogBuscadorMunicipios.setOnItemClickListener(new DialogBuscadorMunicipios.OnItemClickListener() {
             @Override
-            public void onItemClick(int position) {
-                if (position != RecyclerView.NO_POSITION) {
-                    setMunicipioSeleccionado(adaptadorListaMunicipios.getItem(position));
-                    dialog.dismiss();
-                } else {
+            public void onItemClick(Municipio municipio) {
+                setMunicipioSeleccionado(municipio);
+                dialogBuscadorMunicipios.close();
+            }
+        });
+
+        layoutCiudadOrigen.setEndIconOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(layoutCiudadOrigen.getEndIconContentDescription() == LIMPIAR_CAMPO) {
                     setMunicipioSeleccionado(null);
+                } else {
+                    dialogBuscadorMunicipios.show();
                 }
             }
         });
     }
 
     public void abrirActivity_verInfoCliente(Cliente cliente) {
-/*
-        dialogInfoCliente = new Dialog(getActivity());
-        dialog.setContentView(R.layout.list_buscar_ciudad);
-        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        dialog.show();
-        dialog.getWindow().setLayout(viewFragmentBuscarCliente.getMeasuredWidth() - 32, LinearLayout.LayoutParams.WRAP_CONTENT);
-        txtBuscarCiudadDialog = dialog.findViewById(R.id.txtBuscarCiudad);
-        Button btnCerrar = dialog.findViewById(R.id.btnCerrar);*/
         try {
             DialogFragmentInfoCliente dialogFragmentInfoCliente = DialogFragmentInfoCliente.newInstance(cliente);
+            dialogFragmentInfoCliente.setOnItemClickListener(new DialogFragmentInfoCliente.OnItemClickListener() {
+                @Override
+                public void onItemClick(Cliente cliente) {
+                    BottomBarActivity.setFragmentFormularioRegistro(new FragmentFormularioRegistro(cliente));
+                    BottomBarActivity.setSelectedItem(BottomBarActivity.ITEM_ADD);
+                }
+            });
             dialogFragmentInfoCliente.show(getActivity().getSupportFragmentManager(), "fragment");
         } catch (Exception e) {
             //chale
         }
-
     }
 }

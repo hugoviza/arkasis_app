@@ -2,19 +2,20 @@ package com.example.arkasis;
 
 import android.os.Bundle;
 
-import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import androidx.fragment.app.DialogFragment;
+
+import com.example.arkasis.adapters.AdaptadorListaClientes;
 import com.example.arkasis.models.Cliente;
 
 /**
- * A simple {@link Fragment} subclass.
+ * A simple {@link android.app.Fragment} subclass.
  * Use the {@link DialogFragmentInfoCliente#newInstance} factory method to
  * create an instance of this fragment.
  */
@@ -24,6 +25,12 @@ public class DialogFragmentInfoCliente extends DialogFragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+
+    private OnItemClickListener onItemClickListener;
+
+    public interface OnItemClickListener {
+        void onItemClick(Cliente cliente);
+    }
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -35,6 +42,7 @@ public class DialogFragmentInfoCliente extends DialogFragment {
 
     View view ;
     ImageButton btnClose;
+    Button btnNuevaSolicitud;
 
     private Cliente cliente;
 
@@ -98,12 +106,21 @@ public class DialogFragmentInfoCliente extends DialogFragment {
         tvNombreConyuge = view.findViewById(R.id.tvNombreConyuge);
         tvFechaNacimientoConyuge = view.findViewById(R.id.tvFechaNacimientoConyuge);
         tvLugarNacimientoConyuge = view.findViewById(R.id.tvLugarNacimientoConyuge);
+        btnNuevaSolicitud = view.findViewById(R.id.btnNuevaSolicitud);
 
         initData();
 
         btnClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                dismiss();
+            }
+        });
+
+        btnNuevaSolicitud.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onItemClickListener.onItemClick(cliente);
                 dismiss();
             }
         });
@@ -126,5 +143,9 @@ public class DialogFragmentInfoCliente extends DialogFragment {
         tvNombreConyuge.setText(cliente.getStrNombreConyugue());
         tvFechaNacimientoConyuge.setText(cliente.getDatFechaNacimientoConyugue());
         tvLugarNacimientoConyuge.setText(cliente.getStrLugarNacimientoConyugue());
+    }
+
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+        this.onItemClickListener = onItemClickListener;
     }
 }

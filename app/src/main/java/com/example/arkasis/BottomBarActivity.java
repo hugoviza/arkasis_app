@@ -2,16 +2,14 @@ package com.example.arkasis;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.arkasis.DB.tablas.TableActividades;
@@ -21,6 +19,7 @@ import com.example.arkasis.DB.tablas.TableSucursal;
 import com.example.arkasis.config.Config;
 import com.example.arkasis.interfaces.APICatalogosInterface;
 import com.example.arkasis.models.Actividad;
+import com.example.arkasis.models.Cliente;
 import com.example.arkasis.models.Coordinador;
 import com.example.arkasis.models.Municipio;
 import com.example.arkasis.models.ResponseAPI;
@@ -41,25 +40,34 @@ public class BottomBarActivity extends AppCompatActivity {
 
     FragmentDashboard fragmentDashboard;
     FragmentBuscarCliente fragmentBuscarCliente;
-    FragmentFormularioRegistro fragmentFormularioRegistro;
+    private static FragmentFormularioRegistro fragmentFormularioRegistro;
 
-    DialogFragmentLoading dialogFragmentLoading;
+    public static DialogFragmentLoading dialogFragmentLoading;
+    public static FragmentManager fragmentManager;
+    private static BottomNavigationView bottom_navigation;
+
+    public static final int ITEM_HOME = R.id.itemHome;
+    public static final int ITEM_FIND = R.id.itemBuscar;
+    public static final int ITEM_ADD = R.id.itemRegistrar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bottom_bar);
 
-        BottomNavigationView bottom_navigation = findViewById(R.id.bottom_navigation);
+        bottom_navigation = findViewById(R.id.bottom_navigation);
 
         try {
             getUsuarioSesion();
+
+            fragmentManager = this.getSupportFragmentManager();
 
             fragmentDashboard = new FragmentDashboard();
             fragmentBuscarCliente = new FragmentBuscarCliente();
             fragmentFormularioRegistro = new FragmentFormularioRegistro();
 
             cargarFragmento(fragmentDashboard);
+
             validarCatalogoActividades();
 
         } catch (Exception e) {
@@ -87,25 +95,31 @@ public class BottomBarActivity extends AppCompatActivity {
         });
     }
 
+    public static void setSelectedItem(int idItem) {
+        bottom_navigation.setSelectedItemId(idItem);
+    }
+
+    public static void setFragmentFormularioRegistro(FragmentFormularioRegistro _fragmentFormularioRegistro) {
+        fragmentFormularioRegistro = _fragmentFormularioRegistro;
+    }
+
     public void cargarFragmento(Fragment fragment) {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.contenedorFragmentos, fragment);
         fragmentTransaction.commit();
     }
 
-    public void abrirLoading(String mensaje) {
+    public static void abrirLoading(String mensaje) {
         if(dialogFragmentLoading == null) {
             dialogFragmentLoading = DialogFragmentLoading.newInstance(mensaje);
         } else {
             dialogFragmentLoading.actualizarMensaje(mensaje);
-
-            //new TaskUpdateMensajeLoading().execute(mensaje,"", "");
         }
 
-        dialogFragmentLoading.show(this.getSupportFragmentManager(), "loading");
+        dialogFragmentLoading.show(fragmentManager, "loading");
     }
 
-    public void cerrarLoading() {
+    public static void cerrarLoading() {
         if(dialogFragmentLoading != null) {
             dialogFragmentLoading.dismiss();
         }

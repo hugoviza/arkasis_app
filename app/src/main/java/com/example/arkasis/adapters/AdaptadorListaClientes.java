@@ -106,6 +106,7 @@ public class AdaptadorListaClientes extends RecyclerView.Adapter<AdaptadorListaC
     public void buscarClientes(Cliente cliente) {
         try
         {
+            BottomBarActivity.abrirLoading("Buscando...");
             Retrofit retrofit = new Retrofit.Builder()
                     .baseUrl(Config.URL_API)
                     .addConverterFactory(GsonConverterFactory.create())
@@ -132,15 +133,18 @@ public class AdaptadorListaClientes extends RecyclerView.Adapter<AdaptadorListaC
 
                         setData(listaClientes);
                     }
+                    BottomBarActivity.cerrarLoading();
                 }
 
                 @Override
                 public void onFailure(Call<ResponseAPI> call, Throwable t) {
                     Toast.makeText(context, "Error al cargar lista de clientes", Toast.LENGTH_SHORT).show();
+                    BottomBarActivity.cerrarLoading();
                 }
             });
         } catch (Exception e) {
             Toast.makeText(context, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+            BottomBarActivity.cerrarLoading();
         }
     }
 

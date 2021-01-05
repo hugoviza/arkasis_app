@@ -19,6 +19,7 @@
             android:orientation="horizontal">
 
             <Button
+                android:id="@+id/btnLimpiar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Limpiar"
@@ -38,6 +39,7 @@
                 android:layout_weight="2"/>
 
             <Button
+                android:id="@+id/btnGuardar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Guardar"
@@ -66,7 +68,7 @@
                     android:id="@+id/txtPromotor"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="text"
+                    android:inputType="textCapCharacters"
                     android:editable="false"/>
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -82,7 +84,7 @@
                     android:id="@+id/txtSucursal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="text"
+                    android:inputType="textCapCharacters"
                     android:editable="false"/>
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -98,7 +100,7 @@
                     android:id="@+id/txtCoordinador"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="text"/>
+                    android:inputType="textCapCharacters"/>
             </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -120,17 +122,23 @@
             </LinearLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layoutCURP"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Curp">
+                android:hint="Curp"
+                app:endIconMode="custom"
+                app:endIconDrawable="@drawable/ic_baseline_search_24"
+                app:endIconContentDescription="Buscar">
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/txtCURP"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="text"/>
+                    android:inputType="textCapCharacters"
+                    android:maxLength="18"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layoutNombre1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Primer nombre">
@@ -138,10 +146,11 @@
                     android:id="@+id/txtNombre1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="text"/>
+                    android:inputType="textCapCharacters"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layoutNombre2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Segundo nombre">
@@ -149,10 +158,11 @@
                     android:id="@+id/txtNombre2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="text"/>
+                    android:inputType="textCapCharacters"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layoutApellidoPaterno"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Apellido paterno">
@@ -160,10 +170,11 @@
                     android:id="@+id/txtApellidoPaterno"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="text"/>
+                    android:inputType="textCapCharacters"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layoutApellidoMaterno"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Apellido materno">
@@ -171,7 +182,7 @@
                     android:id="@+id/txtApellidoMaterno"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="text"/>
+                    android:inputType="textCapCharacters"/>
             </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -208,6 +219,7 @@
             </LinearLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layoutFechaNacimiento"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Fecha nacimiento">
@@ -220,6 +232,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layoutEstadoCivil"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Estado civil"
@@ -235,6 +248,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layoutNacionalidad"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Nacionalidad">
@@ -242,7 +256,7 @@
                     android:id="@+id/txtNacionalidad"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="text"/>
+                    android:inputType="textCapCharacters"/>
             </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -266,6 +280,7 @@
             </LinearLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layoutOcupacion"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Ocupacion">
@@ -273,10 +288,11 @@
                     android:id="@+id/txtOcupacion"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="text"/>
+                    android:inputType="textCapCharacters"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layoutActividad"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Actividad">
@@ -284,7 +300,7 @@
                     android:id="@+id/txtActividad"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="text"/>
+                    android:inputType="textCapCharacters"/>
             </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -308,6 +324,7 @@
             </LinearLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layoutCelular"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Celular">
@@ -319,6 +336,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layoutTelefono"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Teléfono">
@@ -330,6 +348,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layoutEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Correo electrónico">
@@ -360,17 +379,7 @@
             </LinearLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Número elector">
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/txtNumeroElector"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="text"/>
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layoutClaveElector"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Clave elector">
@@ -378,7 +387,19 @@
                     android:id="@+id/txtClaveElector"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="text"/>
+                    android:inputType="textCapCharacters"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layoutNumeroElector"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Número elector">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/txtNumeroElector"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textCapCharacters"/>
             </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -391,7 +412,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Lugar de origen"
+                    android:text="Lugar de nacimiento"
                     />
 
                 <TextView
@@ -402,25 +423,27 @@
             </LinearLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layoutEstadoOrigen"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Municipio">
+                android:hint="Estado">
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/txtCiuadOrigen"
+                    android:id="@+id/txtEstadoOrigen"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="text"/>
+                    android:inputType="textCapCharacters"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layoutPaisOrigen"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="País">
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/txtPais"
+                    android:id="@+id/txtPaisOrigen"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="text"/>
+                    android:inputType="textCapCharacters"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <!-- DIRECCION DE LA MEJORA  -->
@@ -443,6 +466,19 @@
             </LinearLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layoutCodigoPostal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Código postal">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/txtCodigoPostal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textCapCharacters"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layoutDomicilioMejora"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Dirección">
@@ -450,7 +486,7 @@
                     android:id="@+id/txtDomicilioMejora"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="text"/>
+                    android:inputType="textCapCharacters"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <LinearLayout
@@ -459,31 +495,34 @@
                 android:orientation="horizontal">
 
                 <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/layoutDomicilioMejoraNumExt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:hint="Número exterior"
                     android:layout_weight="2">
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/txtDomicilioMejoraNumero"
+                        android:id="@+id/txtDomicilioMejoraNumExt"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="text"/>
+                        android:inputType="textCapCharacters"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/layoutDomicilioMejoraNumInt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:hint="Número interior"
                     android:layout_weight="2">
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/txtDomicilioMejoraNumeroInterior"
+                        android:id="@+id/txtDomicilioMejoraNumInt"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="text"/>
+                        android:inputType="textCapCharacters"/>
                 </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layoutDomicilioMejoraColonia"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Colonia">
@@ -491,10 +530,11 @@
                     android:id="@+id/txtDomicilioMejoraColonia"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="text"/>
+                    android:inputType="textCapCharacters"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layoutDomicilioMejoraMunicipio"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Municipio">
@@ -502,7 +542,7 @@
                     android:id="@+id/txtDomicilioMejoraMunicipio"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="text"/>
+                    android:inputType="textCapCharacters"/>
             </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -526,6 +566,7 @@
             </LinearLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layoutReferenciaBancaria"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Referencia">
@@ -533,10 +574,11 @@
                     android:id="@+id/txtReferenciaBancaria"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="text"/>
+                    android:inputType="textCapCharacters"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layoutInstitucionBancaria"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Institución bancaria">
@@ -544,11 +586,11 @@
                     android:id="@+id/txtInstitucionBancaria"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="text"/>
+                    android:inputType="textCapCharacters"/>
             </com.google.android.material.textfield.TextInputLayout>
 
 
-            <!-- REFERENCIA BANCARIA  -->
+            <!-- DATOS DEL CREDITO  -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -568,6 +610,7 @@
             </LinearLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layoutIngresos"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Ingresos mensuales">
@@ -579,6 +622,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layoutEgresos"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Egresos mensuales">
@@ -591,6 +635,7 @@
 
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layoutMontoSolicitado"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Monto solicitado">
@@ -628,25 +673,25 @@
                     android:id="@+id/txtProductoSolicitado"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="text"/>
+                    android:inputType="textCapCharacters"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <RadioGroup
                 android:id="@+id/radioPlazoProducto"
-                android:checkedButton="@id/radioSexoMujer"
+                android:checkedButton="@id/radioPlazoProducto12Meses"
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
                 <RadioButton
-                    android:id="@+id/radio12Meses"
+                    android:id="@+id/radioPlazoProducto12Meses"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="12 meses"
                     android:layout_marginRight="16sp"/>
 
                 <RadioButton
-                    android:id="@+id/radio24Meses"
+                    android:id="@+id/radioPlazoProducto24Meses"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="24 meses" />
@@ -676,7 +721,7 @@
 
             <RadioGroup
                 android:id="@+id/radioQuedateEnCasa"
-                android:checkedButton="@id/radioSexoMujer"
+                android:checkedButton="@id/radioQuedateEnCasaNoAplica"
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
