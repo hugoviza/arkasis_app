@@ -62,7 +62,9 @@ public class DialogBuscadorSucursales {
     }
 
     public void limpiar() {
-        txtBuscar.setText("");
+        if(txtBuscar != null) {
+            txtBuscar.setText("");
+        }
         sucursalSeleccionada = null;
     }
 

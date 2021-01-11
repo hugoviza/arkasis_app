@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import com.example.arkasis.DB.ConexionSQLiteHelper;
 import com.example.arkasis.DB.MigracionesSQL;
 import com.example.arkasis.interfaces.TableSQLite;
+import com.example.arkasis.models.Estado;
 import com.example.arkasis.models.Municipio;
 
 import java.util.ArrayList;
@@ -61,6 +62,18 @@ public class TableMunicipios extends Conexion implements TableSQLite {
 
         while (cursor.moveToNext()) {
             list.add(new Municipio(cursor.getString(0), cursor.getString(1), cursor.getString(2),cursor.getString(3)));
+        }
+
+        return list;
+    }
+
+    public List<Object> findAllEstados(String buscar) {
+        List<Object> list = new ArrayList<>();
+        String query = "SELECT "+col_idEstado+", "+col_strEstado+" FROM "+table+" WHERE ("+col_strEstado+") like '%"+buscar+"%' GROUP BY "+col_strEstado+" ORDER BY "+col_strEstado;
+        Cursor cursor = dbRead.rawQuery( query , null);
+
+        while (cursor.moveToNext()) {
+            list.add(new Estado(cursor.getString(0), cursor.getString(1)));
         }
 
         return list;

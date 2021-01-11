@@ -5,30 +5,27 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.arkasis.DB.tablas.TableSolicitudesDispersion;
+import com.example.arkasis.adapters.AdaptadorListaSolicitudes;
 import com.example.arkasis.config.Config;
+import com.example.arkasis.models.SolicitudDispersion;
 import com.example.arkasis.models.Usuario;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link FragmentDashboard#newInstance} factory method to
- * create an instance of this fragment.
- */
+import java.util.List;
+
 public class FragmentDashboard extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private BottomBarActivity parent;
+    private AdaptadorListaSolicitudes adaptadorListaSolicitudes;
+    private RecyclerView rvList_solicitudes;
 
     private View fragmentDashboardView;
     private Usuario usuario;
@@ -37,31 +34,13 @@ public class FragmentDashboard extends Fragment {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment FragmentDashboard.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static FragmentDashboard newInstance(String param1, String param2) {
-        FragmentDashboard fragment = new FragmentDashboard();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
+    public FragmentDashboard(BottomBarActivity parent) {
+        this.parent = parent;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
@@ -70,11 +49,35 @@ public class FragmentDashboard extends Fragment {
         // Inflate the layout for this fragment
         fragmentDashboardView = inflater.inflate(R.layout.fragment_dashboard, container, false);
         usuario = Config.USUARIO_SESION;
-
+        rvList_solicitudes = fragmentDashboardView.findViewById(R.id.rvList_solicitudes);
         TextView tvBienvenida = fragmentDashboardView.findViewById(R.id.tvBienvenida);
         tvBienvenida.setText("Bienvenido " + usuario.getNombre());
+        inicializarListaSolicitudesLocales();
         return fragmentDashboardView;
     }
 
+    private void inicializarListaSolicitudesLocales() {
+        TableSolicitudesDispersion table = new TableSolicitudesDispersion(fragmentDashboardView.getContext());
+        List<SolicitudDispersion> listaSolicitudes = (List<SolicitudDispersion>)(Object)table.findAll("", 1000);
 
+        adaptadorListaSolicitudes = new AdaptadorListaSolicitudes(listaSolicitudes, fragmentDashboardView.getContext());
+        rvList_solicitudes.setHasFixedSize(true);
+        rvList_solicitudes.setLayoutManager(new LinearLayoutManager(fragmentDashboardView.getContext()));
+        rvList_solicitudes.setAdapter(adaptadorListaSolicitudes);
+
+        adaptadorListaSolicitudes.setOnItemClickListener(position -> {
+            if(position != RecyclerView.NO_POSITION) {
+                //Selected data
+                SolicitudDispersion solicitudDispersion = adaptadorListaSolicitudes.getItem(position);
+            }
+        });
+    }
+
+    public void actualizarListaSolicitudesLocales() {
+        if(adaptadorListaSolicitudes != null) {
+            TableSolicitudesDispersion table = new TableSolicitudesDispersion(fragmentDashboardView.getContext());
+            List<SolicitudDispersion> listaSolicitudes = (List<SolicitudDispersion>)(Object)table.findAll("", 1000);
+            adaptadorListaSolicitudes.setListaSolicitudes(listaSolicitudes);
+        }
+    }
 }

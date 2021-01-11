@@ -23,8 +23,6 @@ public class DialogFragmentLoading extends DialogFragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "mensaje";
-
-    // TODO: Rename and change types of parameters
     private String strMensaje;
 
     //Componentes
@@ -32,7 +30,10 @@ public class DialogFragmentLoading extends DialogFragment {
     TextView tvMensaje;
 
     public DialogFragmentLoading() {
-        // Required empty public constructor
+    }
+
+    public DialogFragmentLoading(String strMensaje) {
+        this.strMensaje = strMensaje;
     }
 
     /**
@@ -77,29 +78,9 @@ public class DialogFragmentLoading extends DialogFragment {
     }
 
     public void actualizarMensaje(String strMensaje) {
-        /*if(tvMensaje != null) {
+        if(tvMensaje != null) {
             this.strMensaje = strMensaje;
             tvMensaje.setText(strMensaje);
-        }*/
-        new TaskUpdateMensajeLoading().execute(strMensaje, "", "");
-    }
-
-    private class TaskUpdateMensajeLoading extends AsyncTask<String, String, String> {
-        protected String doInBackground(String... mensajes) {
-            if(tvMensaje != null) {
-                strMensaje = mensajes[0];
-                tvMensaje.setText(mensajes[0]);
-            }
-            publishProgress();
-            return mensajes[0];
-        }
-
-        protected void onProgressUpdate(String... progress) {
-
-        }
-
-        protected void onPostExecute(String result) {
-
         }
     }
 }

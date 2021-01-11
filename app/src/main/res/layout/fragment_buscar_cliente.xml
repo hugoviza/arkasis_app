@@ -66,8 +66,6 @@
         android:id="@+id/rvList_clientes"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingTop="20sp"
-        android:layout_marginBottom="30sp"
         >
 
     </androidx.recyclerview.widget.RecyclerView>

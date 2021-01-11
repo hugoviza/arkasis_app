@@ -6,29 +6,41 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.arkasis.DB.tablas.TableActividades;
 import com.example.arkasis.DB.tablas.TableCoordinadores;
 import com.example.arkasis.DB.tablas.TableMunicipios;
+import com.example.arkasis.DB.tablas.TableSolicitudesDispersion;
 import com.example.arkasis.DB.tablas.TableSucursal;
 import com.example.arkasis.config.Config;
 import com.example.arkasis.interfaces.APICatalogosInterface;
+import com.example.arkasis.interfaces.APISolicitudDispersion;
 import com.example.arkasis.models.Actividad;
 import com.example.arkasis.models.Cliente;
 import com.example.arkasis.models.Coordinador;
+import com.example.arkasis.models.EstatusSincronizacionSolicitud;
 import com.example.arkasis.models.Municipio;
 import com.example.arkasis.models.ResponseAPI;
+import com.example.arkasis.models.SolicitudDispersion;
 import com.example.arkasis.models.Sucursal;
 import com.example.arkasis.models.Usuario;
+import com.example.arkasis.utilerias.CustomReceiver;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.gson.internal.LinkedTreeMap;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -46,6 +58,12 @@ public class BottomBarActivity extends AppCompatActivity {
     public static FragmentManager fragmentManager;
     private static BottomNavigationView bottom_navigation;
 
+    private TextView tvEstatusConexion;
+
+    private CustomReceiver myReceiver = null;
+    private Boolean bitConexionIntenet = false;
+    private Boolean bitActualizarCatalogo = true;
+
     public static final int ITEM_HOME = R.id.itemHome;
     public static final int ITEM_FIND = R.id.itemBuscar;
     public static final int ITEM_ADD = R.id.itemRegistrar;
@@ -56,20 +74,39 @@ public class BottomBarActivity extends AppCompatActivity {
         setContentView(R.layout.activity_bottom_bar);
 
         bottom_navigation = findViewById(R.id.bottom_navigation);
+        tvEstatusConexion = findViewById(R.id.tvEstatusConexion);
 
         try {
             getUsuarioSesion();
 
+            myReceiver = new CustomReceiver();
+            myReceiver.setOnItemClickListener(new CustomReceiver.OnChangeStatus() {
+                @Override
+                public void onChange(String status) {
+                    if(status != "") {
+                        tvEstatusConexion.setVisibility(View.VISIBLE);
+                        tvEstatusConexion.setText(status);
+                        bitConexionIntenet = false;
+                    } else {
+                        tvEstatusConexion.setVisibility(View.GONE);
+                        bitConexionIntenet = true;
+                        if(hayRegistrosPorSincronizar()) {
+                            sincronizarSolicitudes();
+                        } else if(bitActualizarCatalogo) {
+                            actualizarCatalogos();
+                        }
+                    }
+                }
+            });
+
             fragmentManager = this.getSupportFragmentManager();
 
             fragmentDashboard = new FragmentDashboard();
-            fragmentBuscarCliente = new FragmentBuscarCliente();
-            fragmentFormularioRegistro = new FragmentFormularioRegistro();
+            fragmentBuscarCliente = new FragmentBuscarCliente(this);
+            fragmentFormularioRegistro = new FragmentFormularioRegistro(this);
 
             cargarFragmento(fragmentDashboard);
-
-            validarCatalogoActividades();
-
+            comprobarConexionInternet();
         } catch (Exception e) {
             Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
         }
@@ -95,6 +132,77 @@ public class BottomBarActivity extends AppCompatActivity {
         });
     }
 
+    public boolean hayRegistrosPorSincronizar() {
+        TableSolicitudesDispersion table = new TableSolicitudesDispersion(this);
+        int totalRegistros = table.getCount();
+        return totalRegistros > 0;
+    }
+
+    public void actualizarCatalogos(){
+        if(bitActualizarCatalogo) {
+            validarCatalogoActividades();
+            bitActualizarCatalogo = false;
+        }
+    }
+
+    public void sincronizarSolicitudes() {
+        TableSolicitudesDispersion table = new TableSolicitudesDispersion(this);
+        List<SolicitudDispersion> listaSolicitudes = (List<SolicitudDispersion>)(Object)table.findAll("", 10000);
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(Config.URL_API)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        APISolicitudDispersion api = retrofit.create(APISolicitudDispersion.class);
+        Call<ResponseAPI> apiCall = api.batchAddSolicitud(listaSolicitudes);
+        abrirLoading("Sincronizando " + listaSolicitudes.size() + " solicitudes de dispersión");
+        apiCall.enqueue(new Callback<ResponseAPI>() {
+            @Override
+            public void onResponse(Call<ResponseAPI> call, Response<ResponseAPI> response) {
+                if(response.body() == null || response.body().getResultado() == null) {
+                    //No hay nada por hacer
+                    Toast.makeText(BottomBarActivity.this, "Ha surgido un error al sincronizar registros", Toast.LENGTH_SHORT).show();
+                } else {
+                    if(response.body().getSuccess()) {
+                        int contadorRegistrosFallidos = 0;
+                        for (LinkedTreeMap<Object, Object> treeMap : (ArrayList<LinkedTreeMap<Object, Object>>)response.body().getResultado()) {
+                            try {
+                                EstatusSincronizacionSolicitud estatus = new EstatusSincronizacionSolicitud(treeMap);
+                                if(estatus.isBitRegistrado()) {
+                                    table.eliminar(estatus.getIdSolicitud());
+                                } else {
+                                    contadorRegistrosFallidos++;
+                                }
+                            } catch (Exception e) {
+                                //Errorcito
+                            }
+                        }
+                        if(contadorRegistrosFallidos > 0) {
+                            Toast.makeText(BottomBarActivity.this, "Error al sincronizar "+contadorRegistrosFallidos+" solicitudes", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(BottomBarActivity.this, "Solicitudes sincronizadas correctamente", Toast.LENGTH_SHORT).show();
+                        }
+
+                        if(fragmentDashboard != null) {
+                            fragmentDashboard.actualizarListaSolicitudesLocales();
+                        }
+                    }
+                }
+
+                cerrarLoading();
+                actualizarCatalogos();
+            }
+
+            @Override
+            public void onFailure(Call<ResponseAPI> call, Throwable t) {
+                Toast.makeText(BottomBarActivity.this, getString(R.string.sin_acceso_servidor), Toast.LENGTH_SHORT).show();
+                cerrarLoading();
+                actualizarCatalogos();
+            }
+        });
+    }
+
     public static void setSelectedItem(int idItem) {
         bottom_navigation.setSelectedItemId(idItem);
     }
@@ -110,19 +218,27 @@ public class BottomBarActivity extends AppCompatActivity {
     }
 
     public static void abrirLoading(String mensaje) {
-        if(dialogFragmentLoading == null) {
-            dialogFragmentLoading = DialogFragmentLoading.newInstance(mensaje);
-        } else {
-            dialogFragmentLoading.actualizarMensaje(mensaje);
+        if(dialogFragmentLoading != null) {
+            dialogFragmentLoading.dismiss();
         }
 
+        dialogFragmentLoading = new DialogFragmentLoading(mensaje);
         dialogFragmentLoading.show(fragmentManager, "loading");
+
     }
 
     public static void cerrarLoading() {
         if(dialogFragmentLoading != null) {
             dialogFragmentLoading.dismiss();
         }
+    }
+
+    private void comprobarConexionInternet() {
+        registerReceiver(myReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+    }
+
+    public boolean getEstatusConexionInternet() {
+        return bitConexionIntenet;
     }
 
     public void getUsuarioSesion() {
@@ -171,6 +287,7 @@ public class BottomBarActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<ResponseAPI> call, Throwable t) {
+                Toast.makeText(BottomBarActivity.this, getString(R.string.sin_acceso_servidor), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -218,13 +335,18 @@ public class BottomBarActivity extends AppCompatActivity {
 
                 @Override
                 public void onFailure(Call<ResponseAPI> call, Throwable t) {
-                    Toast.makeText(BottomBarActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(BottomBarActivity.this, getString(R.string.sin_acceso_servidor), Toast.LENGTH_SHORT).show();
+                    cerrarLoading();
+                    validarCatalogoMunicipios();
                 }
             });
         } catch (Exception e) {
             Toast.makeText(this, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+            cerrarLoading();
+            validarCatalogoMunicipios();
         }
     }
+
 
     public void validarCatalogoMunicipios() {
 
@@ -260,60 +382,70 @@ public class BottomBarActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<ResponseAPI> call, Throwable t) {
+                Toast.makeText(BottomBarActivity.this, getString(R.string.sin_acceso_servidor), Toast.LENGTH_SHORT).show();
             }
         });
     }
 
     public void descargarCatalogoMunicipios() {
-        try {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Retrofit retrofit = new Retrofit.Builder()
+                            .baseUrl(Config.URL_API)
+                            .addConverterFactory(GsonConverterFactory.create())
+                            .build();
 
-            Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl(Config.URL_API)
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .build();
+                    APICatalogosInterface api = retrofit.create(APICatalogosInterface.class);
+                    Call<ResponseAPI> apiCall = api.getAllMunicipios();
+                    abrirLoading("Actualizando catálogo de municipios");
 
-            APICatalogosInterface api = retrofit.create(APICatalogosInterface.class);
-            Call<ResponseAPI> apiCall = api.getAllMunicipios();
-            abrirLoading("Actualizando catálogo de municipios");
+                    apiCall.enqueue(new Callback<ResponseAPI>() {
+                        @Override
+                        public void onResponse(Call<ResponseAPI> call, Response<ResponseAPI> response) {
+                            if(response.body() == null || response.body().getResultado() == null) {
+                                //No hay nada por hacer
+                            } else {
+                                //limpiamos la tabla antes de insertar nuevos datos
+                                TableMunicipios table = new TableMunicipios(BottomBarActivity.this);
+                                table.truncate();
+                                int totalErrores = 0;
 
-            apiCall.enqueue(new Callback<ResponseAPI>() {
-                @Override
-                public void onResponse(Call<ResponseAPI> call, Response<ResponseAPI> response) {
-                    if(response.body() == null || response.body().getResultado() == null) {
-                        //No hay nada por hacer
-                    } else {
-                        //limpiamos la tabla antes de insertar nuevos datos
-                        TableMunicipios table = new TableMunicipios(BottomBarActivity.this);
-                        table.truncate();
-                        int totalErrores = 0;
+                                if(response.body().getSuccess()) {
+                                    for (LinkedTreeMap<Object, Object> treeMap : (ArrayList<LinkedTreeMap<Object, Object>>)response.body().getResultado()) {
+                                        try {
+                                            table.insertar(new Municipio(treeMap));
+                                        } catch (Exception e) {
+                                            totalErrores++;
+                                        }
+                                    }
+                                }
 
-                        if(response.body().getSuccess()) {
-                            for (LinkedTreeMap<Object, Object> treeMap : (ArrayList<LinkedTreeMap<Object, Object>>)response.body().getResultado()) {
-                                try {
-                                    table.insertar(new Municipio(treeMap));
-                                } catch (Exception e) {
-                                    totalErrores++;
+                                if(totalErrores > 0) {
+                                    Toast.makeText(BottomBarActivity.this, "Se han encontrado errores en " + totalErrores + " registros de municipios", Toast.LENGTH_SHORT).show();
                                 }
                             }
+                            cerrarLoading();
+                            validarCatalogoSucursales();
                         }
 
-                        if(totalErrores > 0) {
-                            Toast.makeText(BottomBarActivity.this, "Se han encontrado errores en " + totalErrores + " registros de municipios", Toast.LENGTH_SHORT).show();
+                        @Override
+                        public void onFailure(Call<ResponseAPI> call, Throwable t) {
+                            cerrarLoading();
+                            validarCatalogoSucursales();
+                            Toast.makeText(BottomBarActivity.this, getString(R.string.sin_acceso_servidor), Toast.LENGTH_SHORT).show();
                         }
-                    }
+                    });
+                } catch (Exception e) {
                     cerrarLoading();
                     validarCatalogoSucursales();
+                    Toast.makeText(BottomBarActivity.this, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
-
-                @Override
-                public void onFailure(Call<ResponseAPI> call, Throwable t) {
-                    Toast.makeText(BottomBarActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
-                }
-            });
-        } catch (Exception e) {
-            Toast.makeText(this, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-        }
+            }
+        }, 300);
     }
+
 
     public void validarCatalogoSucursales() {
 
@@ -349,60 +481,68 @@ public class BottomBarActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<ResponseAPI> call, Throwable t) {
-
+                Toast.makeText(BottomBarActivity.this, getString(R.string.sin_acceso_servidor), Toast.LENGTH_SHORT).show();
             }
         });
     }
 
     public void descargarCatalogoSucursales() {
-        try {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Retrofit retrofit = new Retrofit.Builder()
+                            .baseUrl(Config.URL_API)
+                            .addConverterFactory(GsonConverterFactory.create())
+                            .build();
 
-            Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl(Config.URL_API)
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .build();
+                    APICatalogosInterface api = retrofit.create(APICatalogosInterface.class);
+                    Call<ResponseAPI> apiCall = api.getAllSucursales();
+                    abrirLoading("Actualizando catálogo de sucursales");
 
-            APICatalogosInterface api = retrofit.create(APICatalogosInterface.class);
-            Call<ResponseAPI> apiCall = api.getAllSucursales();
-            abrirLoading("Actualizando catálogo de sucursales");
+                    apiCall.enqueue(new Callback<ResponseAPI>() {
+                        @Override
+                        public void onResponse(Call<ResponseAPI> call, Response<ResponseAPI> response) {
+                            if(response.body() == null || response.body().getResultado() == null) {
+                                //No hay nada por hacer
+                            } else {
+                                //limpiamos la tabla antes de insertar nuevos datos
+                                TableSucursal table = new TableSucursal(BottomBarActivity.this);
+                                table.truncate();
+                                int totalErrores = 0;
 
-            apiCall.enqueue(new Callback<ResponseAPI>() {
-                @Override
-                public void onResponse(Call<ResponseAPI> call, Response<ResponseAPI> response) {
-                    if(response.body() == null || response.body().getResultado() == null) {
-                        //No hay nada por hacer
-                    } else {
-                        //limpiamos la tabla antes de insertar nuevos datos
-                        TableSucursal table = new TableSucursal(BottomBarActivity.this);
-                        table.truncate();
-                        int totalErrores = 0;
+                                if(response.body().getSuccess()) {
+                                    for (LinkedTreeMap<Object, Object> treeMap : (ArrayList<LinkedTreeMap<Object, Object>>)response.body().getResultado()) {
+                                        try {
+                                            table.insertar(new Sucursal(treeMap));
+                                        } catch (Exception e) {
+                                            totalErrores++;
+                                        }
+                                    }
+                                }
 
-                        if(response.body().getSuccess()) {
-                            for (LinkedTreeMap<Object, Object> treeMap : (ArrayList<LinkedTreeMap<Object, Object>>)response.body().getResultado()) {
-                                try {
-                                    table.insertar(new Sucursal(treeMap));
-                                } catch (Exception e) {
-                                    totalErrores++;
+                                if(totalErrores > 0) {
+                                    Toast.makeText(BottomBarActivity.this, "Se han encontrado errores en " + totalErrores + " registros de sucursal", Toast.LENGTH_SHORT).show();
                                 }
                             }
+                            cerrarLoading();
+                            validarCatalogoCoordinadores();
                         }
 
-                        if(totalErrores > 0) {
-                            Toast.makeText(BottomBarActivity.this, "Se han encontrado errores en " + totalErrores + " registros de sucursal", Toast.LENGTH_SHORT).show();
+                        @Override
+                        public void onFailure(Call<ResponseAPI> call, Throwable t) {
+                            cerrarLoading();
+                            validarCatalogoCoordinadores();
+                            Toast.makeText(BottomBarActivity.this, getString(R.string.sin_acceso_servidor), Toast.LENGTH_SHORT).show();
                         }
-                    }
+                    });
+                } catch (Exception e) {
                     cerrarLoading();
                     validarCatalogoCoordinadores();
+                    Toast.makeText(BottomBarActivity.this, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
-
-                @Override
-                public void onFailure(Call<ResponseAPI> call, Throwable t) {
-                    Toast.makeText(BottomBarActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
-                }
-            });
-        } catch (Exception e) {
-            Toast.makeText(this, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-        }
+            }
+        }, 300);
     }
 
 
@@ -438,60 +578,66 @@ public class BottomBarActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<ResponseAPI> call, Throwable t) {
-
+                Toast.makeText(BottomBarActivity.this, getString(R.string.sin_acceso_servidor), Toast.LENGTH_SHORT).show();
             }
         });
     }
 
     public void descargarCatalogoCoordinadores() {
-        try {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Retrofit retrofit = new Retrofit.Builder()
+                            .baseUrl(Config.URL_API)
+                            .addConverterFactory(GsonConverterFactory.create())
+                            .build();
 
-            Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl(Config.URL_API)
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .build();
+                    APICatalogosInterface api = retrofit.create(APICatalogosInterface.class);
+                    Call<ResponseAPI> apiCall = api.getAllCoordinadores();
+                    abrirLoading("Actualizando catálogo de coordinadores");
 
-            APICatalogosInterface api = retrofit.create(APICatalogosInterface.class);
-            Call<ResponseAPI> apiCall = api.getAllCoordinadores();
-            abrirLoading("Actualizando catálogo de coordinadores");
+                    apiCall.enqueue(new Callback<ResponseAPI>() {
+                        @Override
+                        public void onResponse(Call<ResponseAPI> call, Response<ResponseAPI> response) {
+                            if(response.body() == null || response.body().getResultado() == null) {
+                                //No hay nada por hacer
+                            } else {
+                                //limpiamos la tabla antes de insertar nuevos datos
+                                TableCoordinadores table = new TableCoordinadores(BottomBarActivity.this);
+                                table.truncate();
+                                int totalErrores = 0;
 
-            apiCall.enqueue(new Callback<ResponseAPI>() {
-                @Override
-                public void onResponse(Call<ResponseAPI> call, Response<ResponseAPI> response) {
-                    if(response.body() == null || response.body().getResultado() == null) {
-                        //No hay nada por hacer
-                    } else {
-                        //limpiamos la tabla antes de insertar nuevos datos
-                        TableCoordinadores table = new TableCoordinadores(BottomBarActivity.this);
-                        table.truncate();
-                        int totalErrores = 0;
+                                if(response.body().getSuccess()) {
+                                    for (LinkedTreeMap<Object, Object> treeMap : (ArrayList<LinkedTreeMap<Object, Object>>)response.body().getResultado()) {
+                                        try {
+                                            table.insertar(new Coordinador(treeMap));
+                                        } catch (Exception e) {
+                                            totalErrores++;
+                                        }
+                                    }
+                                }
 
-                        if(response.body().getSuccess()) {
-                            for (LinkedTreeMap<Object, Object> treeMap : (ArrayList<LinkedTreeMap<Object, Object>>)response.body().getResultado()) {
-                                try {
-                                    table.insertar(new Coordinador(treeMap));
-                                } catch (Exception e) {
-                                    totalErrores++;
+                                if(totalErrores > 0) {
+                                    Toast.makeText(BottomBarActivity.this, "Se han encontrado errores en " + totalErrores + " registros de coordinadores", Toast.LENGTH_SHORT).show();
                                 }
                             }
+                            cerrarLoading();
                         }
 
-                        if(totalErrores > 0) {
-                            Toast.makeText(BottomBarActivity.this, "Se han encontrado errores en " + totalErrores + " registros de coordinadores", Toast.LENGTH_SHORT).show();
+                        @Override
+                        public void onFailure(Call<ResponseAPI> call, Throwable t) {
+                            cerrarLoading();
+                            Toast.makeText(BottomBarActivity.this, getString(R.string.sin_acceso_servidor), Toast.LENGTH_SHORT).show();
                         }
-                    }
+                    });
+                } catch (Exception e) {
                     cerrarLoading();
+                    Toast.makeText(BottomBarActivity.this, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
+            }
+        }, 300);
 
-                @Override
-                public void onFailure(Call<ResponseAPI> call, Throwable t) {
-                    Toast.makeText(BottomBarActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
-                }
-            });
-        } catch (Exception e) {
-            Toast.makeText(this, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-        }
     }
-
 
 }

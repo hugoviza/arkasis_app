@@ -10,4 +10,8 @@
     <string name="seleccionar">Seleccione</string>
     <string name="limpiar_campo">Limpiar campo</string>
 
+
+    <string name="sin_conexion">Sin conexión a internet</string>
+    <string name="sin_acceso_servidor">No es posible conectarse al servidor</string>
+
 </resources>

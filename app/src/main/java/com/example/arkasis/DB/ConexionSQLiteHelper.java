@@ -19,6 +19,7 @@ public class ConexionSQLiteHelper extends SQLiteOpenHelper {
         db.execSQL(MigracionesSQL.CREAR_TABLA_MUNICIPIOS);
         db.execSQL(MigracionesSQL.CREAR_TABLA_SUCURSALES);
         db.execSQL(MigracionesSQL.CREAR_TABLA_COORDINADORES);
+        db.execSQL(MigracionesSQL.CREAR_TABLA_SOLICITUDESDISPERSION);
     }
 
     @Override

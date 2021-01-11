@@ -17,7 +17,6 @@ import com.example.arkasis.R;
 import com.example.arkasis.config.Config;
 import com.example.arkasis.interfaces.APIClientesInterface;
 import com.example.arkasis.models.Cliente;
-import com.example.arkasis.models.Municipio;
 import com.example.arkasis.models.ResponseAPI;
 import com.google.android.material.card.MaterialCardView;
 import com.google.gson.internal.LinkedTreeMap;
@@ -51,7 +50,7 @@ public class AdaptadorListaClientes extends RecyclerView.Adapter<AdaptadorListaC
 
     @Override
     public int getItemCount() {
-        return listaClientes.size();
+        return listaClientes != null ? listaClientes.size() : 0;
     }
 
     public interface OnItemClickListener {
@@ -89,6 +88,7 @@ public class AdaptadorListaClientes extends RecyclerView.Adapter<AdaptadorListaC
             tvNombreCliente.setText(cliente.getStrNombreCompleto());
             tvCURPCliente.setText(cliente.getStrCurp());
             tvUbicacion.setText(cliente.getMunicipioResidencia());
+            tvEstatusCliente.setVisibility(View.GONE);
         }
     }
 
@@ -128,7 +128,7 @@ public class AdaptadorListaClientes extends RecyclerView.Adapter<AdaptadorListaC
                                 }
                             }
                         } catch (Exception ex) {
-                            Toast.makeText(context, "Error al cargar cliente", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context, "No es posible cargar cliente", Toast.LENGTH_SHORT).show();
                         }
 
                         setData(listaClientes);
@@ -138,12 +138,14 @@ public class AdaptadorListaClientes extends RecyclerView.Adapter<AdaptadorListaC
 
                 @Override
                 public void onFailure(Call<ResponseAPI> call, Throwable t) {
-                    Toast.makeText(context, "Error al cargar lista de clientes", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, context.getString(R.string.sin_acceso_servidor), Toast.LENGTH_SHORT).show();
+                    setData(new ArrayList<>());
                     BottomBarActivity.cerrarLoading();
                 }
             });
         } catch (Exception e) {
             Toast.makeText(context, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+            setData(new ArrayList<>());
             BottomBarActivity.cerrarLoading();
         }
     }

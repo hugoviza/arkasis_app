@@ -1,6 +1,7 @@
 package com.example.arkasis;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -16,6 +17,7 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -25,6 +27,8 @@ import android.widget.ListView;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import com.example.arkasis.DB.tablas.TableSolicitudesDispersion;
+import com.example.arkasis.componentes.DialogBuscadorEstados;
 import com.example.arkasis.componentes.DialogBuscadorMunicipios;
 import com.example.arkasis.componentes.DialogBuscadorSucursales;
 import com.example.arkasis.componentes.DialogBuscarCoordinador;
@@ -34,6 +38,7 @@ import com.example.arkasis.interfaces.APIClientesInterface;
 import com.example.arkasis.interfaces.APISolicitudDispersion;
 import com.example.arkasis.models.Cliente;
 import com.example.arkasis.models.Coordinador;
+import com.example.arkasis.models.Estado;
 import com.example.arkasis.models.EstadoCivil;
 import com.example.arkasis.models.Municipio;
 import com.example.arkasis.models.ResponseAPI;
@@ -72,6 +77,8 @@ public class FragmentFormularioRegistro extends Fragment {
     private final String LIMPIAR_CAMPO = "Limpiar campo";
     private final String SELECCIONAR = "Seleccione";
 
+    private BottomBarActivity parent;
+
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
@@ -81,6 +88,12 @@ public class FragmentFormularioRegistro extends Fragment {
     public FragmentFormularioRegistro() {
         // Required empty public constructor
         clienteSeleccionado = null;
+    }
+
+    public FragmentFormularioRegistro(BottomBarActivity parent) {
+        // Required empty public constructor
+        clienteSeleccionado = null;
+        this.parent = parent;
     }
 
     public FragmentFormularioRegistro(Cliente clienteSeleccionado) {
@@ -93,7 +106,9 @@ public class FragmentFormularioRegistro extends Fragment {
     Button btnLimpiar, btnGuardar;
     MaterialDatePicker dpFechaNacimiento, dpFechaNacimientoConyuge;
     TextInputEditText txtFechaNacimiento, txtSucursal, txtPromotor, txtCoordinador, txtCURP, txtNombre1, txtNombre2, txtApellidoPaterno, txtApellidoMaterno, txtNacionalidad, txtOcupacion, txtActividad,
-            txtCelular, txtTelefono, txtEmail, txtClaveElector, txtNumeroElector, txtEstadoOrigen, txtPaisOrigen, txtCodigoPostal, txtDomicilioMejora, txtDomicilioMejoraNumExt, txtDomicilioMejoraNumInt,
+            txtCelular, txtTelefono, txtEmail, txtClaveElector, txtNumeroElector, txtEstadoOrigen, txtPaisOrigen,
+            txtNombreConyuge, txtLugarNacimientoConyuge, txtFechaNacimientoConyuge, txtOcupacionConyuge,
+            txtCodigoPostal, txtDomicilioMejora, txtDomicilioMejoraNumExt, txtDomicilioMejoraNumInt,
             txtDomicilioMejoraColonia, txtDomicilioMejoraMunicipio, txtReferenciaBancaria, txtInstitucionBancaria,
             txtIngresos, txtEgresos, txtMontoSolicitado,
             txtProductoSolicitado;
@@ -104,6 +119,7 @@ public class FragmentFormularioRegistro extends Fragment {
             layoutCelular, layoutTelefono, layoutEmail,
             layoutClaveElector, layoutNumeroElector,
             layoutEstadoOrigen, layoutPaisOrigen,
+            layoutNombreConyuge, layoutLugarNacimientoConyuge, layoutFechaNacimientoConyuge,layoutOcupacionConyuge,
             layoutCodigoPostal, layoutDomicilioMejora, layoutDomicilioMejoraNumExt, layoutDomicilioMejoraNumInt, layoutDomicilioMejoraColonia, layoutDomicilioMejoraMunicipio,
             layoutReferenciaBancaria, layoutInstitucionBancaria,
             layoutIngresos, layoutEgresos, layoutMontoSolicitado;
@@ -112,9 +128,10 @@ public class FragmentFormularioRegistro extends Fragment {
     DialogBuscadorSucursales dialogBuscadorSucursales;
     DialogBuscarCoordinador dialogBuscarCoordinador;
     DialogBuscadorMunicipios dialogBuscadorMunicipios;
+    DialogBuscadorEstados dialogBuscadorEstados;
 
     //Data
-    Date datFechaNacimiento;
+    Date datFechaNacimiento, datFechaNacimientoConyuge;
     ArrayAdapter<String> adaptadorEstadoCivil;
     Usuario usuario;
 
@@ -182,6 +199,16 @@ public class FragmentFormularioRegistro extends Fragment {
             txtEstadoOrigen = view.findViewById(R.id.txtEstadoOrigen);
             layoutPaisOrigen = view.findViewById(R.id.layoutPaisOrigen);
             txtPaisOrigen = view.findViewById(R.id.txtPaisOrigen);
+
+            layoutNombreConyuge = view.findViewById(R.id.layoutNombreConyuge);
+            txtNombreConyuge = view.findViewById(R.id.txtNombreConyuge);
+            layoutLugarNacimientoConyuge = view.findViewById(R.id.layoutLugarNacimientoConyuge);
+            txtLugarNacimientoConyuge = view.findViewById(R.id.txtLugarNacimientoConyuge);
+            layoutFechaNacimientoConyuge = view.findViewById(R.id.layoutFechaNacimientoConyuge);
+            txtFechaNacimientoConyuge = view.findViewById(R.id.txtFechaNacimientoConyuge);
+            layoutOcupacionConyuge = view.findViewById(R.id.layoutOcupacionConyuge);
+            txtOcupacionConyuge = view.findViewById(R.id.txtOcupacionConyuge);
+
             layoutCodigoPostal = view.findViewById(R.id.layoutCodigoPostal);
             txtCodigoPostal = view.findViewById(R.id.txtCodigoPostal);
             layoutDomicilioMejora = view.findViewById(R.id.layoutDomicilioMejora);
@@ -208,15 +235,14 @@ public class FragmentFormularioRegistro extends Fragment {
             radioPlazoProducto = view.findViewById(R.id.radioPlazoProducto);
             radioQuedateEnCasa = view.findViewById(R.id.radioQuedateEnCasa);
 
-
             usuario = Config.USUARIO_SESION;
-
             txtPromotor.setText(usuario.getNombre());
 
             inicializarDatPickers();
             inicializarSelectorEstadoCivil();
             inicializarSelectorSucursales();
             inicializarSelectorCoordinador();
+            inicializarSelectorEstadoOrigen();
             inicializarSelectorCiudadMejora();
             inicializarBuscadorCurp();
 
@@ -248,6 +274,13 @@ public class FragmentFormularioRegistro extends Fragment {
         return view;
     }
 
+    private Boolean getEstatusConexionInternet(){
+        if(parent != null) {
+            return parent.getEstatusConexionInternet();
+        }
+        return false;
+    }
+
     public void setCliente(Cliente cliente) {
         this.clienteSeleccionado = cliente;
     }
@@ -256,6 +289,7 @@ public class FragmentFormularioRegistro extends Fragment {
         MaterialDatePicker.Builder builder = MaterialDatePicker.Builder.datePicker();
         builder.setTitleText("Seleccione fecha");
 
+        //Fecha nacimiento cliente
         dpFechaNacimiento = builder.build();
         txtFechaNacimiento.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -280,6 +314,36 @@ public class FragmentFormularioRegistro extends Fragment {
                 datFechaNacimiento = new Date((Long) selection + offsetFromUTC);
                 SimpleDateFormat dateFormat = new SimpleDateFormat("dd 'de' MMMM 'de' yyyy", new Locale("es", "ES"));
                 txtFechaNacimiento.setText(dateFormat.format(datFechaNacimiento));
+                closeKeyBoard();
+            }
+        });
+
+        //Fecha nacimiento conyuge
+        dpFechaNacimientoConyuge = builder.build();
+        txtFechaNacimientoConyuge.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dpFechaNacimientoConyuge.show(getActivity().getSupportFragmentManager(), "datePicker");
+            }
+        });
+        txtFechaNacimientoConyuge.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(hasFocus) {
+                    dpFechaNacimientoConyuge.show(getActivity().getSupportFragmentManager(), "datePicker");
+                }
+            }
+        });
+        dpFechaNacimientoConyuge.addOnPositiveButtonClickListener(new MaterialPickerOnPositiveButtonClickListener() {
+            @Override
+            public void onPositiveButtonClick(Object selection) {
+                TimeZone timeZoneUTC = TimeZone.getDefault();
+                int offsetFromUTC = timeZoneUTC.getOffset(new Date().getTime()) * -1;
+
+                datFechaNacimientoConyuge = new Date((Long) selection + offsetFromUTC);
+                SimpleDateFormat dateFormat = new SimpleDateFormat("dd 'de' MMMM 'de' yyyy", new Locale("es", "ES"));
+                txtFechaNacimientoConyuge.setText(dateFormat.format(datFechaNacimientoConyuge));
+                closeKeyBoard();
             }
         });
     }
@@ -324,11 +388,11 @@ public class FragmentFormularioRegistro extends Fragment {
 
                     limpiarSelectorCoordinador();
                     dialogBuscarCoordinador.setIdSucursal(sucursal.getIdSucursal() + "");
-
                 } else {
-                    txtSucursal.setText("");
+                    limpiarSelectorSucursal();
                     limpiarSelectorCoordinador();
                 }
+                closeKeyBoard();
             }
         });
 
@@ -336,14 +400,9 @@ public class FragmentFormularioRegistro extends Fragment {
             @Override
             public void onClick(View v) {
                 if(layoutSucursal.getEndIconContentDescription() == LIMPIAR_CAMPO) {
-                    txtSucursal.setText("");
-                    dialogBuscadorSucursales.limpiar();
-
-                    layoutSucursal.setEndIconDrawable(R.drawable.ic_baseline_arrow_drop_down_24);
-                    layoutSucursal.setEndIconContentDescription(SELECCIONAR);
-
+                    limpiarSelectorSucursal();
                     limpiarSelectorCoordinador();
-
+                    closeKeyBoard();
                 } else {
                     dialogBuscadorSucursales.show();
                 }
@@ -382,6 +441,7 @@ public class FragmentFormularioRegistro extends Fragment {
                 } else {
                     txtCoordinador.setText("");
                 }
+                closeKeyBoard();
             }
         });
 
@@ -390,6 +450,7 @@ public class FragmentFormularioRegistro extends Fragment {
             public void onClick(View v) {
                 if(layoutCoordinador.getEndIconContentDescription() == LIMPIAR_CAMPO) {
                     limpiarSelectorCoordinador();
+                    closeKeyBoard();
                 } else {
                     dialogBuscarCoordinador.show();
                 }
@@ -403,6 +464,13 @@ public class FragmentFormularioRegistro extends Fragment {
         dialogBuscarCoordinador.setIdSucursal("");
         layoutCoordinador.setEndIconDrawable(R.drawable.ic_baseline_arrow_drop_down_24);
         layoutCoordinador.setEndIconContentDescription(SELECCIONAR);
+    }
+
+    private void limpiarSelectorSucursal() {
+        txtSucursal.setText("");
+        dialogBuscadorSucursales.limpiar();
+        layoutSucursal.setEndIconDrawable(R.drawable.ic_baseline_arrow_drop_down_24);
+        layoutSucursal.setEndIconContentDescription(SELECCIONAR);
     }
 
     private void inicializarSelectorCiudadMejora() {
@@ -427,11 +495,12 @@ public class FragmentFormularioRegistro extends Fragment {
             @Override
             public void onItemClick(Municipio municipio) {
                 if(municipio != null) {
-                    seleccionarDomicilioMejoraMunicipio(municipio.getStrMunicipio());
+                    seleccionarDomicilioMejoraMunicipio(municipio.getStrNombreMunicipioEstado());
                     dialogBuscadorMunicipios.close();
                 } else {
                     seleccionarDomicilioMejoraMunicipio(null);
                 }
+                closeKeyBoard();
             }
         });
 
@@ -440,8 +509,53 @@ public class FragmentFormularioRegistro extends Fragment {
             public void onClick(View v) {
                 if(layoutDomicilioMejoraMunicipio.getEndIconContentDescription() == LIMPIAR_CAMPO) {
                     seleccionarDomicilioMejoraMunicipio(null);
+                    closeKeyBoard();
                 } else {
                     dialogBuscadorMunicipios.show();
+                }
+            }
+        });
+    }
+
+    private void inicializarSelectorEstadoOrigen() {
+        dialogBuscadorEstados = new DialogBuscadorEstados(getContext(), view);
+        txtEstadoOrigen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialogBuscadorEstados.show();
+            }
+        });
+
+        txtEstadoOrigen.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(hasFocus) {
+                    dialogBuscadorEstados.show();
+                }
+            }
+        });
+
+        dialogBuscadorEstados.setOnItemClickListener(new DialogBuscadorEstados.OnItemClickListener() {
+            @Override
+            public void onItemClick(Estado estado) {
+                if(estado != null) {
+                    seleccionarEstadoOrigen(estado.getStrEstado());
+                    dialogBuscadorEstados.close();
+                } else {
+                    seleccionarEstadoOrigen(null);
+                }
+                closeKeyBoard();
+            }
+        });
+
+        layoutEstadoOrigen.setEndIconOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(layoutEstadoOrigen.getEndIconContentDescription() == LIMPIAR_CAMPO) {
+                    seleccionarEstadoOrigen(null);
+                    closeKeyBoard();
+                } else {
+                    dialogBuscadorEstados.show();
                 }
             }
         });
@@ -457,6 +571,19 @@ public class FragmentFormularioRegistro extends Fragment {
             txtDomicilioMejoraMunicipio.setText(strMunicipio);
             layoutDomicilioMejoraMunicipio.setEndIconDrawable(R.drawable.ic_baseline_cancel_24);
             layoutDomicilioMejoraMunicipio.setEndIconContentDescription(LIMPIAR_CAMPO);
+        }
+    }
+
+    private void seleccionarEstadoOrigen(String strEstado) {
+        if(strEstado == null) {
+            txtEstadoOrigen.setText("");
+            dialogBuscadorEstados.limpiar();
+            layoutEstadoOrigen.setEndIconDrawable(R.drawable.ic_baseline_arrow_drop_down_24);
+            layoutEstadoOrigen.setEndIconContentDescription(SELECCIONAR);
+        } else {
+            txtEstadoOrigen.setText(strEstado);
+            layoutEstadoOrigen.setEndIconDrawable(R.drawable.ic_baseline_cancel_24);
+            layoutEstadoOrigen.setEndIconContentDescription(LIMPIAR_CAMPO);
         }
     }
 
@@ -483,6 +610,7 @@ public class FragmentFormularioRegistro extends Fragment {
         layoutCURP.setEndIconOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 if(layoutCURP.getEndIconContentDescription() == LIMPIAR_CAMPO) {
                     layoutCURP.setEndIconDrawable(R.drawable.ic_baseline_search_24);
                     layoutCURP.setEndIconContentDescription("Buscar");
@@ -548,6 +676,10 @@ public class FragmentFormularioRegistro extends Fragment {
     }
 
     private void buscarCURP() {
+        if(!getEstatusConexionInternet()) {
+            Toast.makeText(getContext(), R.string.sin_conexion, Toast.LENGTH_SHORT).show();
+            return;
+        }
 
         BottomBarActivity.abrirLoading("Validando curp");
 
@@ -586,12 +718,15 @@ public class FragmentFormularioRegistro extends Fragment {
             @Override
             public void onFailure(Call<ResponseAPI> call, Throwable t) {
                 BottomBarActivity.cerrarLoading();
-                Toast.makeText(getContext(), "No es posible conectarse con el servidor", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), getString(R.string.sin_acceso_servidor), Toast.LENGTH_SHORT).show();
             }
         });
     }
 
     public void inicializarFormulario(Cliente cliente) {
+        //Primero limpiamos la vista y despues asignamos datos
+        limpiarVista();
+
         txtCURP.setText(cliente.getStrCurp());
         if(validarCURP()) {
             layoutCURP.setEndIconDrawable(R.drawable.ic_baseline_cancel_24);
@@ -665,11 +800,13 @@ public class FragmentFormularioRegistro extends Fragment {
         radioPlazoProducto.check(R.id.radioPlazoProducto12Meses);
 
         radioQuedateEnCasa.check(R.id.radioQuedateEnCasaNoAplica);
-
-
     }
 
     public void limpiarVista() {
+
+        limpiarSelectorSucursal();
+        limpiarSelectorCoordinador();
+
         clienteSeleccionado = null;
         txtCURP.setText("");
         layoutCURP.setEndIconDrawable(R.drawable.ic_baseline_search_24);
@@ -685,6 +822,12 @@ public class FragmentFormularioRegistro extends Fragment {
         //FECHA NACIMIENTO
         datFechaNacimiento = null;
         txtFechaNacimiento.setText("");
+        //CONYUGE
+        txtNombreConyuge.setText("");
+        txtLugarNacimientoConyuge.setText("");
+        datFechaNacimientoConyuge = null;
+        txtFechaNacimientoConyuge.setText("");
+        txtOcupacionConyuge.setText("");
         //ESTADO CIVIL
         txtEstadoCivil.setText("");
         txtNacionalidad.setText("");
@@ -695,7 +838,7 @@ public class FragmentFormularioRegistro extends Fragment {
         txtEmail.setText("");
         txtClaveElector.setText("");
         txtNumeroElector.setText("");
-        txtEstadoOrigen.setText("");
+        seleccionarEstadoOrigen(null);
         txtPaisOrigen.setText("");
         txtCodigoPostal.setText("");
         txtDomicilioMejora.setText("");
@@ -712,50 +855,67 @@ public class FragmentFormularioRegistro extends Fragment {
         txtProductoSolicitado.setText("");
         radioPlazoProducto.check(R.id.radioPlazoProducto12Meses);
         radioQuedateEnCasa.check(R.id.radioQuedateEnCasaNoAplica);
+
+        txtCURP.requestFocus();
     }
 
     private void guadarSolicitudDispersion() {
-
         if(validarSolicitudDispersion()) {
+
             SolicitudDispersion solicitudDispersion = armarObjetoSolicitud();
 
-            Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl(Config.URL_API)
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .build();
-
-            BottomBarActivity.abrirLoading("Guardando...");
-
-            APISolicitudDispersion api = retrofit.create(APISolicitudDispersion.class);
-            Call<ResponseAPI> apiCall = api.addSolicitud(solicitudDispersion);
-            apiCall.enqueue(new Callback<ResponseAPI>() {
-                @Override
-                public void onResponse(Call<ResponseAPI> call, Response<ResponseAPI> response) {
-                    if(response.body().getResultado() == null) {
-                        Toast.makeText(getContext(), "Error al guardar en servidor", Toast.LENGTH_SHORT).show();
-                        //No hay nada por hacer
-                    } else {
-                        Toast.makeText(getContext(), "Guardado correctamente", Toast.LENGTH_SHORT).show();
-                        limpiarVista();
-                    }
-
-                    BottomBarActivity.cerrarLoading();
-                }
-
-                @Override
-                public void onFailure(Call<ResponseAPI> call, Throwable t) {
-                    Toast.makeText(getContext(), "Error al guardar en servidor", Toast.LENGTH_SHORT).show();
-                    BottomBarActivity.cerrarLoading();
-                }
-            });
+            if(getEstatusConexionInternet()) {
+                guadarSolicitudDispersionSERVER(solicitudDispersion);
+            } else {
+                guadarSolicitudDispersionLOCAL(solicitudDispersion);
+            }
         }
+    }
+
+    private void guadarSolicitudDispersionLOCAL(SolicitudDispersion solicitudDispersion) {
+        TableSolicitudesDispersion table = new TableSolicitudesDispersion(getContext());
+        table.insertar(solicitudDispersion);
+
+        Toast.makeText(getContext(), "Registro guardado localmente", Toast.LENGTH_SHORT).show();
+        limpiarVista();
+    }
+
+    private void guadarSolicitudDispersionSERVER(SolicitudDispersion solicitudDispersion) {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(Config.URL_API)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        BottomBarActivity.abrirLoading("Guardando...");
+
+        APISolicitudDispersion api = retrofit.create(APISolicitudDispersion.class);
+        Call<ResponseAPI> apiCall = api.addSolicitud(solicitudDispersion);
+        apiCall.enqueue(new Callback<ResponseAPI>() {
+            @Override
+            public void onResponse(Call<ResponseAPI> call, Response<ResponseAPI> response) {
+                if(response.body().getResultado() == null) {
+                    Toast.makeText(getContext(), "Error al guardar en servidor", Toast.LENGTH_SHORT).show();
+                    //No hay nada por hacer
+                } else {
+                    Toast.makeText(getContext(), "Guardado correctamente", Toast.LENGTH_SHORT).show();
+                    limpiarVista();
+                }
+
+                BottomBarActivity.cerrarLoading();
+            }
+
+            @Override
+            public void onFailure(Call<ResponseAPI> call, Throwable t) {
+                Toast.makeText(getContext(), getString(R.string.sin_acceso_servidor), Toast.LENGTH_SHORT).show();
+                BottomBarActivity.cerrarLoading();
+            }
+        });
     }
 
     private SolicitudDispersion armarObjetoSolicitud() {
 
         SolicitudDispersion solicitudDispersion = new SolicitudDispersion();
-        TimeZone timeZoneUTC = TimeZone.getDefault();
-        int offsetFromUTC = timeZoneUTC.getOffset(new Date().getTime()) * -1;
+        solicitudDispersion.setStrStatusSolicitud("TRÁMITE");
 
         solicitudDispersion.setIdPromotor("");
         solicitudDispersion.setStrUsuarioPromotor(usuario.getUser());
@@ -765,7 +925,7 @@ public class FragmentFormularioRegistro extends Fragment {
         solicitudDispersion.setIdCliente(clienteSeleccionado != null ? clienteSeleccionado.getIdCliente() : "");
 
         Date hoy = new Date();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("YYYY/MM/dd", new Locale("es", "ES"));
+        SimpleDateFormat dateFormat = new SimpleDateFormat("YYYY/MM/dd HH:mm:ss", new Locale("es", "ES"));
         solicitudDispersion.setStrFechaAlta(dateFormat.format(hoy));
 
         solicitudDispersion.setStrCURP(txtCURP.getText().toString());
@@ -777,9 +937,8 @@ public class FragmentFormularioRegistro extends Fragment {
         solicitudDispersion.setIdGenero(radioSexo.getCheckedRadioButtonId() == R.id.radioSexoMujer ? "2" : "1");
         solicitudDispersion.setStrGenero(radioSexo.getCheckedRadioButtonId() == R.id.radioSexoMujer ? "MUJER" : "HOMBRE");
 
-
-        Date datFechaNacimiento = new Date((Long) dpFechaNacimiento.getSelection() + offsetFromUTC);
-        solicitudDispersion.setStrFechaNacimiento(dateFormat.format(datFechaNacimiento));
+        dateFormat = new SimpleDateFormat("YYYY/MM/dd", new Locale("es", "ES"));
+        solicitudDispersion.setStrFechaNacimiento(datFechaNacimiento != null ? dateFormat.format(datFechaNacimiento) : "");
 
         String idEstadoCivil = "";
         for (int i = 0; i < arrayEstadoCivil.length; i++){
@@ -789,20 +948,20 @@ public class FragmentFormularioRegistro extends Fragment {
         }
 
         solicitudDispersion.setIdEstadoCivil(idEstadoCivil);
-        solicitudDispersion.setStrEstadoCivil(txtEstadoCivil.getText().toString());
+        solicitudDispersion.setStrEstadoCivil(txtEstadoCivil.getText().toString().trim());
 
-        solicitudDispersion.setStrNacionalidad(txtNacionalidad.getText().toString());
+        solicitudDispersion.setStrNacionalidad(txtNacionalidad.getText().toString().trim());
 
-        solicitudDispersion.setStrOcupacion(txtOcupacion.getText().toString());
-        solicitudDispersion.setStrActividad(txtActividad.getText().toString());
+        solicitudDispersion.setStrOcupacion(txtOcupacion.getText().toString().trim());
+        solicitudDispersion.setStrActividad(txtActividad.getText().toString().trim());
         solicitudDispersion.setIdActividad("");
 
-        solicitudDispersion.setStrCelular(txtCelular.getText().toString());
-        solicitudDispersion.setStrTelefono(txtTelefono.getText().toString());
-        solicitudDispersion.setStrEmail(txtEmail.getText().toString());
+        solicitudDispersion.setStrCelular(txtCelular.getText().toString().trim());
+        solicitudDispersion.setStrTelefono(txtTelefono.getText().toString().trim());
+        solicitudDispersion.setStrEmail(txtEmail.getText().toString().trim());
 
-        solicitudDispersion.setStrClaveINE(txtClaveElector.getText().toString());
-        solicitudDispersion.setStrNumeroINE(txtNumeroElector.getText().toString());
+        solicitudDispersion.setStrClaveINE(txtClaveElector.getText().toString().trim());
+        solicitudDispersion.setStrNumeroINE(txtNumeroElector.getText().toString().trim());
 
         solicitudDispersion.setStrEstadoNacimiento(txtEstadoOrigen.getText().toString());
         solicitudDispersion.setStrPais(txtPaisOrigen.getText().toString());
@@ -825,10 +984,10 @@ public class FragmentFormularioRegistro extends Fragment {
         solicitudDispersion.setDblMontoSolicitado(Double.parseDouble(txtMontoSolicitado.getText().toString().trim()));
         solicitudDispersion.setDblMontoAutorizado(Double.parseDouble(txtMontoSolicitado.getText().toString().trim()));
 
-        solicitudDispersion.setStrNombreConyuge("");
-        solicitudDispersion.setStrOcupacionConyuge("");
-        solicitudDispersion.setStrLugarNacimientoConyuge("");
-        solicitudDispersion.setStrFechaNacimientoConyuge("");
+        solicitudDispersion.setStrNombreConyuge(txtNombreConyuge.getText().toString().trim());
+        solicitudDispersion.setStrOcupacionConyuge(txtOcupacionConyuge.getText().toString().trim());
+        solicitudDispersion.setStrLugarNacimientoConyuge(txtLugarNacimientoConyuge.getText().toString().trim());
+        solicitudDispersion.setStrFechaNacimientoConyuge(datFechaNacimientoConyuge != null ? dateFormat.format(datFechaNacimientoConyuge) : "");
 
         solicitudDispersion.setStrProducto(txtProductoSolicitado.getText().toString().trim());
         solicitudDispersion.setIntPlazo(radioPlazoProducto.getCheckedRadioButtonId() == R.id.radioPlazoProducto12Meses ? 12 : 24);
@@ -1053,5 +1212,14 @@ public class FragmentFormularioRegistro extends Fragment {
         }
 
         return true;
+    }
+
+    private void closeKeyBoard(){
+        View view = getActivity().getCurrentFocus();
+        if (view != null){
+            InputMethodManager imm = (InputMethodManager)
+                    getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
     }
 }

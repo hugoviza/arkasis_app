@@ -31,6 +31,10 @@ public class Municipio {
         return this.idEstado + "_" + this.idMunicipio;
     }
 
+    public String getStrNombreMunicipioEstado() {
+        return this.strMunicipio + ", " + this.strEstado;
+    }
+
     public String getIdEstado() {
         return idEstado;
     }

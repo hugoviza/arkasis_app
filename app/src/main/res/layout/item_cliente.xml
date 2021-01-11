@@ -1,19 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    android:layout_margin="5dp">
-
-    <com.google.android.material.card.MaterialCardView
+<com.google.android.material.card.MaterialCardView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/card_cliente"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:clickable="true"
         android:focusable="true"
-        android:checkable="true">
+        android:checkable="true"
+        android:layout_margin="5dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -26,7 +21,7 @@
                 android:layout_width="40dp"
                 android:layout_height="match_parent"
                 android:scaleType="fitCenter"
-                app:srcCompat="@drawable/ic_usuario"
+                app:srcCompat="@drawable/ic_user"
                 >
 
             </ImageView>
@@ -96,5 +91,4 @@
 
         </LinearLayout>
 
-    </com.google.android.material.card.MaterialCardView>
-</LinearLayout>
+</com.google.android.material.card.MaterialCardView>

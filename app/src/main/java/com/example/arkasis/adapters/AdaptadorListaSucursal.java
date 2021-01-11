@@ -15,7 +15,6 @@ import com.example.arkasis.DB.tablas.TableSucursal;
 import com.example.arkasis.R;
 import com.example.arkasis.models.Sucursal;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class AdaptadorListaSucursal extends RecyclerView.Adapter<AdaptadorListaSucursal.ViewHolder> implements Filterable {

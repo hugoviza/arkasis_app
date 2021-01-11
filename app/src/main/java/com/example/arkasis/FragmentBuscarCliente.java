@@ -58,10 +58,17 @@ public class FragmentBuscarCliente extends Fragment {
     //Variables
     private Municipio municipioSeleccionado;
 
+    //
+    BottomBarActivity parent;
+
     public FragmentBuscarCliente() {
         // Required empty public constructor
     }
 
+    public FragmentBuscarCliente(BottomBarActivity parent) {
+        // Required empty public constructor
+        this.parent = parent;
+    }
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
@@ -133,6 +140,13 @@ public class FragmentBuscarCliente extends Fragment {
         }
     }
 
+    private Boolean getEstatusConexionInternet(){
+        if(parent != null) {
+            return parent.getEstatusConexionInternet();
+        }
+        return false;
+    }
+
     public void incializarListaClientes() {
         adaptadorListaClientes = new AdaptadorListaClientes(viewFragmentBuscarCliente.getContext());
         rvList_clientes = viewFragmentBuscarCliente.findViewById(R.id.rvList_clientes);
@@ -159,7 +173,7 @@ public class FragmentBuscarCliente extends Fragment {
             layoutCiudadOrigen.setEndIconDrawable(R.drawable.ic_baseline_arrow_drop_down_24);
             layoutCiudadOrigen.setEndIconContentDescription(SELECCIONAR_CIUDAD);
         } else {
-            txtBuscarCiudad.setText(municipioSeleccionado.getStrMunicipio());
+            txtBuscarCiudad.setText(municipioSeleccionado.getStrNombreMunicipioEstado());
             layoutCiudadOrigen.setEndIconDrawable(R.drawable.ic_baseline_cancel_24);
             layoutCiudadOrigen.setEndIconContentDescription(LIMPIAR_CAMPO);
         }

@@ -222,7 +222,10 @@
                 android:id="@+id/layoutFechaNacimiento"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Fecha nacimiento">
+                android:hint="Fecha nacimiento"
+                app:endIconMode="custom"
+                app:endIconDrawable="@drawable/ic_baseline_date_range_24"
+                app:endIconContentDescription="@string/seleccionar">
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/txtFechaNacimiento"
                     android:layout_width="match_parent"
@@ -426,7 +429,10 @@
                 android:id="@+id/layoutEstadoOrigen"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Estado">
+                android:hint="Estado"
+                app:endIconMode="custom"
+                app:endIconDrawable="@drawable/ic_baseline_arrow_drop_down_24"
+                app:endIconContentDescription="@string/seleccionar">
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/txtEstadoOrigen"
                     android:layout_width="match_parent"
@@ -445,6 +451,82 @@
                     android:layout_height="wrap_content"
                     android:inputType="textCapCharacters"/>
             </com.google.android.material.textfield.TextInputLayout>
+
+
+
+            <!-- INFORMACION DEL CONYUGE  -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="16sp">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Información del conyuge"
+                    />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/border_bottom"
+                    />
+            </LinearLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layoutNombreConyuge"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Nombre completo">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/txtNombreConyuge"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textCapCharacters"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layoutLugarNacimientoConyuge"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Lugar de nacimiento">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/txtLugarNacimientoConyuge"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textCapCharacters"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layoutFechaNacimientoConyuge"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Fecha de nacimiento"
+                app:endIconMode="custom"
+                app:endIconDrawable="@drawable/ic_baseline_date_range_24"
+                app:endIconContentDescription="@string/seleccionar">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/txtFechaNacimientoConyuge"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textCapCharacters"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layoutOcupacionConyuge"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Ocupacion">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/txtOcupacionConyuge"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textCapCharacters"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+
 
             <!-- DIRECCION DE LA MEJORA  -->
             <LinearLayout
@@ -537,13 +619,17 @@
                 android:id="@+id/layoutDomicilioMejoraMunicipio"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Municipio">
+                android:hint="Municipio"
+                app:endIconMode="custom"
+                app:endIconDrawable="@drawable/ic_baseline_arrow_drop_down_24"
+                app:endIconContentDescription="@string/seleccionar">
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/txtDomicilioMejoraMunicipio"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textCapCharacters"/>
             </com.google.android.material.textfield.TextInputLayout>
+
 
 
             <!-- REFERENCIA BANCARIA  -->
@@ -588,6 +674,7 @@
                     android:layout_height="wrap_content"
                     android:inputType="textCapCharacters"/>
             </com.google.android.material.textfield.TextInputLayout>
+
 
 
             <!-- DATOS DEL CREDITO  -->
@@ -646,6 +733,8 @@
                     android:inputType="number"/>
             </com.google.android.material.textfield.TextInputLayout>
 
+
+
             <!-- Equipando tu hogar  -->
             <LinearLayout
                 android:layout_width="match_parent"
@@ -676,27 +765,39 @@
                     android:inputType="textCapCharacters"/>
             </com.google.android.material.textfield.TextInputLayout>
 
-            <RadioGroup
-                android:id="@+id/radioPlazoProducto"
-                android:checkedButton="@id/radioPlazoProducto12Meses"
-                android:orientation="horizontal"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <RadioButton
-                    android:id="@+id/radioPlazoProducto12Meses"
-                    android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="12 meses"
-                    android:layout_marginRight="16sp"/>
+                    android:text="Plazo"/>
 
-                <RadioButton
-                    android:id="@+id/radioPlazoProducto24Meses"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="24 meses" />
+                <RadioGroup
+                    android:id="@+id/radioPlazoProducto"
+                    android:checkedButton="@id/radioPlazoProducto12Meses"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
-            </RadioGroup>
+                    <RadioButton
+                        android:id="@+id/radioPlazoProducto12Meses"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="12 meses"
+                        android:layout_marginRight="16sp"/>
+
+                    <RadioButton
+                        android:id="@+id/radioPlazoProducto24Meses"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="24 meses" />
+
+                </RadioGroup>
+
+            </LinearLayout>
+
 
 
 
