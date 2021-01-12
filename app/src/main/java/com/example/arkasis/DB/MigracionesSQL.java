@@ -95,7 +95,12 @@ public class MigracionesSQL {
     public static final String TRUNCATE_TABLA_MUNICIPIOS = "DELETE FROM " + TableMunicipios.table;
     public static final String TRUNCATE_TABLA_SUCURSALES = "DELETE FROM " + TableSucursal.table;
     public static final String TRUNCATE_TABLA_COORDINADORES = "DELETE FROM " + TableCoordinadores.table;
+    public static final String TRUNCATE_TABLA_SOLICITUDESDISPERSION = "DELETE FROM " + TableSolicitudesDispersion.table;
 
-
+    public static final String DROP_TABLA_ACTIVIDADES = "DROP TABLE IF EXISTS " + TableActividades.table;
+    public static final String DROP_TABLA_MUNICIPIOS = "DROP TABLE IF EXISTS " + TableMunicipios.table;
+    public static final String DROP_TABLA_SUCURSALES = "DROP TABLE IF EXISTS " + TableSucursal.table;
+    public static final String DROP_TABLA_COORDINADORES = "DROP TABLE IF EXISTS " + TableCoordinadores.table;
+    public static final String DROP_TABLA_SOLICITUDESDISPERSION = "DROP TABLE IF EXISTS " + TableSolicitudesDispersion.table;
 
 }

@@ -311,7 +311,7 @@ public class FragmentFormularioRegistro extends Fragment {
                 int offsetFromUTC = timeZoneUTC.getOffset(new Date().getTime()) * -1;
 
                 datFechaNacimiento = new Date((Long) selection + offsetFromUTC);
-                SimpleDateFormat dateFormat = new SimpleDateFormat("dd 'de' MMMM 'de' yyyy", new Locale("es", "ES"));
+                SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", new Locale("es", "ES"));
                 txtFechaNacimiento.setText(dateFormat.format(datFechaNacimiento));
                 closeKeyBoard();
             }
@@ -340,7 +340,7 @@ public class FragmentFormularioRegistro extends Fragment {
                 int offsetFromUTC = timeZoneUTC.getOffset(new Date().getTime()) * -1;
 
                 datFechaNacimientoConyuge = new Date((Long) selection + offsetFromUTC);
-                SimpleDateFormat dateFormat = new SimpleDateFormat("dd 'de' MMMM 'de' yyyy", new Locale("es", "ES"));
+                SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", new Locale("es", "ES"));
                 txtFechaNacimientoConyuge.setText(dateFormat.format(datFechaNacimientoConyuge));
                 closeKeyBoard();
             }
@@ -750,10 +750,10 @@ public class FragmentFormularioRegistro extends Fragment {
         }
 
         //FECHA NACIMIENTO
-        DateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+        DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         try {
             datFechaNacimiento = sdf.parse(cliente.getDatFechaNacimiento());
-            SimpleDateFormat dateFormat = new SimpleDateFormat("dd 'de' MMMM 'de' yyyy", new Locale("es", "ES"));
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", new Locale("es", "ES"));
             txtFechaNacimiento.setText(dateFormat.format(datFechaNacimiento));
         } catch (Exception e) {
             datFechaNacimiento = null;
@@ -897,7 +897,12 @@ public class FragmentFormularioRegistro extends Fragment {
                     //No hay nada por hacer
                 } else {
                     Toast.makeText(getContext(), "Guardado correctamente", Toast.LENGTH_SHORT).show();
-                    limpiarVista();
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            limpiarVista();
+                        }
+                    });
                 }
 
                 BottomBarActivity.cerrarLoading();
@@ -924,7 +929,7 @@ public class FragmentFormularioRegistro extends Fragment {
         solicitudDispersion.setIdCliente(clienteSeleccionado != null ? clienteSeleccionado.getIdCliente() : "");
 
         Date hoy = new Date();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("YYYY/MM/dd HH:mm:ss", new Locale("es", "ES"));
+        SimpleDateFormat dateFormat = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss", new Locale("es", "ES"));
         solicitudDispersion.setStrFechaAlta(dateFormat.format(hoy));
 
         solicitudDispersion.setStrCURP(txtCURP.getText().toString());
@@ -936,7 +941,7 @@ public class FragmentFormularioRegistro extends Fragment {
         solicitudDispersion.setIdGenero(radioSexo.getCheckedRadioButtonId() == R.id.radioSexoMujer ? "2" : "1");
         solicitudDispersion.setStrGenero(radioSexo.getCheckedRadioButtonId() == R.id.radioSexoMujer ? "MUJER" : "HOMBRE");
 
-        dateFormat = new SimpleDateFormat("YYYY/MM/dd", new Locale("es", "ES"));
+        dateFormat = new SimpleDateFormat("YYYY-MM-dd", new Locale("es", "ES"));
         solicitudDispersion.setStrFechaNacimiento(datFechaNacimiento != null ? dateFormat.format(datFechaNacimiento) : "");
 
         String idEstadoCivil = "";

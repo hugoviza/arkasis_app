@@ -14,7 +14,6 @@ public class ConexionSQLiteHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-
         db.execSQL(MigracionesSQL.CREAR_TABLA_ACTIVIDADES);
         db.execSQL(MigracionesSQL.CREAR_TABLA_MUNICIPIOS);
         db.execSQL(MigracionesSQL.CREAR_TABLA_SUCURSALES);
@@ -25,5 +24,16 @@ public class ConexionSQLiteHelper extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
+        db.execSQL(MigracionesSQL.DROP_TABLA_ACTIVIDADES);
+        db.execSQL(MigracionesSQL.DROP_TABLA_MUNICIPIOS);
+        db.execSQL(MigracionesSQL.DROP_TABLA_SUCURSALES);
+        db.execSQL(MigracionesSQL.DROP_TABLA_COORDINADORES);
+        db.execSQL(MigracionesSQL.DROP_TABLA_SOLICITUDESDISPERSION);
+
+        db.execSQL(MigracionesSQL.CREAR_TABLA_ACTIVIDADES);
+        db.execSQL(MigracionesSQL.CREAR_TABLA_MUNICIPIOS);
+        db.execSQL(MigracionesSQL.CREAR_TABLA_SUCURSALES);
+        db.execSQL(MigracionesSQL.CREAR_TABLA_COORDINADORES);
+        db.execSQL(MigracionesSQL.CREAR_TABLA_SOLICITUDESDISPERSION);
     }
 }
