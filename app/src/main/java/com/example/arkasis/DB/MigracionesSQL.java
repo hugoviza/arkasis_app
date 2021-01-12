@@ -87,7 +87,9 @@ public class MigracionesSQL {
                     + TableSolicitudesDispersion.col_dblMontoSolicitado + " REAL,"
                     + TableSolicitudesDispersion.col_dblMontoAutorizado + " REAL,"
                     + TableSolicitudesDispersion.col_dblIngresos + " REAL,"
-                    + TableSolicitudesDispersion.col_dblEgresos + " REAL" + " )";
+                    + TableSolicitudesDispersion.col_dblEgresos + " REAL,"
+                    + TableSolicitudesDispersion.col_strEstatusInserccionServidor + " TEXT"
+                    + " )";
 
     public static final String TRUNCATE_TABLA_ACTIVIDADES = "DELETE FROM " + TableActividades.table;
     public static final String TRUNCATE_TABLA_MUNICIPIOS = "DELETE FROM " + TableMunicipios.table;

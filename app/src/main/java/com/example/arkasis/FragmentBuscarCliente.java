@@ -38,10 +38,6 @@ public class FragmentBuscarCliente extends Fragment {
     private final String LIMPIAR_CAMPO = "Limpiar campo";
     private final String SELECCIONAR_CIUDAD = "Seleccionar ciudad";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
     public static final String CANAL_DATA_CLIENTE = "data_cliente";
 
     //Componentes
@@ -69,31 +65,10 @@ public class FragmentBuscarCliente extends Fragment {
         // Required empty public constructor
         this.parent = parent;
     }
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment FragmentBuscarCliente.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static FragmentBuscarCliente newInstance(String param1, String param2) {
-        FragmentBuscarCliente fragment = new FragmentBuscarCliente();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
@@ -226,7 +201,7 @@ public class FragmentBuscarCliente extends Fragment {
             dialogFragmentInfoCliente.setOnItemClickListener(new DialogFragmentInfoCliente.OnItemClickListener() {
                 @Override
                 public void onItemClick(Cliente cliente) {
-                    BottomBarActivity.setFragmentFormularioRegistro(new FragmentFormularioRegistro(cliente));
+                    BottomBarActivity.setFragmentFormularioRegistro(new FragmentFormularioRegistro(parent, cliente));
                     BottomBarActivity.setSelectedItem(BottomBarActivity.ITEM_ADD);
                 }
             });

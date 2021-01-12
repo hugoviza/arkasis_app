@@ -91,13 +91,12 @@ public class FragmentFormularioRegistro extends Fragment {
     }
 
     public FragmentFormularioRegistro(BottomBarActivity parent) {
-        // Required empty public constructor
         clienteSeleccionado = null;
         this.parent = parent;
     }
 
-    public FragmentFormularioRegistro(Cliente clienteSeleccionado) {
-        // Required empty public constructor
+    public FragmentFormularioRegistro(BottomBarActivity parent, Cliente clienteSeleccionado) {
+        this.parent = parent;
         this.clienteSeleccionado = clienteSeleccionado;
     }
 
@@ -894,7 +893,7 @@ public class FragmentFormularioRegistro extends Fragment {
             @Override
             public void onResponse(Call<ResponseAPI> call, Response<ResponseAPI> response) {
                 if(response.body().getResultado() == null) {
-                    Toast.makeText(getContext(), "Error al guardar en servidor", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), response.body().getMensaje(), Toast.LENGTH_SHORT).show();
                     //No hay nada por hacer
                 } else {
                     Toast.makeText(getContext(), "Guardado correctamente", Toast.LENGTH_SHORT).show();

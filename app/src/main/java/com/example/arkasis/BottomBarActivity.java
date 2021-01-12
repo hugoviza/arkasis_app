@@ -1,6 +1,5 @@
 package com.example.arkasis;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -11,6 +10,7 @@ import android.content.Context;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.MenuItem;
@@ -113,7 +113,7 @@ public class BottomBarActivity extends AppCompatActivity {
 
         bottom_navigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            public boolean onNavigationItemSelected(MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.itemHome:
                         cargarFragmento(fragmentDashboard);
@@ -148,6 +148,11 @@ public class BottomBarActivity extends AppCompatActivity {
     public void sincronizarSolicitudes() {
         TableSolicitudesDispersion table = new TableSolicitudesDispersion(this);
         List<SolicitudDispersion> listaSolicitudes = (List<SolicitudDispersion>)(Object)table.findAll("", 10000);
+        List<Integer> listIdSolicitudes = new ArrayList<>();
+
+        for (SolicitudDispersion solicitudDispersion: listaSolicitudes) {
+            listIdSolicitudes.add(solicitudDispersion.getIdSolicitud());
+        }
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(Config.URL_API)
@@ -172,6 +177,8 @@ public class BottomBarActivity extends AppCompatActivity {
                                 if(estatus.isBitRegistrado()) {
                                     table.eliminar(estatus.getIdSolicitud());
                                 } else {
+                                    int index = listIdSolicitudes.indexOf(estatus.getIdSolicitud());
+                                    table.actualizarEstatusInserccionServidor(listaSolicitudes.get(index));
                                     contadorRegistrosFallidos++;
                                 }
                             } catch (Exception e) {
