@@ -28,6 +28,7 @@ import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.example.arkasis.DB.tablas.TableSolicitudesDispersion;
+import com.example.arkasis.componentes.DialogBuscadorActividades;
 import com.example.arkasis.componentes.DialogBuscadorEstados;
 import com.example.arkasis.componentes.DialogBuscadorMunicipios;
 import com.example.arkasis.componentes.DialogBuscadorSucursales;
@@ -36,6 +37,7 @@ import com.example.arkasis.config.Config;
 import com.example.arkasis.interfaces.APICatalogosInterface;
 import com.example.arkasis.interfaces.APIClientesInterface;
 import com.example.arkasis.interfaces.APISolicitudDispersion;
+import com.example.arkasis.models.Actividad;
 import com.example.arkasis.models.Cliente;
 import com.example.arkasis.models.Coordinador;
 import com.example.arkasis.models.Estado;
@@ -128,6 +130,7 @@ public class FragmentFormularioRegistro extends Fragment {
     DialogBuscarCoordinador dialogBuscarCoordinador;
     DialogBuscadorMunicipios dialogBuscadorMunicipios;
     DialogBuscadorEstados dialogBuscadorEstados;
+    DialogBuscadorActividades dialogBuscadorActividades;
 
     //Data
     Date datFechaNacimiento, datFechaNacimientoConyuge;
@@ -243,6 +246,7 @@ public class FragmentFormularioRegistro extends Fragment {
             inicializarSelectorCoordinador();
             inicializarSelectorEstadoOrigen();
             inicializarSelectorCiudadMejora();
+            inicializarSelectorActividades();
             inicializarBuscadorCurp();
 
             BottomBarActivity.cerrarLoading();
@@ -516,6 +520,62 @@ public class FragmentFormularioRegistro extends Fragment {
         });
     }
 
+    private void inicializarSelectorActividades() {
+        dialogBuscadorActividades = new DialogBuscadorActividades(getContext(), view);
+        txtActividad.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    dialogBuscadorActividades.show();
+                }
+            }
+        });
+
+        txtActividad.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialogBuscadorActividades.show();
+            }
+        });
+
+        dialogBuscadorActividades.setOnItemClickListener(new DialogBuscadorActividades.OnItemClickListener() {
+            @Override
+            public void onItemClick(Actividad actividad) {
+                if(actividad != null) {
+                    seleccionarActividad(actividad.getStrActividad());
+                    dialogBuscadorActividades.close();
+                } else {
+                    seleccionarActividad(null);
+                }
+            }
+        });
+
+        layoutActividad.setEndIconOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(layoutActividad.getEndIconContentDescription() == LIMPIAR_CAMPO) {
+                    seleccionarActividad(null);
+                    closeKeyBoard();
+                } else {
+                    dialogBuscadorActividades.show();
+                }
+            }
+        });
+    }
+
+    private void seleccionarActividad(String strActividad) {
+        if(strActividad == null) {
+            txtActividad.setText("");
+            dialogBuscadorActividades.limpiar();
+            layoutActividad.setEndIconDrawable(R.drawable.ic_baseline_arrow_drop_down_24);
+            layoutActividad.setEndIconContentDescription(SELECCIONAR);
+        } else {
+            txtActividad.setText(strActividad);
+            layoutActividad.setEndIconDrawable(R.drawable.ic_baseline_cancel_24);
+            layoutActividad.setEndIconContentDescription(LIMPIAR_CAMPO);
+        }
+    }
+
     private void inicializarSelectorEstadoOrigen() {
         dialogBuscadorEstados = new DialogBuscadorEstados(getContext(), view);
         txtEstadoOrigen.setOnClickListener(new View.OnClickListener() {
@@ -770,7 +830,7 @@ public class FragmentFormularioRegistro extends Fragment {
 
         txtNacionalidad.setText(cliente.getStrNacionalidad());
         txtOcupacion.setText(cliente.getStrOcupacion());
-        txtActividad.setText(cliente.getStrDescripcionActividad());
+        seleccionarActividad(cliente.getStrDescripcionActividad());
         txtCelular.setText(cliente.getStrCelular());
         txtTelefono.setText(cliente.getStrTelefono());
         txtEmail.setText(cliente.getStrEmail());
@@ -802,7 +862,6 @@ public class FragmentFormularioRegistro extends Fragment {
     }
 
     public void limpiarVista() {
-
         limpiarSelectorSucursal();
         limpiarSelectorCoordinador();
 
@@ -831,7 +890,7 @@ public class FragmentFormularioRegistro extends Fragment {
         txtEstadoCivil.setText("");
         txtNacionalidad.setText("");
         txtOcupacion.setText("");
-        txtActividad.setText("");
+        seleccionarActividad(null);
         txtCelular.setText("");
         txtTelefono.setText("");
         txtEmail.setText("");
@@ -957,8 +1016,9 @@ public class FragmentFormularioRegistro extends Fragment {
         solicitudDispersion.setStrNacionalidad(txtNacionalidad.getText().toString().trim());
 
         solicitudDispersion.setStrOcupacion(txtOcupacion.getText().toString().trim());
-        solicitudDispersion.setStrActividad(txtActividad.getText().toString().trim());
-        solicitudDispersion.setIdActividad("");
+        Actividad actividad = dialogBuscadorActividades != null ? dialogBuscadorActividades.getSelectedItem() : null;
+        solicitudDispersion.setStrActividad(actividad.getStrActividad());
+        solicitudDispersion.setIdActividad(actividad.getIdActividad()+"");
 
         solicitudDispersion.setStrCelular(txtCelular.getText().toString().trim());
         solicitudDispersion.setStrTelefono(txtTelefono.getText().toString().trim());
@@ -1080,7 +1140,7 @@ public class FragmentFormularioRegistro extends Fragment {
         }
 
         if(txtActividad.getText().toString().trim().length() == 0) {
-            layoutActividad.setError("Ingrese actividad");
+            layoutActividad.setError("Seleccione actividad");
             txtActividad.requestFocus();
             return false;
         } else {

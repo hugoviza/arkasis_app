@@ -1,9 +1,21 @@
 package com.example.arkasis.models;
 
+import com.google.gson.internal.LinkedTreeMap;
+
 public class Usuario {
     private String user;
     private String password;
     private String nombre;
+
+    public Usuario() {
+
+    }
+
+    public Usuario(LinkedTreeMap<Object, Object> treeMap) {
+        this.user = treeMap.get("user").toString().trim();
+        this.password = treeMap.get("password").toString().trim();
+        this.nombre = treeMap.get("nombre").toString().trim();
+    }
 
     public String getUser() {
         return user;

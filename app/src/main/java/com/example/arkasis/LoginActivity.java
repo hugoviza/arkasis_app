@@ -90,8 +90,7 @@ public class LoginActivity extends AppCompatActivity {
                             Toast.makeText(LoginActivity.this, response.body().getMensaje(), Toast.LENGTH_SHORT).show();
                         } else {
                             LinkedTreeMap<Object, Object> treeMap = (LinkedTreeMap)response.body().getResultado();
-                            usuario.setNombre(treeMap.get("nombre").toString().trim());
-                            guardarSesionUsuario(usuario);
+                            guardarSesionUsuario(new Usuario(treeMap));
                             abrirDashboard();
                         }
                     } else {

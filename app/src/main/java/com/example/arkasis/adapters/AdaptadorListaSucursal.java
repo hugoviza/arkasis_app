@@ -44,7 +44,6 @@ public class AdaptadorListaSucursal extends RecyclerView.Adapter<AdaptadorListaS
 
             String filtro = constraint.toString().toLowerCase().trim();
             FilterResults filterResults = new FilterResults();
-            //filterResults.values = listaMunicipiosEncontrados;
             filterResults.values = buscarSucursales(filtro);
             return filterResults;
         }

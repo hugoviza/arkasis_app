@@ -298,7 +298,10 @@
                 android:id="@+id/layoutActividad"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Actividad">
+                android:hint="Actividad"
+                app:endIconMode="custom"
+                app:endIconDrawable="@drawable/ic_baseline_arrow_drop_down_24"
+                app:endIconContentDescription="@string/seleccionar">
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/txtActividad"
                     android:layout_width="match_parent"
