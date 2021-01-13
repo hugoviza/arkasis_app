@@ -238,7 +238,7 @@ public class FragmentFormularioRegistro extends Fragment {
             radioQuedateEnCasa = view.findViewById(R.id.radioQuedateEnCasa);
 
             usuario = Config.USUARIO_SESION;
-            txtPromotor.setText(usuario.getNombre());
+            txtPromotor.setText(usuario.getUser());
 
             inicializarDatPickers();
             inicializarSelectorEstadoCivil();
@@ -982,7 +982,7 @@ public class FragmentFormularioRegistro extends Fragment {
 
         solicitudDispersion.setIdPromotor("");
         solicitudDispersion.setStrUsuarioPromotor(usuario.getUser());
-        solicitudDispersion.setStrPromotor(usuario.getNombre());
+        solicitudDispersion.setStrPromotor(usuario.getUser());
         solicitudDispersion.setStrCordinador(txtCoordinador.getText().toString().trim());
         solicitudDispersion.setIdSucursal(dialogBuscadorSucursales.getSelectedItem()  != null ? dialogBuscadorSucursales.getSelectedItem().getIdSucursal() + "" : "");
         solicitudDispersion.setIdCliente(clienteSeleccionado != null ? clienteSeleccionado.getIdCliente() : "");
