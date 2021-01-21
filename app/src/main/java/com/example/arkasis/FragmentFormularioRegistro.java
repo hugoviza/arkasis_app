@@ -291,6 +291,7 @@ public class FragmentFormularioRegistro extends Fragment {
     private void inicializarDatPickers() {
         MaterialDatePicker.Builder builder = MaterialDatePicker.Builder.datePicker();
         builder.setTitleText("Seleccione fecha");
+        builder.setInputMode(MaterialDatePicker.INPUT_MODE_CALENDAR);
 
         //Fecha nacimiento cliente
         dpFechaNacimiento = builder.build();
@@ -384,16 +385,11 @@ public class FragmentFormularioRegistro extends Fragment {
             @Override
             public void onItemClick(Sucursal sucursal) {
                 if(sucursal != null) {
-                    txtSucursal.setText(sucursal.getStrSucursal());
-                    layoutSucursal.setEndIconDrawable(R.drawable.ic_baseline_cancel_24);
-                    layoutSucursal.setEndIconContentDescription(LIMPIAR_CAMPO);
+                    seleccionarSucursal(sucursal.getStrSucursal());
                     dialogBuscadorSucursales.close();
-
-                    limpiarSelectorCoordinador();
                     dialogBuscarCoordinador.setIdSucursal(sucursal.getIdSucursal() + "");
                 } else {
-                    limpiarSelectorSucursal();
-                    limpiarSelectorCoordinador();
+                    seleccionarSucursal(null);
                 }
                 closeKeyBoard();
             }
@@ -403,14 +399,28 @@ public class FragmentFormularioRegistro extends Fragment {
             @Override
             public void onClick(View v) {
                 if(layoutSucursal.getEndIconContentDescription() == LIMPIAR_CAMPO) {
-                    limpiarSelectorSucursal();
-                    limpiarSelectorCoordinador();
+                    seleccionarSucursal(null);
                     closeKeyBoard();
                 } else {
                     dialogBuscadorSucursales.show();
                 }
             }
         });
+    }
+
+    private void seleccionarSucursal(String strSucursal) {
+        if(strSucursal == null) {
+            txtSucursal.setText("");
+            dialogBuscadorSucursales.limpiar();
+            layoutSucursal.setEndIconDrawable(R.drawable.ic_baseline_arrow_drop_down_24);
+            layoutSucursal.setEndIconContentDescription(SELECCIONAR);
+        } else {
+            txtSucursal.setText(strSucursal);
+            layoutSucursal.setEndIconDrawable(R.drawable.ic_baseline_cancel_24);
+            layoutSucursal.setEndIconContentDescription(LIMPIAR_CAMPO);
+        }
+        layoutSucursal.setError(null);
+        seleccionarCoordinador(null);
     }
 
     private void inicializarSelectorCoordinador() {
@@ -437,12 +447,10 @@ public class FragmentFormularioRegistro extends Fragment {
             @Override
             public void onItemClick(Coordinador coordinador) {
                 if(coordinador != null) {
-                    txtCoordinador.setText(coordinador.getStrNombre());
-                    layoutCoordinador.setEndIconDrawable(R.drawable.ic_baseline_cancel_24);
-                    layoutCoordinador.setEndIconContentDescription(LIMPIAR_CAMPO);
+                    seleccionarCoordinador(coordinador.getStrNombre());
                     dialogBuscarCoordinador.close();
                 } else {
-                    txtCoordinador.setText("");
+                    seleccionarCoordinador(null);
                 }
                 closeKeyBoard();
             }
@@ -452,7 +460,7 @@ public class FragmentFormularioRegistro extends Fragment {
             @Override
             public void onClick(View v) {
                 if(layoutCoordinador.getEndIconContentDescription() == LIMPIAR_CAMPO) {
-                    limpiarSelectorCoordinador();
+                    seleccionarCoordinador(null);
                     closeKeyBoard();
                 } else {
                     dialogBuscarCoordinador.show();
@@ -461,19 +469,18 @@ public class FragmentFormularioRegistro extends Fragment {
         });
     }
 
-    private void limpiarSelectorCoordinador() {
-        txtCoordinador.setText("");
-        dialogBuscarCoordinador.limpiar();
-        dialogBuscarCoordinador.setIdSucursal("");
-        layoutCoordinador.setEndIconDrawable(R.drawable.ic_baseline_arrow_drop_down_24);
-        layoutCoordinador.setEndIconContentDescription(SELECCIONAR);
-    }
-
-    private void limpiarSelectorSucursal() {
-        txtSucursal.setText("");
-        dialogBuscadorSucursales.limpiar();
-        layoutSucursal.setEndIconDrawable(R.drawable.ic_baseline_arrow_drop_down_24);
-        layoutSucursal.setEndIconContentDescription(SELECCIONAR);
+    private void seleccionarCoordinador(String strCoordinador) {
+        if(strCoordinador == null) {
+            txtCoordinador.setText("");
+            dialogBuscarCoordinador.limpiar();
+            layoutCoordinador.setEndIconDrawable(R.drawable.ic_baseline_arrow_drop_down_24);
+            layoutCoordinador.setEndIconContentDescription(SELECCIONAR);
+        } else {
+            txtCoordinador.setText(strCoordinador);
+            layoutCoordinador.setEndIconDrawable(R.drawable.ic_baseline_cancel_24);
+            layoutCoordinador.setEndIconContentDescription(LIMPIAR_CAMPO);
+        }
+        layoutCoordinador.setError(null);
     }
 
     private void inicializarSelectorCiudadMejora() {
@@ -518,6 +525,20 @@ public class FragmentFormularioRegistro extends Fragment {
                 }
             }
         });
+    }
+
+    private void seleccionarDomicilioMejoraMunicipio(String strMunicipio) {
+        if(strMunicipio == null) {
+            txtDomicilioMejoraMunicipio.setText("");
+            dialogBuscadorMunicipios.limpiar();
+            layoutDomicilioMejoraMunicipio.setEndIconDrawable(R.drawable.ic_baseline_arrow_drop_down_24);
+            layoutDomicilioMejoraMunicipio.setEndIconContentDescription(SELECCIONAR);
+        } else {
+            txtDomicilioMejoraMunicipio.setText(strMunicipio);
+            layoutDomicilioMejoraMunicipio.setEndIconDrawable(R.drawable.ic_baseline_cancel_24);
+            layoutDomicilioMejoraMunicipio.setEndIconContentDescription(LIMPIAR_CAMPO);
+        }
+        layoutDomicilioMejoraMunicipio.setError(null);
     }
 
     private void inicializarSelectorActividades() {
@@ -574,6 +595,7 @@ public class FragmentFormularioRegistro extends Fragment {
             layoutActividad.setEndIconDrawable(R.drawable.ic_baseline_cancel_24);
             layoutActividad.setEndIconContentDescription(LIMPIAR_CAMPO);
         }
+        layoutActividad.setError(null);
     }
 
     private void inicializarSelectorEstadoOrigen() {
@@ -620,19 +642,6 @@ public class FragmentFormularioRegistro extends Fragment {
         });
     }
 
-    private void seleccionarDomicilioMejoraMunicipio(String strMunicipio) {
-        if(strMunicipio == null) {
-            txtDomicilioMejoraMunicipio.setText("");
-            dialogBuscadorMunicipios.limpiar();
-            layoutDomicilioMejoraMunicipio.setEndIconDrawable(R.drawable.ic_baseline_arrow_drop_down_24);
-            layoutDomicilioMejoraMunicipio.setEndIconContentDescription(SELECCIONAR);
-        } else {
-            txtDomicilioMejoraMunicipio.setText(strMunicipio);
-            layoutDomicilioMejoraMunicipio.setEndIconDrawable(R.drawable.ic_baseline_cancel_24);
-            layoutDomicilioMejoraMunicipio.setEndIconContentDescription(LIMPIAR_CAMPO);
-        }
-    }
-
     private void seleccionarEstadoOrigen(String strEstado) {
         if(strEstado == null) {
             txtEstadoOrigen.setText("");
@@ -644,6 +653,7 @@ public class FragmentFormularioRegistro extends Fragment {
             layoutEstadoOrigen.setEndIconDrawable(R.drawable.ic_baseline_cancel_24);
             layoutEstadoOrigen.setEndIconContentDescription(LIMPIAR_CAMPO);
         }
+        layoutEstadoOrigen.setError(null);
     }
 
     private void inicializarBuscadorCurp() {
@@ -655,14 +665,28 @@ public class FragmentFormularioRegistro extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if(txtCURP.getText().toString().trim().length() == 18) {
-                    validarCURP();
-                }
+
             }
 
             @Override
             public void afterTextChanged(Editable s) {
+                if(txtCURP.getText().toString().trim().length() == 18) {
+                    //Si la curp es válida entonces sacamos la fecha de nacimiento
+                    if(validarCURP()) {
+                        String curp = txtCURP.getText().toString().trim();
+                        String anio = curp.substring(4, 6);
+                        String mes = curp.substring(6, 8);
+                        String dia = curp.substring(8, 10);
 
+                        try {
+                            DateFormat sdf = new SimpleDateFormat("yy-MM-dd");
+                            Date date = sdf.parse(anio+"-"+mes+"-"+dia);
+                            seleccionarFechaNacimiento(date);
+                        } catch (Exception e) {
+                            seleccionarFechaNacimiento(null);
+                        }
+                    }
+                }
             }
         });
 
@@ -687,6 +711,21 @@ public class FragmentFormularioRegistro extends Fragment {
                 }
             }
         });
+    }
+
+    private void seleccionarFechaNacimiento(Date date) {
+        if(date == null) {
+            txtFechaNacimiento.setText("");
+        } else {
+            try {
+                datFechaNacimiento = date;
+                SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", new Locale("es", "ES"));
+                txtFechaNacimiento.setText(dateFormat.format(datFechaNacimiento));
+            } catch (Exception e) {
+                txtFechaNacimiento.setText("");
+            }
+        }
+        layoutFechaNacimiento.setError(null);
     }
 
     private boolean validarCURP() {
@@ -810,14 +849,12 @@ public class FragmentFormularioRegistro extends Fragment {
         }
 
         //FECHA NACIMIENTO
-        DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         try {
-            datFechaNacimiento = sdf.parse(cliente.getDatFechaNacimiento());
-            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", new Locale("es", "ES"));
-            txtFechaNacimiento.setText(dateFormat.format(datFechaNacimiento));
+            DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            Date date = sdf.parse(cliente.getDatFechaNacimiento());
+            seleccionarFechaNacimiento(date);
         } catch (Exception e) {
-            datFechaNacimiento = null;
-            txtFechaNacimiento.setText("");
+            seleccionarFechaNacimiento(null);
         }
 
         //ESTADO CIVIL
@@ -862,8 +899,8 @@ public class FragmentFormularioRegistro extends Fragment {
     }
 
     public void limpiarVista() {
-        limpiarSelectorSucursal();
-        limpiarSelectorCoordinador();
+        seleccionarSucursal(null);
+        seleccionarCoordinador(null);
 
         clienteSeleccionado = null;
         txtCURP.setText("");
@@ -1151,28 +1188,37 @@ public class FragmentFormularioRegistro extends Fragment {
             layoutCelular.setError("Ingrese número celular");
             txtCelular.requestFocus();
             return false;
+        } else if(txtCelular.getText().toString().trim().length() < 10) {
+            layoutCelular.setError("Ingrese número celular a 10 dígitos");
+            txtCelular.requestFocus();
+            return false;
         } else {
             layoutCelular.setError(null);
         }
 
+        String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
         if(txtEmail.getText().toString().trim().length() == 0) {
             layoutEmail.setError("Ingrese correo electrónico");
+            txtEmail.requestFocus();
+            return false;
+        } else if(txtEmail.getText().toString().trim().matches(emailPattern)) {
+            layoutEmail.setError("Ingrese correo electrónico válido");
             txtEmail.requestFocus();
             return false;
         } else {
             layoutEmail.setError(null);
         }
 
-        if(txtClaveElector.getText().toString().trim().length() == 0) {
-            layoutClaveElector.setError("Ingrese clave de elector");
+        if(txtClaveElector.getText().toString().trim().length() < 18) {
+            layoutClaveElector.setError("Ingrese clave de elector a 18 dígitos");
             txtClaveElector.requestFocus();
             return false;
         } else {
             layoutClaveElector.setError(null);
         }
 
-        if(txtNumeroElector.getText().toString().trim().length() == 0) {
-            layoutNumeroElector.setError("Ingrese número de elector");
+        if(txtNumeroElector.getText().toString().trim().length() < 10) {
+            layoutNumeroElector.setError("Ingrese número de elector válido");
             txtNumeroElector.requestFocus();
             return false;
         } else {

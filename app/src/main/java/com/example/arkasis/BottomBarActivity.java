@@ -279,7 +279,7 @@ public class BottomBarActivity extends AppCompatActivity {
         apiCall.enqueue(new Callback<ResponseAPI>() {
             @Override
             public void onResponse(Call<ResponseAPI> call, Response<ResponseAPI> response) {
-                if(response.body().getResultado() == null) {
+                if(response.body() == null || response.body().getResultado() == null) {
                     //No hay nada por hacer
                     validarCatalogoMunicipios();
                 } else {
@@ -374,7 +374,7 @@ public class BottomBarActivity extends AppCompatActivity {
         apiCall.enqueue(new Callback<ResponseAPI>() {
             @Override
             public void onResponse(Call<ResponseAPI> call, Response<ResponseAPI> response) {
-                if(response.body().getResultado() == null) {
+                if(response.body() == null || response.body().getResultado() == null) {
                     //No hay nada por hacer
                     validarCatalogoSucursales();
                 } else {
@@ -474,7 +474,7 @@ public class BottomBarActivity extends AppCompatActivity {
         apiCall.enqueue(new Callback<ResponseAPI>() {
             @Override
             public void onResponse(Call<ResponseAPI> call, Response<ResponseAPI> response) {
-                if(response.body().getResultado() == null) {
+                if(response.body() == null || response.body().getResultado() == null) {
                     //No hay nada por hacer
                 } else {
                     Integer totalRegistrosAPI = Integer.parseInt(response.body().getResultado().toString().trim());
@@ -573,7 +573,7 @@ public class BottomBarActivity extends AppCompatActivity {
         apiCall.enqueue(new Callback<ResponseAPI>() {
             @Override
             public void onResponse(Call<ResponseAPI> call, Response<ResponseAPI> response) {
-                if(response.body().getResultado() == null) {
+                if(response.body() == null || response.body().getResultado() == null) {
                     //No hay nada por hacer
                 } else {
                     Integer totalRegistrosAPI = Integer.parseInt(response.body().getResultado().toString().trim());
