@@ -1242,11 +1242,11 @@ public class FragmentFormularioRegistro extends Fragment {
         }
 
         if(txtCodigoPostal.getText().toString().trim().length() == 0) {
-            txtCodigoPostal.setError("Ingrese código postal");
-            txtCodigoPostal.requestFocus();
+            layoutCodigoPostal.setError("Ingrese código postal");
+            layoutCodigoPostal.requestFocus();
             return false;
         } else {
-            txtCodigoPostal.setError(null);
+            layoutCodigoPostal.setError(null);
         }
 
         if(txtDomicilioMejora.getText().toString().trim().length() == 0) {
