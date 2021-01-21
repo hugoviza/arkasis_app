@@ -1201,7 +1201,7 @@ public class FragmentFormularioRegistro extends Fragment {
             layoutEmail.setError("Ingrese correo electrónico");
             txtEmail.requestFocus();
             return false;
-        } else if(txtEmail.getText().toString().trim().matches(emailPattern)) {
+        } else if(!txtEmail.getText().toString().trim().matches(emailPattern)) {
             layoutEmail.setError("Ingrese correo electrónico válido");
             txtEmail.requestFocus();
             return false;
