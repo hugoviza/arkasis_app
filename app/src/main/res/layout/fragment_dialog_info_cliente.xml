@@ -64,6 +64,7 @@
             android:divider="@drawable/divider"
             android:showDividers="middle"
             android:layout_marginTop="15dp"
+            android:paddingBottom="20dp"
             >
 
             <TextView
@@ -203,7 +204,7 @@
                         android:id="@+id/tvFechaNacimiento"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="01 de Junio de 1990"/>
+                        android:text="XX/XX/XXXX"/>
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -290,6 +291,15 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/border_bottom"
                     />
+
+                <TextView
+                    android:id="@+id/tvSinSaldos"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="@string/sin_segistros"
+                    android:textStyle="bold"
+                    android:visibility="gone" />
             </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView
@@ -297,12 +307,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
-            <TextView
-                android:id="@+id/tvSinSaldos"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/sin_segistros"
-                android:visibility="gone"/>
+
 
 
             <!-- CONTACTO -->
@@ -559,7 +564,7 @@
                         android:id="@+id/tvFechaNacimientoConyuge"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="01 de Enero de 1990"/>
+                        android:text="XX/XX/XXXX"/>
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"

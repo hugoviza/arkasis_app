@@ -17,6 +17,14 @@ import com.example.arkasis.adapters.AdaptadorListaClientes;
 import com.example.arkasis.adapters.AdaptadorListaSaldoCliente;
 import com.example.arkasis.models.Cliente;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
+import java.util.TimeZone;
+
 /**
  * A simple {@link android.app.Fragment} subclass.
  * Use the {@link DialogFragmentInfoCliente#newInstance} factory method to
@@ -110,10 +118,11 @@ public class DialogFragmentInfoCliente extends DialogFragment {
         tvDomicilio = view.findViewById(R.id.tvDomicilio);
         tvLugarNacimiento = view.findViewById(R.id.tvLugarNacimiento);
         tvNombreConyuge = view.findViewById(R.id.tvNombreConyuge);
-        tvFechaNacimientoConyuge = view.findViewById(R.id.tvFechaNacimientoConyuge);
-        tvLugarNacimientoConyuge = view.findViewById(R.id.tvLugarNacimientoConyuge);
+        tvFechaNacimientoConyuge = view.findViewById(R.id.tvFechaNacimientoConyuge);;
+        tvFechaNacimiento = view.findViewById(R.id.tvFechaNacimiento);
         btnNuevaSolicitud = view.findViewById(R.id.btnNuevaSolicitud);
         tvSinSaldos = view.findViewById(R.id.tvSinSaldos);
+        tvLugarNacimientoConyuge = view.findViewById(R.id.tvLugarNacimientoConyuge);
 
         rvList_saldos =  view.findViewById(R.id.rvList_saldos);
 
@@ -168,10 +177,33 @@ public class DialogFragmentInfoCliente extends DialogFragment {
         tvMail.setText(cliente.getStrEmail());
         tvDomicilio.setText(cliente.getStrDomicilio());
         tvLugarNacimiento.setText(cliente.getStrLugarNacimiento());
-        tvNombreConyuge.setText(cliente.getStrNombreConyuge());
-        tvFechaNacimientoConyuge.setText(cliente.getDatFechaNacimientoConyuge());
-        tvLugarNacimientoConyuge.setText(cliente.getStrLugarNacimientoConyuge());
 
+        DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", new Locale("es", "ES"));
+        try {
+            if(cliente.getDatFechaNacimiento() != null && cliente.getDatFechaNacimiento() != "") {
+                Date date = sdf.parse(cliente.getDatFechaNacimiento());
+                tvFechaNacimiento.setText(dateFormat.format(date));
+            } else {
+                tvFechaNacimiento.setText("");
+            }
+        } catch (Exception e) {
+            tvFechaNacimiento.setText("");
+        }
+
+        try {
+            if(cliente.getDatFechaNacimientoConyuge() != null && cliente.getDatFechaNacimientoConyuge() != "") {
+                Date date2 = sdf.parse(cliente.getDatFechaNacimientoConyuge());
+                tvFechaNacimientoConyuge.setText(dateFormat.format(date2));
+            } else {
+                tvFechaNacimientoConyuge.setText("");
+            }
+        } catch (Exception e) {
+            tvFechaNacimientoConyuge.setText("");
+        }
+
+        tvLugarNacimientoConyuge.setText(cliente.getStrLugarNacimientoConyuge());
+        tvNombreConyuge.setText(cliente.getStrNombreConyuge());
         inicializarListaSaldos();
     }
 

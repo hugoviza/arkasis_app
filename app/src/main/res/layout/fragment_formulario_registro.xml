@@ -61,9 +61,13 @@
             android:padding="16dp">
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layoutPromotor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Promotor">
+                android:hint="Promotor"
+                app:endIconMode="custom"
+                app:endIconDrawable="@drawable/ic_baseline_arrow_drop_down_24"
+                app:endIconContentDescription="@string/seleccionar">
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/txtPromotor"
                     android:layout_width="match_parent"
@@ -100,7 +104,8 @@
                     android:id="@+id/txtCoordinador"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textCapCharacters"/>
+                    android:inputType="textCapCharacters"
+                    android:editable="false"/>
             </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -246,6 +251,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="none"
+                    android:editable="false"
                 />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -306,7 +312,8 @@
                     android:id="@+id/txtActividad"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textCapCharacters"/>
+                    android:inputType="textCapCharacters"
+                    android:editable="false"/>
             </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -362,7 +369,7 @@
                     android:id="@+id/txtEmail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textCapCharacters"/>
+                    android:inputType="textEmailAddress"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <!-- CREDENCIA ELECTOR  -->
@@ -406,7 +413,8 @@
                     android:id="@+id/txtNumeroElector"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textCapCharacters"/>
+                    android:inputType="textCapCharacters"
+                    android:maxLength="20"/>
             </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -441,7 +449,8 @@
                     android:id="@+id/txtEstadoOrigen"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textCapCharacters"/>
+                    android:inputType="textCapCharacters"
+                    android:editable="false"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -560,7 +569,8 @@
                     android:id="@+id/txtCodigoPostal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textCapCharacters"/>
+                    android:inputType="textCapCharacters"
+                    android:maxLength="5"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -771,13 +781,13 @@
                         android:id="@+id/radioProductoEquipandoHogar"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Equipando hogar" />
+                        android:text="Equipando tu hogar" />
 
                     <RadioButton
                         android:id="@+id/radioProductoAmbos"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Mejora vivienda y Equipando hogar" />
+                        android:text="Mejora vivienda y Equipando tu hogar" />
 
                 </RadioGroup>
 
@@ -799,10 +809,25 @@
                 android:id="@+id/layoutMontoSolicitadoEquipandoHogar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Monto solicitado - Equipando hogar"
+                android:hint="Monto solicitado - Equipando tu hogar"
                 android:visibility="gone">
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/txtMontoSolicitadoEquipandoHogar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    android:inputType="number"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layoutProductoEquipandoHogar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Producto - Equipando tu hogar"
+                android:visibility="gone">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/txtProductoEquipandoHogar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:visibility="gone"

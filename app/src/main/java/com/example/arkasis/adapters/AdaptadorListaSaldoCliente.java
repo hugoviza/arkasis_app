@@ -18,7 +18,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.arkasis.R;
 import com.example.arkasis.models.SaldoCliente;
 
+import java.text.DateFormat;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class AdaptadorListaSaldoCliente extends RecyclerView.Adapter<AdaptadorListaSaldoCliente.ViewHolder> {
     private Context context;
@@ -99,21 +106,58 @@ public class AdaptadorListaSaldoCliente extends RecyclerView.Adapter<AdaptadorLi
         }
 
         public void bindData(SaldoCliente saldoCliente) {
+
             this.saldoCliente = saldoCliente;
             tvProducto.setText(saldoCliente.getStrProducto());
             tvContrato.setText(saldoCliente.getStrFolioContrato());
-            tvFechaMinistracion.setText(saldoCliente.getDatFechaMinistracion());
-            tvFechaVencimiento.setText(saldoCliente.getDatFechaVencimiento());
+
+            try {
+                if(saldoCliente.getDatFechaMinistracion() != null && saldoCliente.getDatFechaMinistracion() != "") {
+                    DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                    Date date = sdf.parse(saldoCliente.getDatFechaMinistracion());
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", new Locale("es", "ES"));
+                    tvFechaMinistracion.setText(dateFormat.format(date));
+                } else {
+                    tvFechaMinistracion.setText("");
+                }
+            } catch (Exception e) {
+                tvFechaMinistracion.setText("");
+            }
+
+            try {
+                if(saldoCliente.getDatFechaVencimiento() != null && saldoCliente.getDatFechaVencimiento() != "") {
+                    DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                    Date date = sdf.parse(saldoCliente.getDatFechaVencimiento());
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", new Locale("es", "ES"));
+                    tvFechaVencimiento.setText(dateFormat.format(date));
+                } else {
+                    tvFechaVencimiento.setText("");
+                }
+            } catch (Exception e) {
+                tvFechaVencimiento.setText("");
+            }
+
             tvTotalPagos.setText(saldoCliente.getIntTotalPagos());
-            tvCapital.setText(saldoCliente.getDblCapital());
-            tvIntereses.setText(saldoCliente.getDblIntereses());
-            tvSeguro.setText(saldoCliente.getDblSeguro());
-            tvTotal.setText(saldoCliente.getDblTotal());
-            tvAbono.setText(saldoCliente.getDblAbono());
-            tvSaldo.setText(saldoCliente.getDblSaldo());
+            tvCapital.setText(numberFormat( saldoCliente.getDblCapital()));
+            tvIntereses.setText(numberFormat(saldoCliente.getDblIntereses()));
+            tvSeguro.setText(numberFormat(saldoCliente.getDblSeguro()));
+            tvTotal.setText(numberFormat(saldoCliente.getDblTotal()));
+            tvAbono.setText(numberFormat(saldoCliente.getDblAbono()));
+            tvSaldo.setText(numberFormat(saldoCliente.getDblSaldo()));
         }
     }
 
+    private String numberFormat(String number) {
+        try {
+            if (number == null || number == "")
+                return "0.00";
+
+            DecimalFormat format = new DecimalFormat("###,###,##0.00");
+            return format.format(Double.parseDouble(number));
+        } catch (Exception e) {
+            return "0.00";
+        }
+    }
 
     public AdaptadorListaSaldoCliente(List<SaldoCliente> listaSaldos, Context context) {
         this.context = context;

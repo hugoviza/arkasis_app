@@ -54,6 +54,7 @@ public class DialogBuscarCoordinador {
             dialog.show();
         } else{
             dialog.show();
+            txtBuscar.setText("");
             adaptadorListaCoordinadores.getFilter().filter("");
         }
     }
