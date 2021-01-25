@@ -111,8 +111,7 @@ public class FragmentFormularioRegistro extends Fragment {
             txtNombreConyuge, txtLugarNacimientoConyuge, txtFechaNacimientoConyuge, txtOcupacionConyuge,
             txtCodigoPostal, txtDomicilioMejora, txtDomicilioMejoraNumExt, txtDomicilioMejoraNumInt,
             txtDomicilioMejoraColonia, txtDomicilioMejoraMunicipio, txtReferenciaBancaria, txtInstitucionBancaria,
-            txtIngresos, txtEgresos, txtMontoSolicitado,
-            txtProductoSolicitado;
+            txtIngresos, txtEgresos, txtMontoSolicitadoMejoraVivienda, txtMontoSolicitadoEquipandoHogar;
     TextInputLayout layoutSucursal, layoutCoordinador, layoutCURP,
             layoutNombre1, layoutNombre2, layoutApellidoPaterno, layoutApellidoMaterno,
             layoutFechaNacimiento, layoutEstadoCivil, layoutNacionalidad,
@@ -123,8 +122,8 @@ public class FragmentFormularioRegistro extends Fragment {
             layoutNombreConyuge, layoutLugarNacimientoConyuge, layoutFechaNacimientoConyuge,layoutOcupacionConyuge,
             layoutCodigoPostal, layoutDomicilioMejora, layoutDomicilioMejoraNumExt, layoutDomicilioMejoraNumInt, layoutDomicilioMejoraColonia, layoutDomicilioMejoraMunicipio,
             layoutReferenciaBancaria, layoutInstitucionBancaria,
-            layoutIngresos, layoutEgresos, layoutMontoSolicitado;
-    RadioGroup radioSexo, radioPlazoProducto, radioQuedateEnCasa;
+            layoutIngresos, layoutEgresos, layoutMontoSolicitadoMejoraVivienda, layoutMontoSolicitadoEquipandoHogar;
+    RadioGroup radioSexo, radioPlazoProducto, radioQuedateEnCasa, radioProducto;
     AutoCompleteTextView txtEstadoCivil;
     DialogBuscadorSucursales dialogBuscadorSucursales;
     DialogBuscarCoordinador dialogBuscarCoordinador;
@@ -136,6 +135,8 @@ public class FragmentFormularioRegistro extends Fragment {
     Date datFechaNacimiento, datFechaNacimientoConyuge;
     ArrayAdapter<String> adaptadorEstadoCivil;
     Usuario usuario;
+    Estado estadoNacimiento;
+    Municipio municipioMejora;
 
     //default data
     EstadoCivil[] arrayEstadoCivil =
@@ -231,11 +232,13 @@ public class FragmentFormularioRegistro extends Fragment {
             txtIngresos = view.findViewById(R.id.txtIngresos);
             layoutEgresos = view.findViewById(R.id.layoutEgresos);
             txtEgresos = view.findViewById(R.id.txtEgresos);
-            layoutMontoSolicitado = view.findViewById(R.id.layoutMontoSolicitado);
-            txtMontoSolicitado = view.findViewById(R.id.txtMontoSolicitado);
-            txtProductoSolicitado = view.findViewById(R.id.txtProductoSolicitado);
+            layoutMontoSolicitadoMejoraVivienda = view.findViewById(R.id.layoutMontoSolicitadoMejoraVivienda);
+            layoutMontoSolicitadoEquipandoHogar = view.findViewById(R.id.layoutMontoSolicitadoEquipandoHogar);
+            txtMontoSolicitadoMejoraVivienda = view.findViewById(R.id.txtMontoSolicitadoMejoraVivienda);
+            txtMontoSolicitadoEquipandoHogar = view.findViewById(R.id.txtMontoSolicitadoEquipandoHogar);
             radioPlazoProducto = view.findViewById(R.id.radioPlazoProducto);
             radioQuedateEnCasa = view.findViewById(R.id.radioQuedateEnCasa);
+            radioProducto = view.findViewById(R.id.radioProducto);
 
             usuario = Config.USUARIO_SESION;
             txtPromotor.setText(usuario.getUser());
@@ -265,6 +268,35 @@ public class FragmentFormularioRegistro extends Fragment {
                         guadarSolicitudDispersion();
                     } catch (Exception e) {
                         Toast.makeText(getActivity(), "Error", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+
+            radioProducto.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(RadioGroup group, int checkedId) {
+
+                    txtMontoSolicitadoMejoraVivienda.setVisibility(View.GONE);
+                    layoutMontoSolicitadoMejoraVivienda.setVisibility(View.GONE);
+                    txtMontoSolicitadoEquipandoHogar.setVisibility(View.GONE);
+                    layoutMontoSolicitadoEquipandoHogar.setVisibility(View.GONE);
+
+                    switch (checkedId) {
+                        case R.id.radioProductoMejoraVivienda:
+                            txtMontoSolicitadoMejoraVivienda.setVisibility(View.VISIBLE);
+                            layoutMontoSolicitadoMejoraVivienda.setVisibility(View.VISIBLE);
+                            txtMontoSolicitadoEquipandoHogar.setText("");
+                            break;
+                        case R.id.radioProductoEquipandoHogar:
+                            txtMontoSolicitadoMejoraVivienda.setText("");
+                            txtMontoSolicitadoEquipandoHogar.setVisibility(View.VISIBLE);
+                            layoutMontoSolicitadoEquipandoHogar.setVisibility(View.VISIBLE);
+                            break;
+                        default:
+                            txtMontoSolicitadoMejoraVivienda.setVisibility(View.VISIBLE);
+                            txtMontoSolicitadoEquipandoHogar.setVisibility(View.VISIBLE);
+                            layoutMontoSolicitadoMejoraVivienda.setVisibility(View.VISIBLE);
+                            layoutMontoSolicitadoEquipandoHogar.setVisibility(View.VISIBLE);
                     }
                 }
             });
@@ -315,9 +347,7 @@ public class FragmentFormularioRegistro extends Fragment {
                 TimeZone timeZoneUTC = TimeZone.getDefault();
                 int offsetFromUTC = timeZoneUTC.getOffset(new Date().getTime()) * -1;
 
-                datFechaNacimiento = new Date((Long) selection + offsetFromUTC);
-                SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", new Locale("es", "ES"));
-                txtFechaNacimiento.setText(dateFormat.format(datFechaNacimiento));
+                seleccionarFechaNacimiento(new Date((Long) selection + offsetFromUTC));
                 closeKeyBoard();
             }
         });
@@ -350,6 +380,36 @@ public class FragmentFormularioRegistro extends Fragment {
                 closeKeyBoard();
             }
         });
+    }
+
+    private void seleccionarFechaNacimiento(Date date) {
+        if(date == null) {
+            txtFechaNacimiento.setText("");
+        } else {
+            try {
+                datFechaNacimiento = date;
+                SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", new Locale("es", "ES"));
+                txtFechaNacimiento.setText(dateFormat.format(datFechaNacimiento));
+            } catch (Exception e) {
+                txtFechaNacimiento.setText("");
+            }
+        }
+        layoutFechaNacimiento.setError(null);
+    }
+
+    private void seleccionarFechaNacimientoConyuge(Date date) {
+        if(date == null) {
+            txtFechaNacimientoConyuge.setText("");
+        } else {
+            try {
+                datFechaNacimientoConyuge = date;
+                SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", new Locale("es", "ES"));
+                txtFechaNacimientoConyuge.setText(dateFormat.format(datFechaNacimientoConyuge));
+            } catch (Exception e) {
+                txtFechaNacimientoConyuge.setText("");
+            }
+        }
+        layoutFechaNacimientoConyuge.setError(null);
     }
 
     private void inicializarSelectorEstadoCivil() {
@@ -506,6 +566,7 @@ public class FragmentFormularioRegistro extends Fragment {
             public void onItemClick(Municipio municipio) {
                 if(municipio != null) {
                     seleccionarDomicilioMejoraMunicipio(municipio.getStrNombreMunicipioEstado());
+                    municipioMejora = municipio;
                     dialogBuscadorMunicipios.close();
                 } else {
                     seleccionarDomicilioMejoraMunicipio(null);
@@ -533,6 +594,7 @@ public class FragmentFormularioRegistro extends Fragment {
             dialogBuscadorMunicipios.limpiar();
             layoutDomicilioMejoraMunicipio.setEndIconDrawable(R.drawable.ic_baseline_arrow_drop_down_24);
             layoutDomicilioMejoraMunicipio.setEndIconContentDescription(SELECCIONAR);
+            municipioMejora = null;
         } else {
             txtDomicilioMejoraMunicipio.setText(strMunicipio);
             layoutDomicilioMejoraMunicipio.setEndIconDrawable(R.drawable.ic_baseline_cancel_24);
@@ -713,21 +775,6 @@ public class FragmentFormularioRegistro extends Fragment {
         });
     }
 
-    private void seleccionarFechaNacimiento(Date date) {
-        if(date == null) {
-            txtFechaNacimiento.setText("");
-        } else {
-            try {
-                datFechaNacimiento = date;
-                SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", new Locale("es", "ES"));
-                txtFechaNacimiento.setText(dateFormat.format(datFechaNacimiento));
-            } catch (Exception e) {
-                txtFechaNacimiento.setText("");
-            }
-        }
-        layoutFechaNacimiento.setError(null);
-    }
-
     private boolean validarCURP() {
         if(txtCURP.getText().toString().trim().length() == 18) {
             layoutCURP.setEndIconDrawable(R.drawable.ic_baseline_search_24);
@@ -850,7 +897,7 @@ public class FragmentFormularioRegistro extends Fragment {
 
         //FECHA NACIMIENTO
         try {
-            DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            DateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
             Date date = sdf.parse(cliente.getDatFechaNacimiento());
             seleccionarFechaNacimiento(date);
         } catch (Exception e) {
@@ -867,7 +914,8 @@ public class FragmentFormularioRegistro extends Fragment {
 
         txtNacionalidad.setText(cliente.getStrNacionalidad());
         txtOcupacion.setText(cliente.getStrOcupacion());
-        seleccionarActividad(cliente.getStrDescripcionActividad());
+        //seleccionarActividad(cliente.getStrDescripcionActividad());
+        seleccionarActividad(null);
         txtCelular.setText(cliente.getStrCelular());
         txtTelefono.setText(cliente.getStrTelefono());
         txtEmail.setText(cliente.getStrEmail());
@@ -881,21 +929,48 @@ public class FragmentFormularioRegistro extends Fragment {
         txtDomicilioMejoraNumInt.setText(cliente.getStrDireccionNumeroInterno());
         txtDomicilioMejoraColonia.setText(cliente.getStrColonia());
 
-        //CIUDAD DE LA MEJORA
-        seleccionarDomicilioMejoraMunicipio(cliente.getStrMunicipio() != "" ? cliente.getStrMunicipio() : null);
+        if(cliente.getStrMunicipio() != "") {
+            municipioMejora = new Municipio();
+            municipioMejora.setIdEstado(cliente.getIdEstado());
+            municipioMejora.setStrEstado(cliente.getStrEstado());
+            municipioMejora.setIdMunicipio(cliente.getIdMunicipio());
+            municipioMejora.setStrMunicipio(cliente.getStrMunicipio());
+            seleccionarDomicilioMejoraMunicipio(municipioMejora.getStrMunicipio());
+        } else {
+            municipioMejora = null;
+            seleccionarDomicilioMejoraMunicipio(null);
+        }
 
         txtReferenciaBancaria.setText("");
         txtInstitucionBancaria.setText("");
 
         txtIngresos.setText("");
         txtEgresos.setText("");
-        txtMontoSolicitado.setText("");
 
+        //CONYUGE
+        try {
+            DateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+            Date dateConyuge = sdf.parse(cliente.getDatFechaNacimientoConyuge());
+            seleccionarFechaNacimientoConyuge(dateConyuge);
+        } catch (Exception e) {
+            seleccionarFechaNacimientoConyuge(null);
+        }
+        txtOcupacionConyuge.setText(cliente.getStrOcupacionConyuge());
+        txtNombreConyuge.setText(cliente.getStrNombreConyuge());
+        txtLugarNacimientoConyuge.setText(cliente.getStrLugarNacimientoConyuge());
 
-        txtProductoSolicitado.setText("");
         radioPlazoProducto.check(R.id.radioPlazoProducto12Meses);
-
         radioQuedateEnCasa.check(R.id.radioQuedateEnCasaNoAplica);
+        resetearProducto();
+    }
+
+    public void resetearProducto() {
+        radioProducto.check(R.id.radioProductoMejoraVivienda);
+
+        txtMontoSolicitadoMejoraVivienda.setVisibility(View.VISIBLE);
+        txtMontoSolicitadoMejoraVivienda.setText("");
+        txtMontoSolicitadoEquipandoHogar.setVisibility(View.GONE);
+        txtMontoSolicitadoEquipandoHogar.setText("");
     }
 
     public void limpiarVista() {
@@ -946,10 +1021,10 @@ public class FragmentFormularioRegistro extends Fragment {
         txtInstitucionBancaria.setText("");
         txtIngresos.setText("");
         txtEgresos.setText("");
-        txtMontoSolicitado.setText("");
-        txtProductoSolicitado.setText("");
         radioPlazoProducto.check(R.id.radioPlazoProducto12Meses);
         radioQuedateEnCasa.check(R.id.radioQuedateEnCasaNoAplica);
+
+        resetearProducto();
 
         txtCURP.requestFocus();
     }
@@ -988,7 +1063,10 @@ public class FragmentFormularioRegistro extends Fragment {
         apiCall.enqueue(new Callback<ResponseAPI>() {
             @Override
             public void onResponse(Call<ResponseAPI> call, Response<ResponseAPI> response) {
-                if(response.body().getResultado() == null) {
+
+                if(response.body() == null ) {
+                    Toast.makeText(getContext(), "Error al guardar", Toast.LENGTH_SHORT).show();
+                } else if(response.body().getResultado() == null) {
                     Toast.makeText(getContext(), response.body().getMensaje(), Toast.LENGTH_SHORT).show();
                     //No hay nada por hacer
                 } else {
@@ -1017,6 +1095,7 @@ public class FragmentFormularioRegistro extends Fragment {
         SolicitudDispersion solicitudDispersion = new SolicitudDispersion();
         solicitudDispersion.setStrStatusSolicitud("TRÁMITE");
 
+        //CABECERAS
         solicitudDispersion.setIdPromotor("");
         solicitudDispersion.setStrUsuarioPromotor(usuario.getUser());
         solicitudDispersion.setStrPromotor(usuario.getUser());
@@ -1027,72 +1106,79 @@ public class FragmentFormularioRegistro extends Fragment {
         Date hoy = new Date();
         SimpleDateFormat dateFormat = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss", new Locale("es", "ES"));
         solicitudDispersion.setStrFechaAlta(dateFormat.format(hoy));
-
+        //NOMBRE CLIENTE
         solicitudDispersion.setStrCURP(txtCURP.getText().toString());
         solicitudDispersion.setStrNombre1(txtNombre1.getText().toString());
         solicitudDispersion.setStrNombre2(txtNombre2.getText().toString());
         solicitudDispersion.setStrApellidoPaterno(txtApellidoPaterno.getText().toString());
         solicitudDispersion.setStrApellidoMaterno(txtApellidoMaterno.getText().toString());
-
+        //GENERO CLIENTE
         solicitudDispersion.setIdGenero(radioSexo.getCheckedRadioButtonId() == R.id.radioSexoMujer ? "2" : "1");
         solicitudDispersion.setStrGenero(radioSexo.getCheckedRadioButtonId() == R.id.radioSexoMujer ? "MUJER" : "HOMBRE");
-
+        //FECHA NACIMIENTO
         dateFormat = new SimpleDateFormat("YYYY-MM-dd", new Locale("es", "ES"));
         solicitudDispersion.setStrFechaNacimiento(datFechaNacimiento != null ? dateFormat.format(datFechaNacimiento) : "");
-
+        //ESTADO CIVIL
         String idEstadoCivil = "";
         for (int i = 0; i < arrayEstadoCivil.length; i++){
-            if(arrayEstadoCivil[i].getStrEstadoCivil().trim() == txtEstadoCivil.getText().toString()) {
+            if(arrayEstadoCivil[i].getStrEstadoCivil().trim().equals(txtEstadoCivil.getText().toString().trim())) {
                 idEstadoCivil = arrayEstadoCivil[i].getIdEstadoCivil() + "";
             }
         }
-
         solicitudDispersion.setIdEstadoCivil(idEstadoCivil);
         solicitudDispersion.setStrEstadoCivil(txtEstadoCivil.getText().toString().trim());
-
-        solicitudDispersion.setStrNacionalidad(txtNacionalidad.getText().toString().trim());
-
+        //ACTIVIDAD CLIENTE
         solicitudDispersion.setStrOcupacion(txtOcupacion.getText().toString().trim());
         Actividad actividad = dialogBuscadorActividades != null ? dialogBuscadorActividades.getSelectedItem() : null;
         solicitudDispersion.setStrActividad(actividad.getStrActividad());
         solicitudDispersion.setIdActividad(actividad.getIdActividad()+"");
-
+        solicitudDispersion.setStrCNBV(actividad.getStrCNBV());
+        //CONTACTO
         solicitudDispersion.setStrCelular(txtCelular.getText().toString().trim());
         solicitudDispersion.setStrTelefono(txtTelefono.getText().toString().trim());
         solicitudDispersion.setStrEmail(txtEmail.getText().toString().trim());
-
+        //INE
         solicitudDispersion.setStrClaveINE(txtClaveElector.getText().toString().trim());
         solicitudDispersion.setStrNumeroINE(txtNumeroElector.getText().toString().trim());
-
+        //NACIONALIDAD
+        solicitudDispersion.setStrNacionalidad(txtNacionalidad.getText().toString().trim());
         solicitudDispersion.setStrEstadoNacimiento(txtEstadoOrigen.getText().toString());
         solicitudDispersion.setStrPais(txtPaisOrigen.getText().toString());
-
+        //DOMICILIO
         solicitudDispersion.setStrDomicilioCodigoPostal(txtCodigoPostal.getText().toString());
         solicitudDispersion.setStrDomicilio(txtDomicilioMejora.getText().toString());
         solicitudDispersion.setStrDomicilioNumExt(txtDomicilioMejoraNumExt.getText().toString());
         solicitudDispersion.setStrDomicilioNumInt(txtDomicilioMejoraNumInt.getText().toString());
         solicitudDispersion.setStrDomicilioColonia(txtDomicilioMejoraColonia.getText().toString());
-        solicitudDispersion.setIdDomicilioMunicipio(dialogBuscadorMunicipios.getSelectedItem() != null ? dialogBuscadorMunicipios.getSelectedItem().getIdMunicipio() : "");
-        solicitudDispersion.setIdDomicilioEstado(dialogBuscadorMunicipios.getSelectedItem() != null ? dialogBuscadorMunicipios.getSelectedItem().getIdEstado() : "");
-        solicitudDispersion.setStrDomicilioMunicipio(dialogBuscadorMunicipios.getSelectedItem() != null ? dialogBuscadorMunicipios.getSelectedItem().getStrMunicipio() : "");
-        solicitudDispersion.setStrDomicilioEstado(dialogBuscadorMunicipios.getSelectedItem() != null ? dialogBuscadorMunicipios.getSelectedItem().getStrEstado() : "");
-
+        solicitudDispersion.setIdDomicilioMunicipio(municipioMejora != null ? municipioMejora.getIdMunicipio() : "");
+        solicitudDispersion.setIdDomicilioEstado(municipioMejora != null ? municipioMejora.getIdEstado() : "");
+        solicitudDispersion.setStrDomicilioMunicipio(municipioMejora != null ? municipioMejora.getStrMunicipio() : "");
+        solicitudDispersion.setStrDomicilioEstado(municipioMejora != null ? municipioMejora.getStrEstado() : "");
+        //BANCOS
         solicitudDispersion.setStrReferenciaBancaria(txtReferenciaBancaria.getText().toString());
         solicitudDispersion.setStrBanco(txtInstitucionBancaria.getText().toString());
-
+        //INGRESOS
         solicitudDispersion.setDblIngresos(Double.parseDouble(txtIngresos.getText().toString().trim()));
         solicitudDispersion.setDblEgresos(Double.parseDouble(txtEgresos.getText().toString().trim()));
-        solicitudDispersion.setDblMontoSolicitado(Double.parseDouble(txtMontoSolicitado.getText().toString().trim()));
-        solicitudDispersion.setDblMontoAutorizado(Double.parseDouble(txtMontoSolicitado.getText().toString().trim()));
-
+        //CONYUGE
         solicitudDispersion.setStrNombreConyuge(txtNombreConyuge.getText().toString().trim());
         solicitudDispersion.setStrOcupacionConyuge(txtOcupacionConyuge.getText().toString().trim());
         solicitudDispersion.setStrLugarNacimientoConyuge(txtLugarNacimientoConyuge.getText().toString().trim());
         solicitudDispersion.setStrFechaNacimientoConyuge(datFechaNacimientoConyuge != null ? dateFormat.format(datFechaNacimientoConyuge) : "");
-
-        solicitudDispersion.setStrProducto(txtProductoSolicitado.getText().toString().trim());
+        //PRODUCTO
         solicitudDispersion.setIntPlazo(radioPlazoProducto.getCheckedRadioButtonId() == R.id.radioPlazoProducto12Meses ? 12 : 24);
         solicitudDispersion.setIntQuedateCasa(radioQuedateEnCasa.getCheckedRadioButtonId() == R.id.radioQuedateEnCasaAplica ? 1 : 0);
+        if(txtMontoSolicitadoMejoraVivienda.getText().toString().trim().length() > 0 ) {
+            solicitudDispersion.setDblMontoSolicitadoMejoraVivienda(Double.parseDouble(txtMontoSolicitadoMejoraVivienda.getText().toString().trim()));
+        } else {
+            solicitudDispersion.setDblMontoSolicitadoMejoraVivienda(0);
+        }
+
+        if(txtMontoSolicitadoEquipandoHogar.getText().toString().trim().length() > 0 ) {
+            solicitudDispersion.setDblMontoSolicitadoEquipandoHogar(Double.parseDouble(txtMontoSolicitadoEquipandoHogar.getText().toString().trim()));
+        } else {
+            solicitudDispersion.setDblMontoSolicitadoEquipandoHogar(0);
+        }
 
         return solicitudDispersion;
     }
@@ -1196,7 +1282,7 @@ public class FragmentFormularioRegistro extends Fragment {
             layoutCelular.setError(null);
         }
 
-        String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
+        String emailPattern = "[a-zA-Z0-9._-]+@[a-zA-Z0-9]+\\.+[a-zA-Z]+";
         if(txtEmail.getText().toString().trim().length() == 0) {
             layoutEmail.setError("Ingrese correo electrónico");
             txtEmail.requestFocus();
@@ -1313,12 +1399,24 @@ public class FragmentFormularioRegistro extends Fragment {
             layoutEgresos.setError(null);
         }
 
-        if(txtMontoSolicitado.getText().toString().trim().length() == 0) {
-            layoutMontoSolicitado.setError("Ingrese monto solicitado");
-            txtMontoSolicitado.requestFocus();
-            return false;
-        } else {
-            layoutMontoSolicitado.setError(null);
+        if(radioProducto.getCheckedRadioButtonId() == R.id.radioProductoMejoraVivienda || radioProducto.getCheckedRadioButtonId() == R.id.radioProductoAmbos ) {
+            if(txtMontoSolicitadoMejoraVivienda.getText().toString().trim().length() == 0) {
+                layoutMontoSolicitadoMejoraVivienda.setError("Ingrese una cantidad");
+                txtMontoSolicitadoMejoraVivienda.requestFocus();
+                return false;
+            } else {
+                layoutMontoSolicitadoMejoraVivienda.setError(null);
+            }
+        }
+
+        if(radioProducto.getCheckedRadioButtonId() == R.id.radioProductoEquipandoHogar || radioProducto.getCheckedRadioButtonId() == R.id.radioProductoAmbos) {
+            if(txtMontoSolicitadoEquipandoHogar.getText().toString().trim().length() == 0) {
+                layoutMontoSolicitadoEquipandoHogar.setError("Ingrese una cantidad");
+                txtMontoSolicitadoEquipandoHogar.requestFocus();
+                return false;
+            } else {
+                layoutMontoSolicitadoEquipandoHogar.setError(null);
+            }
         }
 
         return true;

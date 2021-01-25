@@ -35,6 +35,7 @@ public class SolicitudDispersion {
     private String strOcupacion = "";
     private String idActividad = "";
     private String strActividad = "";
+    private String strCNBV = "";
     private String strNumeroINE = "";
     private String strClaveINE = "";
     private String strPais = "";
@@ -50,17 +51,17 @@ public class SolicitudDispersion {
     private String strProducto = "";
     private int intPlazo;
     private int intQuedateCasa;
-    private double dblMontoSolicitado;
-    private double dblMontoAutorizado;
-    private double dblIngresos;
-    private double dblEgresos;
+    private double dblMontoSolicitadoMejoraVivienda;
+    private double dblMontoSolicitadoEquipandoHogar;
+    private double dblIngresos = 0;
+    private double dblEgresos = 0;
     private String strEstatusInserccionServidor = "";
 
     public SolicitudDispersion() {
     }
 
 
-    public SolicitudDispersion(int idSolicitud, String strFechaAlta, String strStatusSolicitud, String idSucursal, String strUsuarioPromotor, String idPromotor, String strPromotor, String strCordinador, String idCliente, String strApellidoPaterno, String strApellidoMaterno, String strNombre1, String strNombre2, String strFechaNacimiento, String idGenero, String strGenero, String strCURP, String strDomicilio, String strDomicilioCodigoPostal, String strDomicilioNumExt, String strDomicilioNumInt, String strDomicilioColonia, String idDomicilioEstado, String strDomicilioEstado, String idDomicilioMunicipio, String strDomicilioMunicipio, String strEstadoCivil, String idEstadoCivil, String strTelefono, String strCelular, String strOcupacion, String idActividad, String strActividad, String strNumeroINE, String strClaveINE, String strPais, String strEstadoNacimiento, String strNacionalidad, String strEmail, String strNombreConyuge, String strLugarNacimientoConyuge, String strFechaNacimientoConyuge, String strOcupacionConyuge, String strReferenciaBancaria, String strBanco, String strProducto, int intPlazo, int intQuedateCasa, double dblMontoSolicitado, double dblMontoAutorizado, double dblIngresos, double dblEgresos, String strEstatusInserccionServidor) {
+    public SolicitudDispersion(int idSolicitud, String strFechaAlta, String strStatusSolicitud, String idSucursal, String strUsuarioPromotor, String idPromotor, String strPromotor, String strCordinador, String idCliente, String strApellidoPaterno, String strApellidoMaterno, String strNombre1, String strNombre2, String strFechaNacimiento, String idGenero, String strGenero, String strCURP, String strDomicilio, String strDomicilioCodigoPostal, String strDomicilioNumExt, String strDomicilioNumInt, String strDomicilioColonia, String idDomicilioEstado, String strDomicilioEstado, String idDomicilioMunicipio, String strDomicilioMunicipio, String strEstadoCivil, String idEstadoCivil, String strTelefono, String strCelular, String strOcupacion, String idActividad, String strActividad, String strNumeroINE, String strClaveINE, String strPais, String strEstadoNacimiento, String strNacionalidad, String strEmail, String strNombreConyuge, String strLugarNacimientoConyuge, String strFechaNacimientoConyuge, String strOcupacionConyuge, String strReferenciaBancaria, String strBanco, String strProducto, int intPlazo, int intQuedateCasa, double dblMontoSolicitadoMejoraVivienda, double dblMontoSolicitadoEquipandoHogar, double dblIngresos, double dblEgresos, String strEstatusInserccionServidor, String strCNBV) {
         this.idSolicitud = idSolicitud;
         this.strFechaAlta = strFechaAlta;
         this.strStatusSolicitud = strStatusSolicitud;
@@ -109,10 +110,11 @@ public class SolicitudDispersion {
         this.strProducto = strProducto;
         this.intPlazo = intPlazo;
         this.intQuedateCasa = intQuedateCasa;
-        this.dblMontoSolicitado = dblMontoSolicitado;
-        this.dblMontoAutorizado = dblMontoAutorizado;
+        this.dblMontoSolicitadoMejoraVivienda = dblMontoSolicitadoMejoraVivienda;
+        this.dblMontoSolicitadoEquipandoHogar = dblMontoSolicitadoEquipandoHogar;
         this.dblIngresos = dblIngresos;
         this.dblEgresos = dblEgresos;
+        this.strCNBV = strCNBV;
     }
 
     public String getStrNombreCompleto() {
@@ -512,22 +514,6 @@ public class SolicitudDispersion {
         this.intQuedateCasa = intQuedateCasa;
     }
 
-    public double getDblMontoSolicitado() {
-        return dblMontoSolicitado;
-    }
-
-    public void setDblMontoSolicitado(double dblMontoSolicitado) {
-        this.dblMontoSolicitado = dblMontoSolicitado;
-    }
-
-    public double getDblMontoAutorizado() {
-        return dblMontoAutorizado;
-    }
-
-    public void setDblMontoAutorizado(double dblMontoAutorizado) {
-        this.dblMontoAutorizado = dblMontoAutorizado;
-    }
-
     public double getDblIngresos() {
         return dblIngresos;
     }
@@ -550,5 +536,29 @@ public class SolicitudDispersion {
 
     public void setStrEstatusInserccionServidor(String strEstatusInserccionServidor) {
         this.strEstatusInserccionServidor = strEstatusInserccionServidor;
+    }
+
+    public String getStrCNBV() {
+        return strCNBV;
+    }
+
+    public void setStrCNBV(String strCNBV) {
+        this.strCNBV = strCNBV;
+    }
+
+    public double getDblMontoSolicitadoMejoraVivienda() {
+        return dblMontoSolicitadoMejoraVivienda;
+    }
+
+    public void setDblMontoSolicitadoMejoraVivienda(double dblMontoSolicitadoMejoraVivienda) {
+        this.dblMontoSolicitadoMejoraVivienda = dblMontoSolicitadoMejoraVivienda;
+    }
+
+    public double getDblMontoSolicitadoEquipandoHogar() {
+        return dblMontoSolicitadoEquipandoHogar;
+    }
+
+    public void setDblMontoSolicitadoEquipandoHogar(double dblMontoSolicitadoEquipandoHogar) {
+        this.dblMontoSolicitadoEquipandoHogar = dblMontoSolicitadoEquipandoHogar;
     }
 }

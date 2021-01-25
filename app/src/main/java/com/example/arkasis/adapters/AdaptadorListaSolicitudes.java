@@ -90,7 +90,7 @@ public class AdaptadorListaSolicitudes extends RecyclerView.Adapter<AdaptadorLis
             tvUbicacion.setText(solicitudDispersion.getStrDomicilioCompleto());
             txtFechaSolicitud.setText(solicitudDispersion.getStrFechaAlta());
             NumberFormat formatter = new DecimalFormat("#,###");
-            txtMontoSolicitado.setText(formatter.format(solicitudDispersion.getDblMontoSolicitado())+"");
+            txtMontoSolicitado.setText(formatter.format(solicitudDispersion.getDblMontoSolicitadoMejoraVivienda())+"");
             if(solicitudDispersion.getStrEstatusInserccionServidor() != "") {
                 txtEstatus.setText(solicitudDispersion.getStrEstatusInserccionServidor());
             } else {

@@ -3,6 +3,8 @@ package com.example.arkasis.models;
 import com.google.gson.internal.LinkedTreeMap;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.TreeMap;
 
 public class Cliente implements Serializable {
@@ -37,10 +39,13 @@ public class Cliente implements Serializable {
     private String strEstadoNacimiento = "";
     private String strNacionalidad = "";
     private String strEmail = "";
-    private String strNombreConyugue = "";
-    private String datFechaNacimientoConyugue = "";
-    private String strLugarNacimientoConyugue = "";
+    private String strNombreConyuge = "";
+    private String datFechaNacimientoConyuge = "";
+    private String strLugarNacimientoConyuge = "";
+    private String strOcupacionConyuge = "";
     private String strOcupacion = "";
+
+    List<SaldoCliente> listaSaldos = new ArrayList<>();
 
     public Cliente() {
     }
@@ -76,9 +81,10 @@ public class Cliente implements Serializable {
         this.strEstadoNacimiento = treeMap.get("strEstadoNacimiento").toString().trim();
         this.strNacionalidad = treeMap.get("strNacionalidad").toString().trim();
         this.strEmail = treeMap.get("strEmail").toString().trim();
-        this.strNombreConyugue = treeMap.get("strNombreConyugue").toString().trim();
-        this.datFechaNacimientoConyugue = treeMap.get("datFechaNacimientoConyugue").toString().trim();
-        this.strLugarNacimientoConyugue = treeMap.get("strLugarNacimientoConyugue").toString().trim();
+        this.strNombreConyuge = treeMap.get("strNombreConyuge").toString().trim();
+        this.datFechaNacimientoConyuge = treeMap.get("datFechaNacimientoConyuge").toString().trim();
+        this.strLugarNacimientoConyuge = treeMap.get("strLugarNacimientoConyuge").toString().trim();
+        this.strOcupacionConyuge = treeMap.get("strOcupacionConyuge").toString().trim();
         this.strOcupacion = treeMap.get("strOcupacion").toString().trim();
     }
     //Custom
@@ -97,6 +103,19 @@ public class Cliente implements Serializable {
 
     public String getStrLugarNacimiento() {
         return (strEstadoNacimiento.trim() != "" ? strEstadoNacimiento.trim()+", " : "")+strPaisNacimiento.trim();
+    }
+
+    public Double getSaldoDeudor() {
+        Double saldo = 0.00;
+        if(listaSaldos == null || listaSaldos.size() == 0) {
+            return saldo;
+        }
+
+        for(SaldoCliente saldoCliente : listaSaldos ) {
+            saldo += Double.parseDouble(saldoCliente.getDblSaldo());
+        }
+
+        return saldo;
     }
 
     //Default
@@ -340,28 +359,28 @@ public class Cliente implements Serializable {
         this.strEmail = strEmail;
     }
 
-    public String getStrNombreConyugue() {
-        return strNombreConyugue;
+    public String getStrNombreConyuge() {
+        return strNombreConyuge;
     }
 
-    public void setStrNombreConyugue(String strNombreConyugue) {
-        this.strNombreConyugue = strNombreConyugue;
+    public void setStrNombreConyuge(String strNombreConyugue) {
+        this.strNombreConyuge = strNombreConyugue;
     }
 
-    public String getDatFechaNacimientoConyugue() {
-        return datFechaNacimientoConyugue;
+    public String getDatFechaNacimientoConyuge() {
+        return datFechaNacimientoConyuge;
     }
 
-    public void setDatFechaNacimientoConyugue(String datFechaNacimientoConyugue) {
-        this.datFechaNacimientoConyugue = datFechaNacimientoConyugue;
+    public void setDatFechaNacimientoConyuge(String datFechaNacimientoConyugue) {
+        this.datFechaNacimientoConyuge = datFechaNacimientoConyugue;
     }
 
-    public String getStrLugarNacimientoConyugue() {
-        return strLugarNacimientoConyugue;
+    public String getStrLugarNacimientoConyuge() {
+        return strLugarNacimientoConyuge;
     }
 
-    public void setStrLugarNacimientoConyugue(String strLugarNacimientoConyugue) {
-        this.strLugarNacimientoConyugue = strLugarNacimientoConyugue;
+    public void setStrLugarNacimientoConyuge(String strLugarNacimientoConyuge) {
+        this.strLugarNacimientoConyuge = strLugarNacimientoConyuge;
     }
 
     public String getStrOcupacion() {
@@ -370,5 +389,21 @@ public class Cliente implements Serializable {
 
     public void setStrOcupacion(String strOcupacion) {
         this.strOcupacion = strOcupacion;
+    }
+
+    public List<SaldoCliente> getListaSaldos() {
+        return listaSaldos;
+    }
+
+    public void setListaSaldos(List<SaldoCliente> listaSaldos) {
+        this.listaSaldos = listaSaldos;
+    }
+
+    public String getStrOcupacionConyuge() {
+        return strOcupacionConyuge;
+    }
+
+    public void setStrOcupacionConyuge(String strOcupacionConyuge) {
+        this.strOcupacionConyuge = strOcupacionConyuge;
     }
 }

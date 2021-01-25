@@ -10,8 +10,11 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.fragment.app.DialogFragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.arkasis.adapters.AdaptadorListaClientes;
+import com.example.arkasis.adapters.AdaptadorListaSaldoCliente;
 import com.example.arkasis.models.Cliente;
 
 /**
@@ -46,8 +49,11 @@ public class DialogFragmentInfoCliente extends DialogFragment {
 
     private Cliente cliente;
 
-    private TextView tvNombreCompleto, tvCurp, tvClaveElector, tvGenero, tvFechaNacimiento, tvEstadoCivil, tvNacionalidad;
+    private TextView tvNombreCompleto, tvCurp, tvClaveElector, tvGenero, tvFechaNacimiento, tvEstadoCivil, tvNacionalidad, tvSinSaldos;
     private TextView tvCelular, tvTelefono, tvMail, tvDomicilio, tvLugarNacimiento, tvNombreConyuge, tvFechaNacimientoConyuge, tvLugarNacimientoConyuge;
+
+    private RecyclerView rvList_saldos;
+    private AdaptadorListaSaldoCliente adaptadorListaSaldoCliente;
 
     /**
      * Use this factory method to create a new instance of
@@ -107,6 +113,9 @@ public class DialogFragmentInfoCliente extends DialogFragment {
         tvFechaNacimientoConyuge = view.findViewById(R.id.tvFechaNacimientoConyuge);
         tvLugarNacimientoConyuge = view.findViewById(R.id.tvLugarNacimientoConyuge);
         btnNuevaSolicitud = view.findViewById(R.id.btnNuevaSolicitud);
+        tvSinSaldos = view.findViewById(R.id.tvSinSaldos);
+
+        rvList_saldos =  view.findViewById(R.id.rvList_saldos);
 
         initData();
 
@@ -128,6 +137,25 @@ public class DialogFragmentInfoCliente extends DialogFragment {
         return view;
     }
 
+    public void inicializarListaSaldos() {
+
+        if(cliente.getListaSaldos().size() == 0) {
+            tvSinSaldos.setVisibility(View.VISIBLE);
+            btnNuevaSolicitud.setVisibility(View.VISIBLE);
+        } else {
+            adaptadorListaSaldoCliente = new AdaptadorListaSaldoCliente(cliente.getListaSaldos(), getContext());
+            rvList_saldos.setHasFixedSize(true);
+            rvList_saldos.setLayoutManager(new LinearLayoutManager(view.getContext()));
+            rvList_saldos.setAdapter(adaptadorListaSaldoCliente);
+
+            if(cliente.getSaldoDeudor() > 0) {
+                btnNuevaSolicitud.setVisibility(View.GONE);
+            } else {
+                btnNuevaSolicitud.setVisibility(View.VISIBLE);
+            }
+        }
+    }
+
     public void initData() {
         tvNombreCompleto.setText(cliente.getStrNombreCompleto());
         tvCurp.setText(cliente.getStrCurp());
@@ -140,9 +168,11 @@ public class DialogFragmentInfoCliente extends DialogFragment {
         tvMail.setText(cliente.getStrEmail());
         tvDomicilio.setText(cliente.getStrDomicilio());
         tvLugarNacimiento.setText(cliente.getStrLugarNacimiento());
-        tvNombreConyuge.setText(cliente.getStrNombreConyugue());
-        tvFechaNacimientoConyuge.setText(cliente.getDatFechaNacimientoConyugue());
-        tvLugarNacimientoConyuge.setText(cliente.getStrLugarNacimientoConyugue());
+        tvNombreConyuge.setText(cliente.getStrNombreConyuge());
+        tvFechaNacimientoConyuge.setText(cliente.getDatFechaNacimientoConyuge());
+        tvLugarNacimientoConyuge.setText(cliente.getStrLugarNacimientoConyuge());
+
+        inicializarListaSaldos();
     }
 
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {

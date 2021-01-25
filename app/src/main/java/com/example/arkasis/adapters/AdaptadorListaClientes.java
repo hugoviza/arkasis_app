@@ -119,6 +119,10 @@ public class AdaptadorListaClientes extends RecyclerView.Adapter<AdaptadorListaC
                 public void onResponse(Call<ResponseAPI> call, Response<ResponseAPI> response) {
                     if(response.body() == null || response.body().getResultado() == null) {
                         //No hay nada por hacer
+
+                        Toast.makeText(context, context.getString(R.string.sin_segistros), Toast.LENGTH_SHORT).show();
+                        setData(new ArrayList<>());
+
                     } else {
                         List<Cliente> listaClientes = new ArrayList<>();
                         try {

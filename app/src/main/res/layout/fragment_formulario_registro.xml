@@ -362,7 +362,7 @@
                     android:id="@+id/txtEmail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textEmailAddress"/>
+                    android:inputType="textCapCharacters"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <!-- CREDENCIA ELECTOR  -->
@@ -690,7 +690,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Datos del crédito"
+                    android:text="Ingresos / Egresos"
                     />
 
                 <TextView
@@ -725,21 +725,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/layoutMontoSolicitado"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Monto solicitado">
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/txtMontoSolicitado"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="number"/>
-            </com.google.android.material.textfield.TextInputLayout>
-
-
-
-            <!-- Equipando tu hogar  -->
+            <!-- PRODUCTOS  -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -758,16 +744,71 @@
                     />
             </LinearLayout>
 
-            <com.google.android.material.textfield.TextInputLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Producto solicitado">
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/txtProductoSolicitado"
+                android:orientation="vertical">
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textCapCharacters"/>
+                    android:text="Productos"/>
+
+                <RadioGroup
+                    android:id="@+id/radioProducto"
+                    android:checkedButton="@id/radioProductoMejoraVivienda"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <RadioButton
+                        android:id="@+id/radioProductoMejoraVivienda"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Mejora vivienda"
+                        android:layout_marginRight="16sp"/>
+
+                    <RadioButton
+                        android:id="@+id/radioProductoEquipandoHogar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Equipando hogar" />
+
+                    <RadioButton
+                        android:id="@+id/radioProductoAmbos"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Mejora vivienda y Equipando hogar" />
+
+                </RadioGroup>
+
+            </LinearLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layoutMontoSolicitadoMejoraVivienda"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Monto solicitado - Mejora vivienda">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/txtMontoSolicitadoMejoraVivienda"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"/>
             </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layoutMontoSolicitadoEquipandoHogar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Monto solicitado - Equipando hogar"
+                android:visibility="gone">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/txtMontoSolicitadoEquipandoHogar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    android:inputType="number"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -801,7 +842,6 @@
                 </RadioGroup>
 
             </LinearLayout>
-
 
 
 

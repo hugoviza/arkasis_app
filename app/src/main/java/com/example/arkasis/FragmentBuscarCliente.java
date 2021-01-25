@@ -12,20 +12,34 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.example.arkasis.adapters.AdaptadorListaClientes;
 import com.example.arkasis.componentes.DialogBuscadorMunicipios;
+import com.example.arkasis.config.Config;
+import com.example.arkasis.interfaces.APICatalogosInterface;
+import com.example.arkasis.interfaces.APIClientesInterface;
+import com.example.arkasis.models.Actividad;
 import com.example.arkasis.models.Cliente;
 import com.example.arkasis.models.Municipio;
+import com.example.arkasis.models.ResponseAPI;
+import com.example.arkasis.models.SaldoCliente;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.gson.internal.LinkedTreeMap;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link FragmentBuscarCliente#newInstance} factory method to
+ * Use the  factory method to
  * create an instance of this fragment.
  */
 public class FragmentBuscarCliente extends Fragment {
@@ -134,8 +148,55 @@ public class FragmentBuscarCliente extends Fragment {
                 if(position == RecyclerView.NO_POSITION) {
                     //No hay nada por hacer
                 } else {
-                    abrirActivity_verInfoCliente(adaptadorListaClientes.getItem(position));
+
+                    consultarSaldosDeClientes (adaptadorListaClientes.getItem(position));
                 }
+            }
+        });
+    }
+
+    public void consultarSaldosDeClientes(Cliente cliente) {
+
+        BottomBarActivity.abrirLoading("Consultando saldos");
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(Config.URL_API)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        APIClientesInterface api = retrofit.create(APIClientesInterface.class);
+        Call<ResponseAPI> apiCall = api.getSaldos(cliente);
+
+        apiCall.enqueue(new Callback<ResponseAPI>() {
+            @Override
+            public void onResponse(Call<ResponseAPI> call, Response<ResponseAPI> response) {
+                if(response.body() == null || response.body().getResultado() == null) {
+                    // Si no hay datos solo abrimos el dialogo de info
+                    abrirActivity_verInfoCliente(cliente);
+                } else {
+                    List<SaldoCliente> listaSaldos = new ArrayList<>();
+                    if(response.body().getSuccess()) {
+                        for (LinkedTreeMap<Object, Object> treeMap : (ArrayList<LinkedTreeMap<Object, Object>>)response.body().getResultado()) {
+                            try {
+                                listaSaldos.add(new SaldoCliente(treeMap));
+                            } catch (Exception e) {
+                                Toast.makeText(parent, "Error al obtener saldos de clientes", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+
+                        cliente.setListaSaldos(listaSaldos);
+                    }
+
+                    abrirActivity_verInfoCliente(cliente);
+                }
+
+                BottomBarActivity.cerrarLoading();
+            }
+
+            @Override
+            public void onFailure(Call<ResponseAPI> call, Throwable t) {
+                Toast.makeText(parent, getString(R.string.sin_acceso_servidor), Toast.LENGTH_SHORT).show();
+                BottomBarActivity.cerrarLoading();
             }
         });
     }
@@ -208,6 +269,12 @@ public class FragmentBuscarCliente extends Fragment {
             dialogFragmentInfoCliente.show(getActivity().getSupportFragmentManager(), "fragment");
         } catch (Exception e) {
             //chale
+        }
+    }
+
+    public void setHabilitarBusqueda(boolean bitActivo) {
+        if(btnBuscarCliente != null) {
+            btnBuscarCliente.setEnabled(bitActivo);
         }
     }
 }

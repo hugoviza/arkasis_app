@@ -50,7 +50,7 @@ public class MigracionesSQL {
                     + TableSolicitudesDispersion.col_strNombre1 + " TEXT,"
                     + TableSolicitudesDispersion.col_strNombre2 + " TEXT,"
                     + TableSolicitudesDispersion.col_strFechaNacimiento + " TEXT,"
-                    + TableSolicitudesDispersion.col_idGenero + " TEXT,"
+                    + TableSolicitudesDispersion.col_idGenero + " REAL,"
                     + TableSolicitudesDispersion.col_strGenero + " TEXT,"
                     + TableSolicitudesDispersion.col_strCURP + " TEXT,"
                     + TableSolicitudesDispersion.col_strDomicilio + " TEXT,"
@@ -84,11 +84,12 @@ public class MigracionesSQL {
                     + TableSolicitudesDispersion.col_strProducto + " TEXT,"
                     + TableSolicitudesDispersion.col_intPlazo + " INTEGER,"
                     + TableSolicitudesDispersion.col_intQuedateCasa + " INTEGER,"
-                    + TableSolicitudesDispersion.col_dblMontoSolicitado + " REAL,"
-                    + TableSolicitudesDispersion.col_dblMontoAutorizado + " REAL,"
+                    + TableSolicitudesDispersion.col_dblMontoSolicitadoEquipandoHogar + " REAL,"
+                    + TableSolicitudesDispersion.col_dblMontoSolicitadoMejoraVivienda + " REAL,"
                     + TableSolicitudesDispersion.col_dblIngresos + " REAL,"
                     + TableSolicitudesDispersion.col_dblEgresos + " REAL,"
-                    + TableSolicitudesDispersion.col_strEstatusInserccionServidor + " TEXT"
+                    + TableSolicitudesDispersion.col_strEstatusInserccionServidor + " TEXT,"
+                    + TableSolicitudesDispersion.col_strCNBV + " TEXT"
                     + " )";
 
     public static final String TRUNCATE_TABLA_ACTIVIDADES = "DELETE FROM " + TableActividades.table;

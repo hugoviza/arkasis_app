@@ -10,6 +10,13 @@
     <string name="seleccionar">Seleccione</string>
     <string name="limpiar_campo">Limpiar campo</string>
 
+    <string name="abrir">Abrir</string>
+    <string name="cerrar">Cerrar</string>
+
+
+    <!-- VALIDACIONES -->
+    <string name="sin_segistros">No se encontraron registros</string>
+
 
     <string name="sin_conexion">Sin conexión a internet</string>
     <string name="sin_acceso_servidor">No es posible conectarse al servidor</string>

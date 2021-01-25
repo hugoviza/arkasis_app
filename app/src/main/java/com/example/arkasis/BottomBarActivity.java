@@ -83,6 +83,7 @@ public class BottomBarActivity extends AppCompatActivity {
             myReceiver.setOnItemClickListener(new CustomReceiver.OnChangeStatus() {
                 @Override
                 public void onChange(String status) {
+                    fragmentBuscarCliente.setHabilitarBusqueda(status == "");
                     if(status != "") {
                         tvEstatusConexion.setVisibility(View.VISIBLE);
                         tvEstatusConexion.setText(status);
