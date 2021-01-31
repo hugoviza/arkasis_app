@@ -550,7 +550,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Dirección de la mejora"
+                    android:text="Dirección"
                     />
 
                 <TextView
@@ -792,7 +792,7 @@
                 </RadioGroup>
 
             </LinearLayout>
-
+            <!-- campos para poducto mejora -->
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/layoutMontoSolicitadoMejoraVivienda"
                 android:layout_width="match_parent"
@@ -805,6 +805,93 @@
                     android:inputType="number"/>
             </com.google.android.material.textfield.TextInputLayout>
 
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layoutCodigoPostal_mejoraVivienda"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Código postal - Mejora vivienda">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/txtCodigoPostal_mejoraVivienda"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textCapCharacters"
+                    android:maxLength="5"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layoutDomicilio_mejoraVivienda"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Dirección - Mejora vivienda">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/txtDomicilio_mejoraVivienda"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textCapCharacters"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/layoutNumExt_mejoraVivienda"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="Número exterior - Mejora vivienda"
+                    android:layout_weight="2">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/txtNumExt_mejoraVivienda"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textCapCharacters"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/layoutNumInt_mejoraVivienda"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="Número interior - Mejora vivienda"
+                    android:layout_weight="2">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/txtNumInt_mejoraVivienda"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textCapCharacters"/>
+                </com.google.android.material.textfield.TextInputLayout>
+            </LinearLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layoutColonia_mejoraVivienda"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Colonia - Mejora vivienda">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/txtColonia_mejoraVivienda"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textCapCharacters"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layoutMunicipio_mejoraVivienda"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Municipio - Mejora vivienda"
+                app:endIconMode="custom"
+                app:endIconDrawable="@drawable/ic_baseline_arrow_drop_down_24"
+                app:endIconContentDescription="@string/seleccionar">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/txtMunicipio_mejoraVivienda"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textCapCharacters"/>
+            </com.google.android.material.textfield.TextInputLayout>
+            <!-- campos para poducto mejora -->
+
+
+            <!-- campos para producto equipando -->
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/layoutMontoSolicitadoEquipandoHogar"
                 android:layout_width="match_parent"
@@ -819,7 +906,6 @@
                     android:inputType="number"/>
             </com.google.android.material.textfield.TextInputLayout>
 
-
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/layoutProductoEquipandoHogar"
                 android:layout_width="match_parent"
@@ -831,9 +917,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:visibility="gone"
-                    android:inputType="number"/>
+                    android:inputType="textCapCharacters"/>
             </com.google.android.material.textfield.TextInputLayout>
-
+            <!-- FIN campos para producto equipando -->
 
             <LinearLayout
                 android:layout_width="match_parent"

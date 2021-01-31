@@ -57,6 +57,16 @@ public class SolicitudDispersion {
     private double dblEgresos = 0;
     private String strEstatusInserccionServidor = "";
 
+    private String strDomicilio_mejoraVivienda = "";
+    private String strCodigoPostal_mejoraVivienda = "";
+    private String strNumExt_mejoraVivienda = "";
+    private String strNumInt_mejoraVivienda = "";
+    private String strColonia_mejoraVivienda = "";
+    private String idEstado_mejoraVivienda = "";
+    private String strEstado_mejoraVivienda = "";
+    private String idMunicipio_mejoraVivienda = "";
+    private String strMunicipio_mejoraVivienda = "";
+
     public SolicitudDispersion() {
     }
 
@@ -560,5 +570,77 @@ public class SolicitudDispersion {
 
     public void setDblMontoSolicitadoEquipandoHogar(double dblMontoSolicitadoEquipandoHogar) {
         this.dblMontoSolicitadoEquipandoHogar = dblMontoSolicitadoEquipandoHogar;
+    }
+
+    public String getStrDomicilio_mejoraVivienda() {
+        return strDomicilio_mejoraVivienda;
+    }
+
+    public void setStrDomicilio_mejoraVivienda(String strDomicilio_mejoraVivienda) {
+        this.strDomicilio_mejoraVivienda = strDomicilio_mejoraVivienda;
+    }
+
+    public String getStrCodigoPostal_mejoraVivienda() {
+        return strCodigoPostal_mejoraVivienda;
+    }
+
+    public void setStrCodigoPostal_mejoraVivienda(String strCodigoPostal_mejoraVivienda) {
+        this.strCodigoPostal_mejoraVivienda = strCodigoPostal_mejoraVivienda;
+    }
+
+    public String getStrNumExt_mejoraVivienda() {
+        return strNumExt_mejoraVivienda;
+    }
+
+    public void setStrNumExt_mejoraVivienda(String strNumExt_mejoraVivienda) {
+        this.strNumExt_mejoraVivienda = strNumExt_mejoraVivienda;
+    }
+
+    public String getStrNumInt_mejoraVivienda() {
+        return strNumInt_mejoraVivienda;
+    }
+
+    public void setStrNumInt_mejoraVivienda(String strNumInt_mejoraVivienda) {
+        this.strNumInt_mejoraVivienda = strNumInt_mejoraVivienda;
+    }
+
+    public String getStrColonia_mejoraVivienda() {
+        return strColonia_mejoraVivienda;
+    }
+
+    public void setStrColonia_mejoraVivienda(String strColonia_mejoraVivienda) {
+        this.strColonia_mejoraVivienda = strColonia_mejoraVivienda;
+    }
+
+    public String getIdEstado_mejoraVivienda() {
+        return idEstado_mejoraVivienda;
+    }
+
+    public void setIdEstado_mejoraVivienda(String idEstado_mejoraVivienda) {
+        this.idEstado_mejoraVivienda = idEstado_mejoraVivienda;
+    }
+
+    public String getStrEstado_mejoraVivienda() {
+        return strEstado_mejoraVivienda;
+    }
+
+    public void setStrEstado_mejoraVivienda(String strEstado_mejoraVivienda) {
+        this.strEstado_mejoraVivienda = strEstado_mejoraVivienda;
+    }
+
+    public String getIdMunicipio_mejoraVivienda() {
+        return idMunicipio_mejoraVivienda;
+    }
+
+    public void setIdMunicipio_mejoraVivienda(String idMunicipio_mejoraVivienda) {
+        this.idMunicipio_mejoraVivienda = idMunicipio_mejoraVivienda;
+    }
+
+    public String getStrMunicipio_mejoraVivienda() {
+        return strMunicipio_mejoraVivienda;
+    }
+
+    public void setStrMunicipio_mejoraVivienda(String strMunicipio_mejoraVivienda) {
+        this.strMunicipio_mejoraVivienda = strMunicipio_mejoraVivienda;
     }
 }
