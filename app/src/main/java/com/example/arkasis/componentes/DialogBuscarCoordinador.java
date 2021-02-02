@@ -36,6 +36,8 @@ public class DialogBuscarCoordinador {
     Coordinador coordinadorSeleccionado;
     String idSucursal = "";
 
+    private String title = "Seleccione coordinador";
+
     //Eventos
     DialogBuscarCoordinador.OnItemClickListener onItemClickListener;
 
@@ -46,6 +48,10 @@ public class DialogBuscarCoordinador {
     public DialogBuscarCoordinador(Context context, View parent) {
         this.context = context;
         this.parent = parent;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public void show() {
@@ -86,7 +92,7 @@ public class DialogBuscarCoordinador {
         btnCerrar = dialog.findViewById(R.id.btnCerrar);
         TextView tvTitle = dialog.findViewById(R.id.tvTitle);
 
-        tvTitle.setText("Seleccione coordinador");
+        tvTitle.setText(title);
 
         adaptadorListaCoordinadores = new AdaptadorListaCoordinadores(dialog.getContext(), idSucursal);
         recycler_view = dialog.findViewById(R.id.recycler_view);

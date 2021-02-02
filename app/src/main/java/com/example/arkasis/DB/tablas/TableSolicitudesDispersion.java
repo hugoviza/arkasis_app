@@ -16,9 +16,10 @@ public class TableSolicitudesDispersion extends Conexion implements TableSQLite 
     public static final String col_strFechaAlta = "strFechaAlta";
     public static final String col_strStatusSolicitud = "strStatusSolicitud";
     public static final String col_idSucursal = "idSucursal";
-    public static final String col_strUsuarioPromotor = "strUsuarioPromotor";
+    public static final String col_strUsuario = "strUsuario";
     public static final String col_idPromotor = "idPromotor";
     public static final String col_strPromotor = "strPromotor";
+    public static final String col_idCordinador = "idCordinador";
     public static final String col_strCordinador = "strCordinador";
     public static final String col_idCliente = "idCliente";
     public static final String col_strApellidoPaterno = "strApellidoPaterno";
@@ -45,6 +46,7 @@ public class TableSolicitudesDispersion extends Conexion implements TableSQLite 
     public static final String col_strOcupacion = "strOcupacion";
     public static final String col_idActividad = "idActividad";
     public static final String col_strActividad = "strActividad";
+    public static final String col_strCNBV = "strCNBV";
     public static final String col_strNumeroINE = "strNumeroINE";
     public static final String col_strClaveINE = "strClaveINE";
     public static final String col_strPais = "strPais";
@@ -65,7 +67,25 @@ public class TableSolicitudesDispersion extends Conexion implements TableSQLite 
     public static final String col_dblIngresos = "dblIngresos";
     public static final String col_dblEgresos = "dblEgresos";
     public static final String col_strEstatusInserccionServidor = "strEstatusInserccionServidor";
-    public static final String col_strCNBV = "strCNBV";
+
+    public static final String col_strDomicilio_mejoraVivienda = "strDomicilio_mejoraVivienda";
+    public static final String col_strCodigoPostal_mejoraVivienda = "strCodigoPostal_mejoraVivienda";
+    public static final String col_strNumExt_mejoraVivienda = "strNumExt_mejoraVivienda";
+    public static final String col_strNumInt_mejoraVivienda = "strNumInt_mejoraVivienda";
+    public static final String col_strColonia_mejoraVivienda = "strColonia_mejoraVivienda";
+    public static final String col_idEstado_mejoraVivienda = "idEstado_mejoraVivienda";
+    public static final String col_strEstado_mejoraVivienda = "strEstado_mejoraVivienda";
+    public static final String col_idMunicipio_mejoraVivienda = "idMunicipio_mejoraVivienda";
+    public static final String col_strMunicipio_mejoraVivienda = "strMunicipio_mejoraVivienda";
+
+    public static final String col_strFotoINEFrontal_B64 = "strFotoINEFrontal_B64";
+    public static final String col_strFotoINEFrontal_nombre = "strFotoINEFrontal_nombre";
+    public static final String col_strFotoINEReverso_B64 = "strFotoINEReverso_B64";
+    public static final String col_strFotoINEReverso_nombre = "strFotoINEReverso_nombre";
+    public static final String col_strFotoPerfil_B64 = "strFotoPerfil_B64";
+    public static final String col_strFotoPerfil_nombre = "strFotoPerfil_nombre";
+    public static final String col_strFotoComprobanteDomicilio_B64 = "strFotoComprobanteDomicilio_B64";
+    public static final String col_strFotoComprobanteDomicilio_nombre = "strFotoComprobanteDomicilio_nombre";
 
     public TableSolicitudesDispersion(Context context) {
         super(context);
@@ -75,9 +95,9 @@ public class TableSolicitudesDispersion extends Conexion implements TableSQLite 
     public void insertar(Object o) {
         SolicitudDispersion item = (SolicitudDispersion)o;
         String query = "INSERT INTO "+table
-                +" ( "+ col_strFechaAlta + ", "+ col_strStatusSolicitud + ", "+ col_idSucursal + ", "+ col_strUsuarioPromotor + ", "+ col_idPromotor + ", "+ col_strPromotor + ", "+ col_strCordinador + ", "+ col_idCliente + ", "+ col_strApellidoPaterno + ", "+ col_strApellidoMaterno + ", "+ col_strNombre1 + ", "+ col_strNombre2 + ", "+ col_strFechaNacimiento + ", "+ col_idGenero + ", "+ col_strGenero + ", "+ col_strCURP + ", "+ col_strDomicilio + ", "+ col_strDomicilioCodigoPostal + ", "+ col_strDomicilioNumExt + ", "+ col_strDomicilioNumInt + ", "+ col_strDomicilioColonia + ", "+ col_idDomicilioEstado + ", "+ col_strDomicilioEstado + ", "+ col_idDomicilioMunicipio + ", "+ col_strDomicilioMunicipio + ", "+ col_strEstadoCivil + ", "+ col_idEstadoCivil + ", "+ col_strTelefono + ", "+ col_strCelular + ", "+ col_strOcupacion + ", "+ col_idActividad + ", "+ col_strActividad + ", "+ col_strNumeroINE + ", "+ col_strClaveINE + ", "+ col_strPais + ", "+ col_strEstadoNacimiento + ", "+ col_strNacionalidad + ", "+ col_strEmail + ", "+ col_strNombreConyuge + ", "+ col_strLugarNacimientoConyuge + ", "+ col_strFechaNacimientoConyuge + ", "+ col_strOcupacionConyuge + ", "+ col_strReferenciaBancaria + ", "+ col_strBanco + ", "+ col_strProducto + ", "+ col_intPlazo + ", "+ col_intQuedateCasa + ", "+ col_dblMontoSolicitadoMejoraVivienda + ", "+ col_dblMontoSolicitadoEquipandoHogar + ", "+ col_dblIngresos + ", "+ col_dblEgresos + ", "+col_strEstatusInserccionServidor+", "+col_strCNBV+" )"
+                +" ( "+ col_strFechaAlta + ", "+ col_strStatusSolicitud + ", "+ col_idSucursal + ", "+ col_strUsuario + ", "+ col_idPromotor + ", "+ col_strPromotor + ", "+ col_strCordinador + ", "+ col_idCliente + ", "+ col_strApellidoPaterno + ", "+ col_strApellidoMaterno + ", "+ col_strNombre1 + ", "+ col_strNombre2 + ", "+ col_strFechaNacimiento + ", "+ col_idGenero + ", "+ col_strGenero + ", "+ col_strCURP + ", "+ col_strDomicilio + ", "+ col_strDomicilioCodigoPostal + ", "+ col_strDomicilioNumExt + ", "+ col_strDomicilioNumInt + ", "+ col_strDomicilioColonia + ", "+ col_idDomicilioEstado + ", "+ col_strDomicilioEstado + ", "+ col_idDomicilioMunicipio + ", "+ col_strDomicilioMunicipio + ", "+ col_strEstadoCivil + ", "+ col_idEstadoCivil + ", "+ col_strTelefono + ", "+ col_strCelular + ", "+ col_strOcupacion + ", "+ col_idActividad + ", "+ col_strActividad + ", "+ col_strNumeroINE + ", "+ col_strClaveINE + ", "+ col_strPais + ", "+ col_strEstadoNacimiento + ", "+ col_strNacionalidad + ", "+ col_strEmail + ", "+ col_strNombreConyuge + ", "+ col_strLugarNacimientoConyuge + ", "+ col_strFechaNacimientoConyuge + ", "+ col_strOcupacionConyuge + ", "+ col_strReferenciaBancaria + ", "+ col_strBanco + ", "+ col_strProducto + ", "+ col_intPlazo + ", "+ col_intQuedateCasa + ", "+ col_dblMontoSolicitadoMejoraVivienda + ", "+ col_dblMontoSolicitadoEquipandoHogar + ", "+ col_dblIngresos + ", "+ col_dblEgresos + ", "+col_strEstatusInserccionServidor+", "+col_strCNBV+", "+col_strDomicilio_mejoraVivienda+", "+col_strCodigoPostal_mejoraVivienda+", "+col_strNumExt_mejoraVivienda+", "+col_strNumInt_mejoraVivienda+", "+col_strColonia_mejoraVivienda+", "+col_idEstado_mejoraVivienda+", "+col_strEstado_mejoraVivienda+", "+col_idMunicipio_mejoraVivienda+", "+col_strMunicipio_mejoraVivienda+", " + col_strFotoINEFrontal_B64 + ", " + col_strFotoINEFrontal_nombre + ", " + col_strFotoINEReverso_B64 + ", " + col_strFotoINEReverso_nombre + ", " + col_strFotoPerfil_B64 + ", " + col_strFotoPerfil_nombre + ", " + col_strFotoComprobanteDomicilio_B64 + ", " + col_strFotoComprobanteDomicilio_nombre + " )"
                 + " values"
-                + " ('"+item.getStrFechaAlta()+"','"+item.getStrStatusSolicitud()+"','"+item.getIdSucursal()+"','"+item.getStrUsuarioPromotor()+"','"+item.getIdPromotor()+"','"+item.getStrPromotor()+"','"+item.getStrCordinador()+"','"+item.getIdCliente()+"','"+item.getStrApellidoPaterno()+"','"+item.getStrApellidoMaterno()+"','"+item.getStrNombre1()+"','"+item.getStrNombre2()+"','"+item.getStrFechaNacimiento()+"','"+item.getIdGenero()+"','"+item.getStrGenero()+"','"+item.getStrCURP()+"','"+item.getStrDomicilio()+"','"+item.getStrDomicilioCodigoPostal()+"','"+item.getStrDomicilioNumExt()+"','"+item.getStrDomicilioNumInt()+"','"+item.getStrDomicilioColonia()+"','"+item.getIdDomicilioEstado()+"','"+item.getStrDomicilioEstado()+"','"+item.getIdDomicilioMunicipio()+"','"+item.getStrDomicilioMunicipio()+"','"+item.getStrEstadoCivil()+"','"+item.getIdEstadoCivil()+"','"+item.getStrTelefono()+"','"+item.getStrCelular()+"','"+item.getStrOcupacion()+"','"+item.getIdActividad()+"','"+item.getStrActividad()+"','"+item.getStrNumeroINE()+"','"+item.getStrClaveINE()+"','"+item.getStrPais()+"','"+item.getStrEstadoNacimiento()+"','"+item.getStrNacionalidad()+"','"+item.getStrEmail()+"','"+item.getStrNombreConyuge()+"','"+item.getStrLugarNacimientoConyuge()+"','"+item.getStrFechaNacimientoConyuge()+"','"+item.getStrOcupacionConyuge()+"','"+item.getStrReferenciaBancaria()+"','"+item.getStrBanco()+"','"+item.getStrProducto()+"','"+item.getIntPlazo()+"','"+item.getIntQuedateCasa()+"','"+item.getDblMontoSolicitadoMejoraVivienda()+"','"+item.getDblMontoSolicitadoEquipandoHogar()+"','"+item.getDblIngresos()+"','"+item.getDblEgresos()+"', '"+item.getStrEstatusInserccionServidor()+"', '"+item.getStrCNBV()+"')";
+                + " ('"+item.getStrFechaAlta()+"','"+item.getStrStatusSolicitud()+"','"+item.getIdSucursal()+"','"+item.getStrUsuario()+"','"+item.getIdPromotor()+"','"+item.getStrPromotor()+"','"+item.getStrCordinador()+"','"+item.getIdCliente()+"','"+item.getStrApellidoPaterno()+"','"+item.getStrApellidoMaterno()+"','"+item.getStrNombre1()+"','"+item.getStrNombre2()+"','"+item.getStrFechaNacimiento()+"','"+item.getIdGenero()+"','"+item.getStrGenero()+"','"+item.getStrCURP()+"','"+item.getStrDomicilio()+"','"+item.getStrDomicilioCodigoPostal()+"','"+item.getStrDomicilioNumExt()+"','"+item.getStrDomicilioNumInt()+"','"+item.getStrDomicilioColonia()+"','"+item.getIdDomicilioEstado()+"','"+item.getStrDomicilioEstado()+"','"+item.getIdDomicilioMunicipio()+"','"+item.getStrDomicilioMunicipio()+"','"+item.getStrEstadoCivil()+"','"+item.getIdEstadoCivil()+"','"+item.getStrTelefono()+"','"+item.getStrCelular()+"','"+item.getStrOcupacion()+"','"+item.getIdActividad()+"','"+item.getStrActividad()+"','"+item.getStrNumeroINE()+"','"+item.getStrClaveINE()+"','"+item.getStrPais()+"','"+item.getStrEstadoNacimiento()+"','"+item.getStrNacionalidad()+"','"+item.getStrEmail()+"','"+item.getStrNombreConyuge()+"','"+item.getStrLugarNacimientoConyuge()+"','"+item.getStrFechaNacimientoConyuge()+"','"+item.getStrOcupacionConyuge()+"','"+item.getStrReferenciaBancaria()+"','"+item.getStrBanco()+"','"+item.getStrProducto()+"','"+item.getIntPlazo()+"','"+item.getIntQuedateCasa()+"','"+item.getDblMontoSolicitadoMejoraVivienda()+"','"+item.getDblMontoSolicitadoEquipandoHogar()+"','"+item.getDblIngresos()+"','"+item.getDblEgresos()+"', '"+item.getStrEstatusInserccionServidor()+"', '"+item.getStrCNBV()+"', '"+item.getStrDomicilio_mejoraVivienda()+"', '"+item.getStrCodigoPostal_mejoraVivienda()+"', '"+item.getStrNumExt_mejoraVivienda()+"', '"+item.getStrNumInt_mejoraVivienda()+"', '"+item.getStrColonia_mejoraVivienda()+"', '"+item.getIdEstado_mejoraVivienda()+"', '"+item.getStrEstado_mejoraVivienda()+"', '"+item.getIdMunicipio_mejoraVivienda()+"', '"+item.getStrMunicipio_mejoraVivienda()+"', '"+item.getStrFotoINEFrontal_B64()+"', '"+item.getStrFotoINEFrontal_nombre()+"', '"+item.getStrFotoINEReverso_B64()+"', '"+item.getStrFotoINEReverso_nombre()+"', '"+item.getStrFotoPerfil_B64()+"', '"+item.getStrFotoPerfil_nombre()+"', '"+item.getStrFotoComprobanteDomicilio_B64()+"', '"+item.getStrFotoComprobanteDomicilio_nombre()+"')";
         this.dbWrite.execSQL(query);
     }
 
@@ -115,7 +135,7 @@ public class TableSolicitudesDispersion extends Conexion implements TableSQLite 
                 col_strFechaAlta + ", "+
                 col_strStatusSolicitud + ", "+
                 col_idSucursal + ", "+
-                col_strUsuarioPromotor + ", "+
+                col_strUsuario + ", "+
                 col_idPromotor + ", "+
                 col_strPromotor + ", "+
                 col_strCordinador + ", "+
@@ -164,7 +184,24 @@ public class TableSolicitudesDispersion extends Conexion implements TableSQLite 
                 col_dblIngresos + ", "+
                 col_dblEgresos + ", "+
                 col_strEstatusInserccionServidor + ", "+
-                col_strCNBV
+                col_strCNBV + ", "+
+                col_strDomicilio_mejoraVivienda + ", "+
+                col_strCodigoPostal_mejoraVivienda + ", "+
+                col_strNumExt_mejoraVivienda + ", "+
+                col_strNumInt_mejoraVivienda + ", "+
+                col_strColonia_mejoraVivienda + ", "+
+                col_idEstado_mejoraVivienda + ", "+
+                col_strEstado_mejoraVivienda + ", "+
+                col_idMunicipio_mejoraVivienda + ", "+
+                col_strMunicipio_mejoraVivienda + ", " +
+                col_strFotoINEFrontal_B64 + ", " +
+                col_strFotoINEFrontal_nombre + ", " +
+                col_strFotoINEReverso_B64 + ", " +
+                col_strFotoINEReverso_nombre + ", " +
+                col_strFotoPerfil_B64 + ", " +
+                col_strFotoPerfil_nombre + ", " +
+                col_strFotoComprobanteDomicilio_B64 + ", " +
+                col_strFotoComprobanteDomicilio_nombre
                 + " FROM "+table+" WHERE ("+col_strCURP+") like '%"+buscar+"%' GROUP BY "+col_strCURP+" ORDER BY "+col_strNombre1;
         Cursor cursor = dbRead.rawQuery( query , null);
 
@@ -223,7 +260,24 @@ public class TableSolicitudesDispersion extends Conexion implements TableSQLite 
                     cursor.getDouble(50),
                     cursor.getDouble(51),
                     cursor.getString(52),
-                    cursor.getString(53)
+                    cursor.getString(53),
+                    cursor.getString(54),
+                    cursor.getString(55),
+                    cursor.getString(56),
+                    cursor.getString(57),
+                    cursor.getString(58),
+                    cursor.getString(59),
+                    cursor.getString(60),
+                    cursor.getString(61),
+                    cursor.getString(62),
+                    cursor.getString(63),
+                    cursor.getString(64),
+                    cursor.getString(65),
+                    cursor.getString(66),
+                    cursor.getString(67),
+                    cursor.getString(68),
+                    cursor.getString(69),
+                    cursor.getString(70)
             ));
         }
 

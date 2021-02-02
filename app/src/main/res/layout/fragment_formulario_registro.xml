@@ -372,7 +372,7 @@
                     android:inputType="textEmailAddress"/>
             </com.google.android.material.textfield.TextInputLayout>
 
-            <!-- CREDENCIA ELECTOR  -->
+            <!-- CREDENCIAL DE ELECTOR  -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -416,6 +416,241 @@
                     android:inputType="textCapCharacters"
                     android:maxLength="20"/>
             </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- FOTOS  -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="16sp">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Evidencias"
+                    />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/border_bottom"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:checkable="true"
+                    android:layout_weight="1"
+                    android:layout_margin="5dp">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+                        <TextView
+                            android:id="@+id/tvFotoINEFrontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Foto frontal INE"
+                            android:layout_gravity="center"
+                            android:textAlignment="center"/>
+                        <LinearLayout
+                            android:id="@+id/llFotoINEFrontal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="120dp"
+                            android:orientation="horizontal"
+                            android:layout_gravity="center_horizontal">
+                            <Button
+                                android:id="@+id/btnAbrirCamaraFotoINEFrontal"
+                                android:layout_width="50dp"
+                                android:layout_height="50dp"
+                                app:icon="@drawable/ic_baseline_photo_camera_24"
+                                android:layout_gravity="center_vertical"
+                                style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"/>
+                            <Button
+                                android:id="@+id/btnAbrirGaleriaFotoINEFrontal"
+                                android:layout_width="50dp"
+                                android:layout_height="50dp"
+                                app:icon="@drawable/ic_baseline_image_search_24"
+                                android:layout_gravity="center_vertical"
+                                style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"/>
+                        </LinearLayout>
+                        <ImageButton
+                            android:id="@+id/imgFotoINEFrontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="120dp"
+                            android:backgroundTint="@android:color/transparent"
+                            android:contentDescription="@string/seleccionar"
+                            android:src="@drawable/ic_baseline_add_24"
+                            android:scaleType="fitCenter"
+                            android:visibility="gone"/>
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:checkable="true"
+                    android:layout_weight="1"
+                    android:layout_margin="5dp">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+                        <TextView
+                            android:id="@+id/tvFotoINEReverso"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:textAlignment="center"
+                            android:text="Foto reverso INE"/>
+                        <LinearLayout
+                            android:id="@+id/llFotoINEReverso"
+                            android:layout_width="wrap_content"
+                            android:layout_height="120dp"
+                            android:orientation="horizontal"
+                            android:layout_gravity="center_horizontal">
+                            <Button
+                                android:id="@+id/btnAbrirCamaraFotoINEReverso"
+                                android:layout_width="50dp"
+                                android:layout_height="50dp"
+                                app:icon="@drawable/ic_baseline_photo_camera_24"
+                                android:layout_gravity="center_vertical"
+                                style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"/>
+                            <Button
+                                android:id="@+id/btnAbrirGaleriaFotoINEReverso"
+                                android:layout_width="50dp"
+                                android:layout_height="50dp"
+                                app:icon="@drawable/ic_baseline_image_search_24"
+                                android:layout_gravity="center_vertical"
+                                style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"/>
+                        </LinearLayout>
+                        <ImageButton
+                            android:id="@+id/imgFotoINEReverso"
+                            android:layout_width="match_parent"
+                            android:layout_height="120dp"
+                            android:backgroundTint="@android:color/transparent"
+                            android:src="@drawable/ic_baseline_add_24"
+                            android:contentDescription="@string/seleccionar"
+                            android:visibility="gone"
+                            android:scaleType="fitCenter"/>
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:checkable="true"
+                    android:layout_weight="1"
+                    android:layout_margin="5dp">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+                        <TextView
+                            android:id="@+id/tvFotoPerfil"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Foto rostro cliente"
+                            android:layout_gravity="center"
+                            android:textAlignment="center"/>
+                        <LinearLayout
+                            android:id="@+id/llFotoPerfil"
+                            android:layout_width="wrap_content"
+                            android:layout_height="120dp"
+                            android:orientation="horizontal"
+                            android:layout_gravity="center_horizontal">
+                            <Button
+                                android:id="@+id/btnAbrirCamaraFotoPerfil"
+                                android:layout_width="50dp"
+                                android:layout_height="50dp"
+                                app:icon="@drawable/ic_baseline_photo_camera_24"
+                                android:layout_gravity="center_vertical"
+                                style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"/>
+                            <Button
+                                android:id="@+id/btnAbrirGaleriaFotoPerfil"
+                                android:layout_width="50dp"
+                                android:layout_height="50dp"
+                                app:icon="@drawable/ic_baseline_image_search_24"
+                                android:layout_gravity="center_vertical"
+                                style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"/>
+                        </LinearLayout>
+                        <ImageButton
+                            android:id="@+id/imgFotoPerfil"
+                            android:layout_width="match_parent"
+                            android:layout_height="120dp"
+                            android:backgroundTint="@android:color/transparent"
+                            android:contentDescription="@string/seleccionar"
+                            android:src="@drawable/ic_baseline_add_24"
+                            android:visibility="gone"
+                            android:scaleType="fitCenter"/>
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:checkable="true"
+                    android:layout_weight="1"
+                    android:layout_margin="5dp">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+                        <TextView
+                            android:id="@+id/tvFotoComprobanteDomicilio"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:textAlignment="center"
+                            android:text="Comprobante domicilio"/>
+                        <LinearLayout
+                            android:id="@+id/llFotoComprobanteDomicilio"
+                            android:layout_width="wrap_content"
+                            android:layout_height="120dp"
+                            android:orientation="horizontal"
+                            android:layout_gravity="center_horizontal">
+                            <Button
+                                android:id="@+id/btnAbrirCamaraFotoComprobanteDomicilio"
+                                android:layout_width="50dp"
+                                android:layout_height="50dp"
+                                app:icon="@drawable/ic_baseline_photo_camera_24"
+                                android:layout_gravity="center_vertical"
+                                style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"/>
+                            <Button
+                                android:id="@+id/btnAbrirGaleriaFotoComprobanteDomicilio"
+                                android:layout_width="50dp"
+                                android:layout_height="50dp"
+                                app:icon="@drawable/ic_baseline_image_search_24"
+                                android:layout_gravity="center_vertical"
+                                style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"/>
+                        </LinearLayout>
+                        <ImageButton
+                            android:id="@+id/imgFotoComprobanteDomicilio"
+                            android:layout_width="match_parent"
+                            android:layout_height="120dp"
+                            android:backgroundTint="@android:color/transparent"
+                            android:src="@drawable/ic_baseline_add_24"
+                            android:contentDescription="@string/seleccionar"
+                            android:visibility="gone"
+                            android:scaleType="fitCenter"/>
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+            </LinearLayout>
 
 
             <!-- DIRECCIONES  -->
@@ -765,7 +1000,6 @@
 
                 <RadioGroup
                     android:id="@+id/radioProducto"
-                    android:checkedButton="@id/radioProductoMejoraVivienda"
                     android:orientation="vertical"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">

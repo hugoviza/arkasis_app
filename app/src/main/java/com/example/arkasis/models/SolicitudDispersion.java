@@ -6,7 +6,7 @@ public class SolicitudDispersion {
     private String strFechaAlta = "";
     private String strStatusSolicitud = "";
     private String idSucursal = "";
-    private String strUsuarioPromotor = "";
+    private String strUsuario = "";
     private String idPromotor = "";
     private String strPromotor = "";
     private String strCordinador = "";
@@ -67,16 +67,25 @@ public class SolicitudDispersion {
     private String idMunicipio_mejoraVivienda = "";
     private String strMunicipio_mejoraVivienda = "";
 
+    private String strFotoINEFrontal_B64;
+    private String strFotoINEFrontal_nombre;
+    private String strFotoINEReverso_B64;
+    private String strFotoINEReverso_nombre;
+    private String strFotoPerfil_B64;
+    private String strFotoPerfil_nombre;
+    private String strFotoComprobanteDomicilio_B64;
+    private String strFotoComprobanteDomicilio_nombre;
+
     public SolicitudDispersion() {
     }
 
 
-    public SolicitudDispersion(int idSolicitud, String strFechaAlta, String strStatusSolicitud, String idSucursal, String strUsuarioPromotor, String idPromotor, String strPromotor, String strCordinador, String idCliente, String strApellidoPaterno, String strApellidoMaterno, String strNombre1, String strNombre2, String strFechaNacimiento, String idGenero, String strGenero, String strCURP, String strDomicilio, String strDomicilioCodigoPostal, String strDomicilioNumExt, String strDomicilioNumInt, String strDomicilioColonia, String idDomicilioEstado, String strDomicilioEstado, String idDomicilioMunicipio, String strDomicilioMunicipio, String strEstadoCivil, String idEstadoCivil, String strTelefono, String strCelular, String strOcupacion, String idActividad, String strActividad, String strNumeroINE, String strClaveINE, String strPais, String strEstadoNacimiento, String strNacionalidad, String strEmail, String strNombreConyuge, String strLugarNacimientoConyuge, String strFechaNacimientoConyuge, String strOcupacionConyuge, String strReferenciaBancaria, String strBanco, String strProducto, int intPlazo, int intQuedateCasa, double dblMontoSolicitadoMejoraVivienda, double dblMontoSolicitadoEquipandoHogar, double dblIngresos, double dblEgresos, String strEstatusInserccionServidor, String strCNBV) {
+    public SolicitudDispersion(int idSolicitud, String strFechaAlta, String strStatusSolicitud, String idSucursal, String strUsuario, String idPromotor, String strPromotor, String strCordinador, String idCliente, String strApellidoPaterno, String strApellidoMaterno, String strNombre1, String strNombre2, String strFechaNacimiento, String idGenero, String strGenero, String strCURP, String strDomicilio, String strDomicilioCodigoPostal, String strDomicilioNumExt, String strDomicilioNumInt, String strDomicilioColonia, String idDomicilioEstado, String strDomicilioEstado, String idDomicilioMunicipio, String strDomicilioMunicipio, String strEstadoCivil, String idEstadoCivil, String strTelefono, String strCelular, String strOcupacion, String idActividad, String strActividad, String strNumeroINE, String strClaveINE, String strPais, String strEstadoNacimiento, String strNacionalidad, String strEmail, String strNombreConyuge, String strLugarNacimientoConyuge, String strFechaNacimientoConyuge, String strOcupacionConyuge, String strReferenciaBancaria, String strBanco, String strProducto, int intPlazo, int intQuedateCasa, double dblMontoSolicitadoMejoraVivienda, double dblMontoSolicitadoEquipandoHogar, double dblIngresos, double dblEgresos, String strEstatusInserccionServidor, String strCNBV, String strDomicilio_mejoraVivienda, String strCodigoPostal_mejoraVivienda, String strNumExt_mejoraVivienda, String strNumInt_mejoraVivienda, String strColonia_mejoraVivienda, String idEstado_mejoraVivienda, String strEstado_mejoraVivienda, String idMunicipio_mejoraVivienda, String strMunicipio_mejoraVivienda, String strFotoINEFrontal_B64, String strFotoINEFrontal_nombre, String strFotoINEReverso_B64, String strFotoINEReverso_nombre, String strFotoPerfil_B64, String strFotoPerfil_nombre, String strFotoComprobanteDomicilio_B64, String strFotoComprobanteDomicilio_nombre) {
         this.idSolicitud = idSolicitud;
         this.strFechaAlta = strFechaAlta;
         this.strStatusSolicitud = strStatusSolicitud;
         this.idSucursal = idSucursal;
-        this.strUsuarioPromotor = strUsuarioPromotor;
+        this.strUsuario = strUsuario;
         this.idPromotor = idPromotor;
         this.strPromotor = strPromotor;
         this.strCordinador = strCordinador;
@@ -125,6 +134,26 @@ public class SolicitudDispersion {
         this.dblIngresos = dblIngresos;
         this.dblEgresos = dblEgresos;
         this.strCNBV = strCNBV;
+
+        this.strEstatusInserccionServidor = strEstatusInserccionServidor;
+        this.strDomicilio_mejoraVivienda = strDomicilio_mejoraVivienda;
+        this.strCodigoPostal_mejoraVivienda = strCodigoPostal_mejoraVivienda;
+        this.strNumExt_mejoraVivienda = strNumExt_mejoraVivienda;
+        this.strNumInt_mejoraVivienda = strNumInt_mejoraVivienda;
+        this.strColonia_mejoraVivienda = strColonia_mejoraVivienda;
+        this.idEstado_mejoraVivienda = idEstado_mejoraVivienda;
+        this.strEstado_mejoraVivienda = strEstado_mejoraVivienda;
+        this.idMunicipio_mejoraVivienda = idMunicipio_mejoraVivienda;
+        this.strMunicipio_mejoraVivienda = strMunicipio_mejoraVivienda;
+
+        this.strFotoINEFrontal_B64 = strFotoINEFrontal_B64;
+        this.strFotoINEFrontal_nombre = strFotoINEFrontal_nombre;
+        this.strFotoINEReverso_B64 = strFotoINEReverso_B64;
+        this.strFotoINEReverso_nombre = strFotoINEReverso_nombre;
+        this.strFotoPerfil_B64 = strFotoPerfil_B64;
+        this.strFotoPerfil_nombre = strFotoPerfil_nombre;
+        this.strFotoComprobanteDomicilio_B64 = strFotoComprobanteDomicilio_B64;
+        this.strFotoComprobanteDomicilio_nombre = strFotoComprobanteDomicilio_nombre;
     }
 
     public String getStrNombreCompleto() {
@@ -180,12 +209,12 @@ public class SolicitudDispersion {
         this.idPromotor = idPromotor;
     }
 
-    public String getStrUsuarioPromotor() {
-        return strUsuarioPromotor;
+    public String getStrUsuario() {
+        return strUsuario;
     }
 
-    public void setStrUsuarioPromotor(String strUsuarioPromotor) {
-        this.strUsuarioPromotor = strUsuarioPromotor;
+    public void setStrUsuario(String strUsuario) {
+        this.strUsuario = strUsuario;
     }
 
     public String getStrPromotor() {
@@ -642,5 +671,69 @@ public class SolicitudDispersion {
 
     public void setStrMunicipio_mejoraVivienda(String strMunicipio_mejoraVivienda) {
         this.strMunicipio_mejoraVivienda = strMunicipio_mejoraVivienda;
+    }
+
+    public String getStrFotoINEFrontal_B64() {
+        return strFotoINEFrontal_B64;
+    }
+
+    public void setStrFotoINEFrontal_B64(String strFotoINEFrontal_B64) {
+        this.strFotoINEFrontal_B64 = strFotoINEFrontal_B64;
+    }
+
+    public String getStrFotoINEFrontal_nombre() {
+        return strFotoINEFrontal_nombre;
+    }
+
+    public void setStrFotoINEFrontal_nombre(String strFotoINEFrontal_nombre) {
+        this.strFotoINEFrontal_nombre = strFotoINEFrontal_nombre;
+    }
+
+    public String getStrFotoINEReverso_B64() {
+        return strFotoINEReverso_B64;
+    }
+
+    public void setStrFotoINEReverso_B64(String strFotoINEReverso_B64) {
+        this.strFotoINEReverso_B64 = strFotoINEReverso_B64;
+    }
+
+    public String getStrFotoINEReverso_nombre() {
+        return strFotoINEReverso_nombre;
+    }
+
+    public void setStrFotoINEReverso_nombre(String strFotoINEReverso_nombre) {
+        this.strFotoINEReverso_nombre = strFotoINEReverso_nombre;
+    }
+
+    public String getStrFotoPerfil_B64() {
+        return strFotoPerfil_B64;
+    }
+
+    public void setStrFotoPerfil_B64(String strFotoPerfil_B64) {
+        this.strFotoPerfil_B64 = strFotoPerfil_B64;
+    }
+
+    public String getStrFotoPerfil_nombre() {
+        return strFotoPerfil_nombre;
+    }
+
+    public void setStrFotoPerfil_nombre(String strFotoPerfil_nombre) {
+        this.strFotoPerfil_nombre = strFotoPerfil_nombre;
+    }
+
+    public String getStrFotoComprobanteDomicilio_B64() {
+        return strFotoComprobanteDomicilio_B64;
+    }
+
+    public void setStrFotoComprobanteDomicilio_B64(String strFotoComprobanteDomicilio_B64) {
+        this.strFotoComprobanteDomicilio_B64 = strFotoComprobanteDomicilio_B64;
+    }
+
+    public String getStrFotoComprobanteDomicilio_nombre() {
+        return strFotoComprobanteDomicilio_nombre;
+    }
+
+    public void setStrFotoComprobanteDomicilio_nombre(String strFotoComprobanteDomicilio_nombre) {
+        this.strFotoComprobanteDomicilio_nombre = strFotoComprobanteDomicilio_nombre;
     }
 }

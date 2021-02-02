@@ -1,12 +1,26 @@
 package com.example.arkasis;
 
+import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 
+import android.os.StrictMode;
+import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +28,8 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
@@ -42,6 +58,13 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.gson.internal.LinkedTreeMap;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URI;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -65,6 +88,15 @@ public class FragmentFormularioRegistro extends Fragment {
 
     private final String LIMPIAR_CAMPO = "Limpiar campo";
     private final String SELECCIONAR = "Seleccione";
+    private final int REQUEST_PERMISSION_GALERY = 100;
+    private final int REQUEST_PERMISSION_CAMERA = 101;
+    private final int REQUEST_IMAGE = 101;
+
+
+    private final String DOCUMENTO_INE_FRONTAL = "evidencia_ine_frontal";
+    private final String DOCUMENTO_INE_REVERSO = "evidencia_ine_reverso";
+    private final String DOCUMENTO_FOTO_PERFIL = "evidencia_foto_perfil";
+    private final String DOCUMENTO_COMPROBANTE_DOMICILIO = "evidencia_comprobante_domicilio";
 
     private BottomBarActivity parent;
 
@@ -91,7 +123,14 @@ public class FragmentFormularioRegistro extends Fragment {
 
     //Componentes
     View view;
-    Button btnLimpiar, btnGuardar;
+    Button btnLimpiar, btnGuardar,
+            btnAbrirCamaraFotoINEFrontal, btnAbrirGaleriaFotoINEFrontal,
+            btnAbrirCamaraFotoINEReverso, btnAbrirGaleriaFotoINEReverso,
+            btnAbrirCamaraFotoPerfil, btnAbrirGaleriaFotoPerfil,
+            btnAbrirCamaraFotoComprobanteDomicilio, btnAbrirGaleriaFotoComprobanteDomicilio
+    ;
+    LinearLayout llFotoINEFrontal, llFotoINEReverso, llFotoPerfil, llFotoComprobanteDomicilio;
+    ImageButton imgFotoINEFrontal, imgFotoINEReverso, imgFotoPerfil, imgFotoComprobanteDomicilio;
     MaterialDatePicker dpFechaNacimiento, dpFechaNacimientoConyuge;
     TextInputEditText txtFechaNacimiento, txtSucursal, txtPromotor, txtCoordinador, txtCURP, txtNombre1, txtNombre2, txtApellidoPaterno, txtApellidoMaterno, txtNacionalidad, txtOcupacion, txtActividad,
             txtCelular, txtTelefono, txtEmail, txtClaveElector, txtNumeroElector, txtEstadoOrigen, txtPaisOrigen,
@@ -128,6 +167,15 @@ public class FragmentFormularioRegistro extends Fragment {
     Estado estadoNacimiento;
     Municipio municipioMejora;
     Municipio municipio_mejoraVivienda;
+    Bitmap bmFotoINEFrontal, bmFotoINEReverso, bmFotoPerfil, bmFotoComprobanteDomicilio;
+    String strFotoINEFrontal, strFotoINEReverso, strFotoPerfil, strFotoComprobanteDomicilio;
+
+    String currentPic = null;
+
+    //Helper
+    int tipoImagenSolicitada = 0;
+    int requestPermisoSolicitado = 0;
+
 
     //default data
     EstadoCivil[] arrayEstadoCivil =
@@ -248,6 +296,25 @@ public class FragmentFormularioRegistro extends Fragment {
             txtMunicipio_mejoraVivienda = view.findViewById(R.id.txtMunicipio_mejoraVivienda);
             layoutMunicipio_mejoraVivienda = view.findViewById(R.id.layoutMunicipio_mejoraVivienda);
 
+            imgFotoINEFrontal = view.findViewById(R.id.imgFotoINEFrontal);
+            imgFotoINEReverso = view.findViewById(R.id.imgFotoINEReverso);
+            imgFotoPerfil = view.findViewById(R.id.imgFotoPerfil);
+            imgFotoComprobanteDomicilio = view.findViewById(R.id.imgFotoComprobanteDomicilio);
+
+            btnAbrirCamaraFotoINEFrontal = view.findViewById(R.id.btnAbrirCamaraFotoINEFrontal);
+            btnAbrirGaleriaFotoINEFrontal = view.findViewById(R.id.btnAbrirGaleriaFotoINEFrontal);
+            btnAbrirCamaraFotoINEReverso = view.findViewById(R.id.btnAbrirCamaraFotoINEReverso);
+            btnAbrirGaleriaFotoINEReverso = view.findViewById(R.id.btnAbrirGaleriaFotoINEReverso);
+            btnAbrirCamaraFotoPerfil = view.findViewById(R.id.btnAbrirCamaraFotoPerfil);
+            btnAbrirGaleriaFotoPerfil = view.findViewById(R.id.btnAbrirGaleriaFotoPerfil);
+            btnAbrirCamaraFotoComprobanteDomicilio = view.findViewById(R.id.btnAbrirCamaraFotoComprobanteDomicilio);
+            btnAbrirGaleriaFotoComprobanteDomicilio = view.findViewById(R.id.btnAbrirGaleriaFotoComprobanteDomicilio);
+
+            llFotoINEFrontal = view.findViewById(R.id.llFotoINEFrontal);
+            llFotoINEReverso = view.findViewById(R.id.llFotoINEReverso);
+            llFotoPerfil = view.findViewById(R.id.llFotoPerfil);
+            llFotoComprobanteDomicilio = view.findViewById(R.id.llFotoComprobanteDomicilio);
+
             usuario = Config.USUARIO_SESION;
             txtPromotor.setText(usuario.getUser());
 
@@ -261,6 +328,8 @@ public class FragmentFormularioRegistro extends Fragment {
             inicializarSelectorActividades();
             inicializarBuscadorCurp();
             inicializarMunicipio_mejoraVivienda();
+            inicializarSelectoresImagenesGaleria();
+            inicializarSelectoresImagenesCamara();
 
             BottomBarActivity.cerrarLoading();
 
@@ -289,16 +358,18 @@ public class FragmentFormularioRegistro extends Fragment {
                     switch (checkedId) {
                         case R.id.radioProductoMejoraVivienda:
                             limpiarProductoEquipandoHogar();
+                            copiarDireccionMejora();
                             habilitarProductoEquipandoHogar(false);
                             habilitarProductoMejora(true);
                             break;
                         case R.id.radioProductoEquipandoHogar:
-                            habilitarProductoEquipandoHogar(true);
                             limpiarProductoMejora();
+                            habilitarProductoEquipandoHogar(true);
                             habilitarProductoMejora(false);
                             break;
                         default:
                             habilitarProductoEquipandoHogar(true);
+                            copiarDireccionMejora();
                             habilitarProductoMejora(true);
                     }
                 }
@@ -310,6 +381,334 @@ public class FragmentFormularioRegistro extends Fragment {
         }
 
         return view;
+    }
+
+    private void copiarDireccionMejora() {
+        txtCodigoPostal_mejoraVivienda.setText(txtCodigoPostal.getText());
+        txtDomicilio_mejoraVivienda.setText(txtDomicilioMejora.getText());
+        txtNumExt_mejoraVivienda.setText(txtDomicilioMejoraNumExt.getText());
+        txtNumInt_mejoraVivienda.setText(txtDomicilioMejoraNumInt.getText());
+        txtColonia_mejoraVivienda.setText(txtDomicilioMejoraColonia.getText());
+        txtMunicipio_mejoraVivienda.setText(txtDomicilioMejoraMunicipio.getText());
+    }
+
+    private void inicializarSelectoresImagenesGaleria() {
+        btnAbrirGaleriaFotoINEFrontal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tipoImagenSolicitada = R.id.imgFotoINEFrontal;
+                comprobarPermisosAbrirGaleria();
+            }
+        });
+
+        btnAbrirGaleriaFotoINEReverso.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tipoImagenSolicitada = R.id.imgFotoINEReverso;
+                comprobarPermisosAbrirGaleria();
+            }
+        });
+
+        btnAbrirGaleriaFotoPerfil.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tipoImagenSolicitada = R.id.imgFotoPerfil;
+                comprobarPermisosAbrirGaleria();
+            }
+        });
+
+        btnAbrirGaleriaFotoComprobanteDomicilio.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tipoImagenSolicitada = R.id.imgFotoComprobanteDomicilio;
+                comprobarPermisosAbrirGaleria();
+            }
+        });
+    }
+
+    private void inicializarSelectoresImagenesCamara() {
+        btnAbrirCamaraFotoINEFrontal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tipoImagenSolicitada = R.id.imgFotoINEFrontal;
+                comprobarPermisosAbrirCamara();
+            }
+        });
+
+        btnAbrirCamaraFotoINEReverso.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tipoImagenSolicitada = R.id.imgFotoINEReverso;
+                comprobarPermisosAbrirCamara();
+            }
+        });
+
+        btnAbrirCamaraFotoPerfil.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tipoImagenSolicitada = R.id.imgFotoPerfil;
+                comprobarPermisosAbrirCamara();
+            }
+        });
+
+        btnAbrirCamaraFotoComprobanteDomicilio.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tipoImagenSolicitada = R.id.imgFotoComprobanteDomicilio;
+                comprobarPermisosAbrirCamara();
+            }
+        });
+    }
+
+    private void comprobarPermisosAbrirGaleria() {
+        requestPermisoSolicitado = REQUEST_PERMISSION_GALERY;
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if(ActivityCompat.checkSelfPermission(parent, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+                abrirGaleria();
+            } else {
+                ActivityCompat.requestPermissions(parent, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_PERMISSION_GALERY);
+            }
+        } else {
+            abrirGaleria();
+        }
+    }
+
+    private void comprobarPermisosAbrirCamara() {
+        requestPermisoSolicitado = REQUEST_PERMISSION_CAMERA;
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if(ActivityCompat.checkSelfPermission(parent, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
+                abrirCamara();
+            } else {
+                ActivityCompat.requestPermissions(parent, new String[]{Manifest.permission.CAMERA}, REQUEST_PERMISSION_CAMERA);
+            }
+        } else {
+            abrirCamara();
+        }
+    }
+
+    private void abrirGaleria() {
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.setType("image/*");
+        if(intent.resolveActivity(parent.getPackageManager()) != null) {
+            parent.startActivityFromFragment(this, intent, REQUEST_IMAGE);
+        }
+    }
+
+    private void abrirCamara() {
+        Intent intent = new Intent();
+        intent.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
+        if(intent.resolveActivity(parent.getPackageManager()) != null) {
+            parent.startActivityFromFragment(this, intent, REQUEST_IMAGE);
+        }
+    }
+
+    private void limpiarCampoFotoINEFrontal() {
+        bmFotoINEFrontal = null;
+        strFotoINEFrontal = null;
+        imgFotoINEFrontal.setVisibility(View.GONE);
+        llFotoINEFrontal.setVisibility(View.VISIBLE);
+    }
+    private void limpiarCampoFotoIneReverso() {
+        bmFotoINEReverso = null;
+        strFotoINEReverso = null;
+        imgFotoINEReverso.setVisibility(View.GONE);
+        llFotoINEReverso.setVisibility(View.VISIBLE);
+    }
+    private void limpiarCampoFotoPerfil() {
+        bmFotoPerfil = null;
+        strFotoPerfil = null;
+        imgFotoPerfil.setVisibility(View.GONE);
+        llFotoPerfil.setVisibility(View.VISIBLE);
+    }
+    private void limpiarCampoFotoComprobanteDomicilio() {
+        bmFotoComprobanteDomicilio = null;
+        strFotoComprobanteDomicilio = null;
+        imgFotoComprobanteDomicilio.setVisibility(View.GONE);
+        llFotoComprobanteDomicilio.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case REQUEST_PERMISSION_GALERY:
+                if(permissions.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    abrirGaleria();
+                } else {
+                    Toast.makeText(parent, "Se requiere conceder permisos para abrir galería", Toast.LENGTH_SHORT).show();
+                }
+                break;
+            case REQUEST_PERMISSION_CAMERA:
+                if(permissions.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    abrirCamara();
+                } else {
+                    Toast.makeText(parent, "Se requiere conceder permisos para abrir camara", Toast.LENGTH_SHORT).show();
+                }
+                break;
+        }
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if(requestCode == REQUEST_IMAGE) {
+            if(resultCode == Activity.RESULT_OK && (data != null || currentPic != null)) {
+                if(requestPermisoSolicitado == REQUEST_PERMISSION_GALERY) {
+                    Uri uri = data.getData();
+                    switch (tipoImagenSolicitada) {
+                        case R.id.imgFotoINEFrontal:
+                            try {
+                                bmFotoINEFrontal = getBitmapFormUri(parent, uri);
+                                strFotoINEFrontal = DOCUMENTO_INE_FRONTAL + "." + getExt(parent.getContentResolver().getType(uri));
+                            } catch (IOException e) {
+                                bmFotoINEFrontal = null;
+                            }
+                            imgFotoINEFrontal.setImageURI(uri);
+                            imgFotoINEFrontal.setVisibility(View.VISIBLE);
+                            llFotoINEFrontal.setVisibility(View.GONE);
+                            break;
+                        case R.id.imgFotoINEReverso:
+                            try {
+                                bmFotoINEReverso = getBitmapFormUri(parent, uri);
+                                strFotoINEReverso = DOCUMENTO_INE_REVERSO + "." + getExt(parent.getContentResolver().getType(uri));
+                            } catch (IOException e) {
+                                bmFotoINEReverso = null;
+                            }
+                            imgFotoINEReverso.setImageURI(uri);
+                            imgFotoINEReverso.setVisibility(View.VISIBLE);
+                            llFotoINEReverso.setVisibility(View.GONE);
+                            break;
+                        case R.id.imgFotoPerfil:
+                            try {
+                                bmFotoPerfil = getBitmapFormUri(parent, uri);
+                                strFotoPerfil =  DOCUMENTO_FOTO_PERFIL + "." + getExt(parent.getContentResolver().getType(uri));
+                            } catch (IOException e) {
+                                bmFotoPerfil = null;
+                            }
+                            imgFotoPerfil.setImageURI(uri);
+                            imgFotoPerfil.setVisibility(View.VISIBLE);
+                            llFotoPerfil.setVisibility(View.GONE);
+                            break;
+                        case R.id.imgFotoComprobanteDomicilio:
+                            try {
+                                bmFotoComprobanteDomicilio = getBitmapFormUri(parent, uri);
+                                strFotoComprobanteDomicilio =  DOCUMENTO_COMPROBANTE_DOMICILIO + "." + getExt(parent.getContentResolver().getType(uri));
+                            } catch (IOException e) {
+                                bmFotoComprobanteDomicilio = null;
+                            }
+                            imgFotoComprobanteDomicilio.setImageURI(uri);
+                            imgFotoComprobanteDomicilio.setVisibility(View.VISIBLE);
+                            llFotoComprobanteDomicilio.setVisibility(View.GONE);
+                            break;
+                        default:
+                            Toast.makeText(parent, "Tipo de imagen no solicitada", Toast.LENGTH_SHORT).show();
+                    }
+                } else if(requestPermisoSolicitado == REQUEST_PERMISSION_CAMERA) {
+                    Bitmap bitmap = (Bitmap)data.getExtras().get("data");
+                    switch (tipoImagenSolicitada) {
+                        case R.id.imgFotoINEFrontal:
+                            bmFotoINEFrontal = bitmap;
+                            strFotoINEFrontal =  DOCUMENTO_INE_FRONTAL + ".jpg";
+                            imgFotoINEFrontal.setImageBitmap(bitmap);
+                            imgFotoINEFrontal.setVisibility(View.VISIBLE);
+                            llFotoINEFrontal.setVisibility(View.GONE);
+                            break;
+                        case R.id.imgFotoINEReverso:
+                            bmFotoINEReverso = bitmap;
+                            strFotoINEReverso =  DOCUMENTO_INE_REVERSO + ".jpg";
+                            imgFotoINEReverso.setImageBitmap(bitmap);
+                            imgFotoINEReverso.setVisibility(View.VISIBLE);
+                            llFotoINEReverso.setVisibility(View.GONE);
+                            break;
+                        case R.id.imgFotoPerfil:
+                            bmFotoPerfil = bitmap;
+                            strFotoPerfil =  DOCUMENTO_FOTO_PERFIL + ".jpg";
+                            imgFotoPerfil.setImageBitmap(bitmap);
+                            imgFotoPerfil.setVisibility(View.VISIBLE);
+                            llFotoPerfil.setVisibility(View.GONE);
+                            break;
+                        case R.id.imgFotoComprobanteDomicilio:
+                            bmFotoComprobanteDomicilio = bitmap;
+                            strFotoComprobanteDomicilio =  DOCUMENTO_COMPROBANTE_DOMICILIO + ".jpg";
+                            imgFotoComprobanteDomicilio.setImageBitmap(bitmap);
+                            imgFotoComprobanteDomicilio.setVisibility(View.VISIBLE);
+                            llFotoComprobanteDomicilio.setVisibility(View.GONE);
+                            break;
+                        default:
+                            Toast.makeText(parent, "Tipo de imagen no solicitada", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                tipoImagenSolicitada = 0;
+            } else {
+                Toast.makeText(parent, "Imagen no seleccionada", Toast.LENGTH_SHORT).show();
+            }
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    private String getExt(String type) {
+        String[] strings =  type.split("/");
+        return strings[1];
+    }
+
+    public static Bitmap getBitmapFormUri(Activity ac, Uri uri) throws FileNotFoundException, IOException {
+        InputStream input = ac.getContentResolver().openInputStream(uri);
+        BitmapFactory.Options onlyBoundsOptions = new BitmapFactory.Options();
+        onlyBoundsOptions.inJustDecodeBounds = true;
+        onlyBoundsOptions.inDither = true;//optional
+        onlyBoundsOptions.inPreferredConfig = Bitmap.Config.ARGB_8888;//optional
+        BitmapFactory.decodeStream(input, null, onlyBoundsOptions);
+        input.close();
+        int originalWidth = onlyBoundsOptions.outWidth;
+        int originalHeight = onlyBoundsOptions.outHeight;
+        if ((originalWidth == -1) || (originalHeight == -1))
+            return null;
+        //Image resolution is based on 480x800
+        float hh = 800f;//The height is set as 800f here
+        float ww = 480f;//Set the width here to 480f
+        //Zoom ratio. Because it is a fixed scale, only one data of height or width is used for calculation
+        int be = 1;//be=1 means no scaling
+        if (originalWidth > originalHeight && originalWidth > ww) {//If the width is large, scale according to the fixed size of the width
+            be = (int) (originalWidth / ww);
+        } else if (originalWidth < originalHeight && originalHeight > hh) {//If the height is high, scale according to the fixed size of the width
+            be = (int) (originalHeight / hh);
+        }
+        if (be <= 0)
+            be = 1;
+        //Proportional compression
+        BitmapFactory.Options bitmapOptions = new BitmapFactory.Options();
+        bitmapOptions.inSampleSize = be;//Set scaling
+        bitmapOptions.inDither = true;//optional
+        bitmapOptions.inPreferredConfig = Bitmap.Config.ARGB_8888;//optional
+        input = ac.getContentResolver().openInputStream(uri);
+        Bitmap bitmap = BitmapFactory.decodeStream(input, null, bitmapOptions);
+        input.close();
+
+        return compressImage(bitmap);//Mass compression again
+    }
+
+    public static Bitmap compressImage(Bitmap image) {
+
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        image.compress(Bitmap.CompressFormat.JPEG, 100, baos);//Quality compression method, here 100 means no compression, store the compressed data in the BIOS
+        int options = 100;
+        while (baos.toByteArray().length / 1024 > 100) {  //Cycle to determine if the compressed image is greater than 100kb, greater than continue compression
+            baos.reset();//Reset the BIOS to clear it
+            //First parameter: picture format, second parameter: picture quality, 100 is the highest, 0 is the worst, third parameter: save the compressed data stream
+            image.compress(Bitmap.CompressFormat.JPEG, options, baos);//Here, the compression options are used to store the compressed data in the BIOS
+            options -= 10;//10 less each time
+        }
+        ByteArrayInputStream isBm = new ByteArrayInputStream(baos.toByteArray());//Store the compressed data in ByteArrayInputStream
+        Bitmap bitmap = BitmapFactory.decodeStream(isBm, null, null);//Generate image from ByteArrayInputStream data
+        return bitmap;
+    }
+
+    private String bitMapToBase64(Bitmap bitmap) {
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+        byte[] byteArray = byteArrayOutputStream .toByteArray();
+        String encoded = Base64.encodeToString(byteArray, Base64.DEFAULT);
+        return encoded;
     }
 
     private void habilitarProductoMejora(Boolean activo) {
@@ -579,6 +978,7 @@ public class FragmentFormularioRegistro extends Fragment {
     private void inicializarSelectorPromotor() {
         txtPromotor.setText("");
         dialogBuscarPromotor = new DialogBuscarCoordinador(getContext(), view);
+        dialogBuscarPromotor.setTitle("Seleccione promotor");
 
         txtPromotor.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -1157,8 +1557,14 @@ public class FragmentFormularioRegistro extends Fragment {
     }
 
     public void limpiarVista() {
+        seleccionarPromotor(null);
         seleccionarSucursal(null);
         seleccionarCoordinador(null);
+
+        limpiarCampoFotoINEFrontal();
+        limpiarCampoFotoIneReverso();
+        limpiarCampoFotoPerfil();
+        limpiarCampoFotoComprobanteDomicilio();
 
         clienteSeleccionado = null;
         txtCURP.setText("");
@@ -1246,7 +1652,6 @@ public class FragmentFormularioRegistro extends Fragment {
         apiCall.enqueue(new Callback<ResponseAPI>() {
             @Override
             public void onResponse(Call<ResponseAPI> call, Response<ResponseAPI> response) {
-
                 if(response.body() == null ) {
                     Toast.makeText(getContext(), "Error al guardar", Toast.LENGTH_SHORT).show();
                 } else if(response.body().getResultado() == null) {
@@ -1281,7 +1686,7 @@ public class FragmentFormularioRegistro extends Fragment {
         //CABECERAS
         solicitudDispersion.setIdPromotor(dialogBuscarPromotor.getSelectedItem() != null ? (dialogBuscarPromotor.getSelectedItem().getIdCoordinador() + "") : "");
         solicitudDispersion.setStrPromotor(txtPromotor.getText().toString().trim().toUpperCase());
-        solicitudDispersion.setStrUsuarioPromotor(usuario.getUser().toUpperCase());
+        solicitudDispersion.setStrUsuario(usuario.getUser().toUpperCase());
         solicitudDispersion.setStrCordinador(txtCoordinador.getText().toString().trim().toUpperCase());
         solicitudDispersion.setIdSucursal(dialogBuscadorSucursales.getSelectedItem()  != null ? dialogBuscadorSucursales.getSelectedItem().getIdSucursal() + "" : "");
         solicitudDispersion.setIdCliente(clienteSeleccionado != null ? clienteSeleccionado.getIdCliente() : "");
@@ -1323,6 +1728,17 @@ public class FragmentFormularioRegistro extends Fragment {
         //INE
         solicitudDispersion.setStrClaveINE(txtClaveElector.getText().toString().trim().toUpperCase());
         solicitudDispersion.setStrNumeroINE(txtNumeroElector.getText().toString().trim().toUpperCase());
+
+        //DOCUMENTOS
+        solicitudDispersion.setStrFotoINEFrontal_B64(bitMapToBase64(bmFotoINEFrontal));
+        solicitudDispersion.setStrFotoINEReverso_B64(bitMapToBase64(bmFotoINEReverso));
+        solicitudDispersion.setStrFotoPerfil_B64(bitMapToBase64(bmFotoPerfil));
+        solicitudDispersion.setStrFotoComprobanteDomicilio_B64(bitMapToBase64(bmFotoComprobanteDomicilio));
+        solicitudDispersion.setStrFotoINEFrontal_nombre(strFotoINEFrontal);
+        solicitudDispersion.setStrFotoINEReverso_nombre(strFotoINEReverso);
+        solicitudDispersion.setStrFotoPerfil_nombre(strFotoPerfil);
+        solicitudDispersion.setStrFotoComprobanteDomicilio_nombre(strFotoComprobanteDomicilio);
+
         //NACIONALIDAD
         solicitudDispersion.setStrNacionalidad(txtNacionalidad.getText().toString().trim().toUpperCase());
         solicitudDispersion.setStrEstadoNacimiento(txtEstadoOrigen.getText().toString().trim().toUpperCase());
@@ -1390,6 +1806,14 @@ public class FragmentFormularioRegistro extends Fragment {
     }
 
     private boolean validarSolicitudDispersion() {
+
+        if(txtPromotor.getText().toString().trim().length() == 0) {
+            layoutPromotor.setError("Seleccione un promotor");
+            layoutPromotor.requestFocus();
+            return false;
+        } else {
+            layoutPromotor.setError(null);
+        }
 
         if(txtSucursal.getText().toString().trim().length() == 0) {
             layoutSucursal.setError("Seleccione una sucursal");
@@ -1517,6 +1941,26 @@ public class FragmentFormularioRegistro extends Fragment {
             layoutNumeroElector.setError(null);
         }
 
+        if(bmFotoINEFrontal == null) {
+            Toast.makeText(parent, "Seleccione foto frontal de INE", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        if(bmFotoINEReverso == null) {
+            Toast.makeText(parent, "Seleccione foto del reverso de INE", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        if(bmFotoPerfil == null) {
+            Toast.makeText(parent, "Seleccione foto perfil del cliente", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        if(bmFotoComprobanteDomicilio == null) {
+            Toast.makeText(parent, "Seleccione foto de comprobante de domicilio", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
         if(txtEstadoOrigen.getText().toString().trim().length() == 0) {
             layoutEstadoOrigen.setError("Ingrese estado de origen");
             txtEstadoOrigen.requestFocus();
@@ -1603,6 +2047,12 @@ public class FragmentFormularioRegistro extends Fragment {
             return false;
         } else {
             layoutEgresos.setError(null);
+        }
+
+        if(radioProducto.getCheckedRadioButtonId() == -1) {
+            Toast.makeText(parent, "Seleccione por lo menos un producto por solicitar", Toast.LENGTH_SHORT).show();
+            radioProducto.requestFocus();
+            return false;
         }
 
         //Validaciones de producto mejora
