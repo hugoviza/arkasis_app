@@ -1031,12 +1031,14 @@
                 android:id="@+id/layoutMontoSolicitadoMejoraVivienda"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Monto solicitado - Mejora vivienda">
+                android:hint="Monto solicitado - Mejora vivienda"
+                android:visibility="gone">
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/txtMontoSolicitadoMejoraVivienda"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="number"/>
+                    android:inputType="number"
+                    android:visibility="gone"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -1049,7 +1051,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textCapCharacters"
-                    android:maxLength="5"/>
+                    android:maxLength="5"
+                    android:visibility="gone"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -1061,7 +1064,8 @@
                     android:id="@+id/txtDomicilio_mejoraVivienda"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textCapCharacters"/>
+                    android:inputType="textCapCharacters"
+                    android:visibility="gone"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <LinearLayout
@@ -1074,12 +1078,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:hint="Número exterior - Mejora vivienda"
-                    android:layout_weight="2">
+                    android:layout_weight="2"
+                    android:visibility="gone">
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/txtNumExt_mejoraVivienda"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="textCapCharacters"/>
+                        android:inputType="textCapCharacters"
+                        android:visibility="gone"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -1087,12 +1093,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:hint="Número interior - Mejora vivienda"
-                    android:layout_weight="2">
+                    android:layout_weight="2"
+                    android:visibility="gone">
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/txtNumInt_mejoraVivienda"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="textCapCharacters"/>
+                        android:inputType="textCapCharacters"
+                        android:visibility="gone"/>
                 </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
 
@@ -1100,12 +1108,14 @@
                 android:id="@+id/layoutColonia_mejoraVivienda"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Colonia - Mejora vivienda">
+                android:hint="Colonia - Mejora vivienda"
+                android:visibility="gone">
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/txtColonia_mejoraVivienda"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textCapCharacters"/>
+                    android:inputType="textCapCharacters"
+                    android:visibility="gone"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -1115,12 +1125,14 @@
                 android:hint="Municipio - Mejora vivienda"
                 app:endIconMode="custom"
                 app:endIconDrawable="@drawable/ic_baseline_arrow_drop_down_24"
-                app:endIconContentDescription="@string/seleccionar">
+                app:endIconContentDescription="@string/seleccionar"
+                android:visibility="gone">
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/txtMunicipio_mejoraVivienda"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textCapCharacters"/>
+                    android:inputType="textCapCharacters"
+                    android:visibility="gone"/>
             </com.google.android.material.textfield.TextInputLayout>
             <!-- campos para poducto mejora -->
 
