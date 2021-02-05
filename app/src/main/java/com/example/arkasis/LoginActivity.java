@@ -86,8 +86,8 @@ public class LoginActivity extends AppCompatActivity {
                     btnIniciarSesion.setEnabled(true);
 
                     if(response.isSuccessful()) {
-                        if(response.body().getResultado() == null) {
-                            Toast.makeText(LoginActivity.this, response.body().getMensaje(), Toast.LENGTH_SHORT).show();
+                        if(response.body() == null || response.body().getResultado() == null) {
+                            Toast.makeText(LoginActivity.this, "No se puede iniciar sesión", Toast.LENGTH_SHORT).show();
                         } else {
                             LinkedTreeMap<Object, Object> treeMap = (LinkedTreeMap)response.body().getResultado();
                             guardarSesionUsuario(new Usuario(treeMap));

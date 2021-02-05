@@ -119,7 +119,7 @@ public class FragmentDashboard extends Fragment {
         apiCall.enqueue(new Callback<ResponseAPI>() {
             @Override
             public void onResponse(Call<ResponseAPI> call, Response<ResponseAPI> response) {
-                if(response.body().getResultado() == null) {
+                if(response.body() == null || response.body().getResultado() == null) {
 
                 } else {
                     try {
@@ -131,12 +131,10 @@ public class FragmentDashboard extends Fragment {
                         Toast.makeText(getContext(), "Error al cargar datos de gráfica", Toast.LENGTH_SHORT).show();
                     }
                 }
-                BottomBarActivity.cerrarLoading();
             }
 
             @Override
             public void onFailure(Call<ResponseAPI> call, Throwable t) {
-                BottomBarActivity.cerrarLoading();
                 Toast.makeText(getContext(), getString(R.string.sin_acceso_servidor), Toast.LENGTH_SHORT).show();
             }
         });
