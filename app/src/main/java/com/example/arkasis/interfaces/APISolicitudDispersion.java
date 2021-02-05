@@ -3,6 +3,7 @@ package com.example.arkasis.interfaces;
 import com.example.arkasis.config.Config;
 import com.example.arkasis.models.ResponseAPI;
 import com.example.arkasis.models.SolicitudDispersion;
+import com.example.arkasis.models.Usuario;
 
 import java.util.List;
 
@@ -26,4 +27,12 @@ public interface APISolicitudDispersion {
     })
     @POST("api/dispersion/batch/nueva")
     Call<ResponseAPI> batchAddSolicitud(@Body List<SolicitudDispersion> arraySolicitudesDispersion);
+
+
+    @Headers({
+            "x-api-key: " + Config.API_KEY,
+            "Content-Type: application/json"
+    })
+    @POST("api/dispersion/resumen-usuario")
+    Call<ResponseAPI> obtenerResumenSolicitudesPorUsuario(@Body Usuario usuario);
 }

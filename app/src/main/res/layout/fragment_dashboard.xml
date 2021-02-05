@@ -20,17 +20,29 @@
 
         </TextView>
 
-        <!-- SEPARADOR GRAFICAS -->
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvList_graficas"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-
+        <!-- GRAFICAS -->
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingTop="16dp">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Resumen de solicitudes de los últimos 90 días"
+                />
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/border_bottom"
+                />
         </LinearLayout>
+
+        <lecho.lib.hellocharts.view.PieChartView
+            android:id="@+id/pieChartResumenSolicitudesMensuales"
+            android:layout_width="match_parent"
+            android:layout_height="250dp" />
 
         <!-- ULTIMOS REGISTRADOS -->
         <LinearLayout
