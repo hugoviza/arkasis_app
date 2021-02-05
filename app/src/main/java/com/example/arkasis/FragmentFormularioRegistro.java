@@ -14,8 +14,11 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 
+import android.os.Environment;
+import android.os.Handler;
 import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.text.Editable;
@@ -170,7 +173,7 @@ public class FragmentFormularioRegistro extends Fragment {
     Bitmap bmFotoINEFrontal, bmFotoINEReverso, bmFotoPerfil, bmFotoComprobanteDomicilio;
     String strFotoINEFrontal, strFotoINEReverso, strFotoPerfil, strFotoComprobanteDomicilio;
 
-    String currentPic = null;
+    String fotoPath;
 
     //Helper
     int tipoImagenSolicitada = 0;
@@ -497,9 +500,35 @@ public class FragmentFormularioRegistro extends Fragment {
     private void abrirCamara() {
         Intent intent = new Intent();
         intent.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
+
+        File imagenFile = null;
+
+        try {
+            imagenFile = crearFileImagen();
+        } catch (Exception e) {
+            Toast.makeText(parent, "Error al abrir camara", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if(imagenFile != null) {
+            Uri uriImageFile = FileProvider.getUriForFile(parent, "com.example.arkasis.fileprovider", imagenFile);
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, uriImageFile);
+        }
+
         if(intent.resolveActivity(parent.getPackageManager()) != null) {
             parent.startActivityFromFragment(this, intent, REQUEST_IMAGE);
         }
+    }
+
+    private File crearFileImagen() throws IOException {
+        Date date = new Date();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd_MM_yyyy_HH_mm_ss", new Locale("es", "ES"));
+        String fileName = "foto_arkasis_" + dateFormat.format(date);
+
+        File directorio = parent.getExternalFilesDir(Environment.DIRECTORY_DCIM);
+        File imagen = File.createTempFile(fileName, ".jpg", directorio);
+        fotoPath = imagen.getAbsolutePath();
+        return imagen;
     }
 
     private void limpiarCampoFotoINEFrontal() {
@@ -551,7 +580,7 @@ public class FragmentFormularioRegistro extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         if(requestCode == REQUEST_IMAGE) {
-            if(resultCode == Activity.RESULT_OK && (data != null || currentPic != null)) {
+            if(resultCode == Activity.RESULT_OK && (data != null || fotoPath != null)) {
                 if(requestPermisoSolicitado == REQUEST_PERMISSION_GALERY) {
                     Uri uri = data.getData();
                     switch (tipoImagenSolicitada) {
@@ -602,8 +631,8 @@ public class FragmentFormularioRegistro extends Fragment {
                         default:
                             Toast.makeText(parent, "Tipo de imagen no solicitada", Toast.LENGTH_SHORT).show();
                     }
-                } else if(requestPermisoSolicitado == REQUEST_PERMISSION_CAMERA) {
-                    Bitmap bitmap = (Bitmap)data.getExtras().get("data");
+                } else if(requestPermisoSolicitado == REQUEST_PERMISSION_CAMERA && fotoPath != null) {
+                    Bitmap bitmap = BitmapFactory.decodeFile(fotoPath);
                     switch (tipoImagenSolicitada) {
                         case R.id.imgFotoINEFrontal:
                             bmFotoINEFrontal = bitmap;
@@ -637,7 +666,7 @@ public class FragmentFormularioRegistro extends Fragment {
                             Toast.makeText(parent, "Tipo de imagen no solicitada", Toast.LENGTH_SHORT).show();
                     }
                 }
-
+                fotoPath = null;
                 tipoImagenSolicitada = 0;
             } else {
                 Toast.makeText(parent, "Imagen no seleccionada", Toast.LENGTH_SHORT).show();
@@ -705,7 +734,7 @@ public class FragmentFormularioRegistro extends Fragment {
 
     private String bitMapToBase64(Bitmap bitmap) {
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 70, byteArrayOutputStream);
         byte[] byteArray = byteArrayOutputStream .toByteArray();
         String encoded = Base64.encodeToString(byteArray, Base64.DEFAULT);
         return encoded;
@@ -1620,14 +1649,20 @@ public class FragmentFormularioRegistro extends Fragment {
 
     private void guadarSolicitudDispersion() {
         if(validarSolicitudDispersion()) {
+            //mostramos el mensaje de guardando
+            BottomBarActivity.abrirLoading("Guardando...");
 
-            SolicitudDispersion solicitudDispersion = armarObjetoSolicitud();
-
-            if(getEstatusConexionInternet()) {
-                guadarSolicitudDispersionSERVER(solicitudDispersion);
-            } else {
-                guadarSolicitudDispersionLOCAL(solicitudDispersion);
-            }
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    SolicitudDispersion solicitudDispersion = armarObjetoSolicitud();
+                    if(getEstatusConexionInternet()) {
+                        guadarSolicitudDispersionSERVER(solicitudDispersion);
+                    } else {
+                        guadarSolicitudDispersionLOCAL(solicitudDispersion);
+                    }
+                }
+            }, 1000);
         }
     }
 
@@ -1654,6 +1689,7 @@ public class FragmentFormularioRegistro extends Fragment {
             public void onResponse(Call<ResponseAPI> call, Response<ResponseAPI> response) {
                 if(response.body() == null ) {
                     Toast.makeText(getContext(), "Error al guardar", Toast.LENGTH_SHORT).show();
+                    guadarSolicitudDispersionLOCAL(solicitudDispersion);
                 } else if(response.body().getResultado() == null) {
                     Toast.makeText(getContext(), response.body().getMensaje(), Toast.LENGTH_SHORT).show();
                     //No hay nada por hacer
@@ -1673,6 +1709,7 @@ public class FragmentFormularioRegistro extends Fragment {
             @Override
             public void onFailure(Call<ResponseAPI> call, Throwable t) {
                 Toast.makeText(getContext(), getString(R.string.sin_acceso_servidor), Toast.LENGTH_SHORT).show();
+                guadarSolicitudDispersionLOCAL(solicitudDispersion);
                 BottomBarActivity.cerrarLoading();
             }
         });
