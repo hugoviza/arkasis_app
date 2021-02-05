@@ -150,7 +150,7 @@ public class FragmentDashboard extends Fragment {
 
         PieChartData pieChartData = new PieChartData(pieData);
         pieChartData.setHasLabels(true).setValueLabelTextSize(8);
-        pieChartData.setHasCenterCircle(true).setCenterText1(rs.getIntTotalRegistros() + " SOLICITUDES").setCenterText1FontSize(12).setCenterText1Color(Color.parseColor("#0097A7"));
+        pieChartData.setHasCenterCircle(true).setCenterText1(rs.getIntTotalRegistros() + ( rs.getIntTotalRegistros() != 1 ? " SOLICITUDES" : " SOLICITUD")).setCenterText1FontSize(12).setCenterText1Color(Color.parseColor("#0097A7"));
         pieChartResumenSolicitudesMensuales.setPieChartData(pieChartData);
     }
 }
