@@ -423,11 +423,11 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:layout_marginTop="16sp">
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Evidencias"
-                    />
+                    android:text="Digitalización" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -1008,8 +1008,8 @@
                         android:id="@+id/radioProductoMejoraVivienda"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Mejora vivienda"
-                        android:layout_marginRight="16sp"/>
+                        android:layout_marginRight="16sp"
+                        android:text="Mejora tu vivienda" />
 
                     <RadioButton
                         android:id="@+id/radioProductoEquipandoHogar"
@@ -1021,7 +1021,7 @@
                         android:id="@+id/radioProductoAmbos"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Mejora vivienda y Equipando tu hogar" />
+                        android:text="Ambos" />
 
                 </RadioGroup>
 
