@@ -772,7 +772,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textCapCharacters"
-                    tools:text="MÉXICO" />
+                    tools:text="MEXICO" />
             </com.google.android.material.textfield.TextInputLayout>
 
 
