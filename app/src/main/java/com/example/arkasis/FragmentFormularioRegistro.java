@@ -34,6 +34,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.example.arkasis.DB.tablas.TableSolicitudesDispersion;
@@ -133,7 +134,9 @@ public class FragmentFormularioRegistro extends Fragment {
             btnAbrirCamaraFotoComprobanteDomicilio, btnAbrirGaleriaFotoComprobanteDomicilio
     ;
     LinearLayout llFotoINEFrontal, llFotoINEReverso, llFotoPerfil, llFotoComprobanteDomicilio;
+    RelativeLayout rlFotoINEFrontal, rlFotoINEReverso, rlFotoPerfil, rlFotoComprobanteDomicilio;
     ImageButton imgFotoINEFrontal, imgFotoINEReverso, imgFotoPerfil, imgFotoComprobanteDomicilio;
+    ImageButton btnCancelarFotoINEFrontal, btnCancelarFotoINEReverso, btnCancelarFotoPerfil, btnCancelarFotoComprobanteDomicilio;
     MaterialDatePicker dpFechaNacimiento, dpFechaNacimientoConyuge;
     TextInputEditText txtFechaNacimiento, txtSucursal, txtPromotor, txtCoordinador, txtCURP, txtNombre1, txtNombre2, txtApellidoPaterno, txtApellidoMaterno, txtNacionalidad, txtOcupacion, txtActividad,
             txtCelular, txtTelefono, txtEmail, txtClaveElector, txtNumeroElector, txtEstadoOrigen, txtPaisOrigen,
@@ -178,6 +181,7 @@ public class FragmentFormularioRegistro extends Fragment {
     //Helper
     int tipoImagenSolicitada = 0;
     int requestPermisoSolicitado = 0;
+    int pesoMaximo = 2048;
 
 
     //default data
@@ -318,6 +322,16 @@ public class FragmentFormularioRegistro extends Fragment {
             llFotoPerfil = view.findViewById(R.id.llFotoPerfil);
             llFotoComprobanteDomicilio = view.findViewById(R.id.llFotoComprobanteDomicilio);
 
+            rlFotoINEFrontal = view.findViewById(R.id.rlFotoINEFrontal);
+            rlFotoINEReverso = view.findViewById(R.id.rlFotoINEReverso);
+            rlFotoPerfil = view.findViewById(R.id.rlFotoPerfil);
+            rlFotoComprobanteDomicilio = view.findViewById(R.id.rlFotoComprobanteDomicilio);
+
+            btnCancelarFotoINEFrontal = view.findViewById(R.id.btnCancelarFotoINEFrontal);
+            btnCancelarFotoINEReverso = view.findViewById(R.id.btnCancelarFotoINEReverso);
+            btnCancelarFotoPerfil = view.findViewById(R.id.btnCancelarFotoPerfil);
+            btnCancelarFotoComprobanteDomicilio = view.findViewById(R.id.btnCancelarFotoComprobanteDomicilio);
+
             usuario = Config.USUARIO_SESION;
             txtPromotor.setText(usuario.getUser());
 
@@ -333,6 +347,7 @@ public class FragmentFormularioRegistro extends Fragment {
             inicializarMunicipio_mejoraVivienda();
             inicializarSelectoresImagenesGaleria();
             inicializarSelectoresImagenesCamara();
+            inicializarBotonesCancelarSeleccionImagen();
 
             BottomBarActivity.cerrarLoading();
 
@@ -463,6 +478,37 @@ public class FragmentFormularioRegistro extends Fragment {
         });
     }
 
+    private void inicializarBotonesCancelarSeleccionImagen() {
+        btnCancelarFotoINEFrontal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                limpiarCampoFotoINEFrontal();
+            }
+        });
+
+        btnCancelarFotoINEReverso.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                limpiarCampoFotoIneReverso();
+            }
+        });
+
+        btnCancelarFotoPerfil.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                limpiarCampoFotoPerfil();
+            }
+        });
+
+        btnCancelarFotoComprobanteDomicilio.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                limpiarCampoFotoComprobanteDomicilio();
+            }
+        });
+
+    }
+
     private void comprobarPermisosAbrirGaleria() {
         requestPermisoSolicitado = REQUEST_PERMISSION_GALERY;
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -534,25 +580,28 @@ public class FragmentFormularioRegistro extends Fragment {
     private void limpiarCampoFotoINEFrontal() {
         bmFotoINEFrontal = null;
         strFotoINEFrontal = null;
-        imgFotoINEFrontal.setVisibility(View.GONE);
+        rlFotoINEFrontal.setVisibility(View.GONE);
         llFotoINEFrontal.setVisibility(View.VISIBLE);
     }
+
     private void limpiarCampoFotoIneReverso() {
         bmFotoINEReverso = null;
         strFotoINEReverso = null;
-        imgFotoINEReverso.setVisibility(View.GONE);
+        rlFotoINEReverso.setVisibility(View.GONE);
         llFotoINEReverso.setVisibility(View.VISIBLE);
     }
+
     private void limpiarCampoFotoPerfil() {
         bmFotoPerfil = null;
         strFotoPerfil = null;
-        imgFotoPerfil.setVisibility(View.GONE);
+        rlFotoPerfil.setVisibility(View.GONE);
         llFotoPerfil.setVisibility(View.VISIBLE);
     }
+
     private void limpiarCampoFotoComprobanteDomicilio() {
         bmFotoComprobanteDomicilio = null;
         strFotoComprobanteDomicilio = null;
-        imgFotoComprobanteDomicilio.setVisibility(View.GONE);
+        rlFotoComprobanteDomicilio.setVisibility(View.GONE);
         llFotoComprobanteDomicilio.setVisibility(View.VISIBLE);
     }
 
@@ -592,7 +641,7 @@ public class FragmentFormularioRegistro extends Fragment {
                                 bmFotoINEFrontal = null;
                             }
                             imgFotoINEFrontal.setImageURI(uri);
-                            imgFotoINEFrontal.setVisibility(View.VISIBLE);
+                            rlFotoINEFrontal.setVisibility(View.VISIBLE);
                             llFotoINEFrontal.setVisibility(View.GONE);
                             break;
                         case R.id.imgFotoINEReverso:
@@ -603,7 +652,7 @@ public class FragmentFormularioRegistro extends Fragment {
                                 bmFotoINEReverso = null;
                             }
                             imgFotoINEReverso.setImageURI(uri);
-                            imgFotoINEReverso.setVisibility(View.VISIBLE);
+                            rlFotoINEReverso.setVisibility(View.VISIBLE);
                             llFotoINEReverso.setVisibility(View.GONE);
                             break;
                         case R.id.imgFotoPerfil:
@@ -614,7 +663,7 @@ public class FragmentFormularioRegistro extends Fragment {
                                 bmFotoPerfil = null;
                             }
                             imgFotoPerfil.setImageURI(uri);
-                            imgFotoPerfil.setVisibility(View.VISIBLE);
+                            rlFotoPerfil.setVisibility(View.VISIBLE);
                             llFotoPerfil.setVisibility(View.GONE);
                             break;
                         case R.id.imgFotoComprobanteDomicilio:
@@ -625,7 +674,7 @@ public class FragmentFormularioRegistro extends Fragment {
                                 bmFotoComprobanteDomicilio = null;
                             }
                             imgFotoComprobanteDomicilio.setImageURI(uri);
-                            imgFotoComprobanteDomicilio.setVisibility(View.VISIBLE);
+                            rlFotoComprobanteDomicilio.setVisibility(View.VISIBLE);
                             llFotoComprobanteDomicilio.setVisibility(View.GONE);
                             break;
                         default:
@@ -638,28 +687,28 @@ public class FragmentFormularioRegistro extends Fragment {
                             bmFotoINEFrontal = bitmap;
                             strFotoINEFrontal =  DOCUMENTO_INE_FRONTAL + ".jpg";
                             imgFotoINEFrontal.setImageBitmap(bitmap);
-                            imgFotoINEFrontal.setVisibility(View.VISIBLE);
+                            rlFotoINEFrontal.setVisibility(View.VISIBLE);
                             llFotoINEFrontal.setVisibility(View.GONE);
                             break;
                         case R.id.imgFotoINEReverso:
                             bmFotoINEReverso = bitmap;
                             strFotoINEReverso =  DOCUMENTO_INE_REVERSO + ".jpg";
                             imgFotoINEReverso.setImageBitmap(bitmap);
-                            imgFotoINEReverso.setVisibility(View.VISIBLE);
+                            rlFotoINEReverso.setVisibility(View.VISIBLE);
                             llFotoINEReverso.setVisibility(View.GONE);
                             break;
                         case R.id.imgFotoPerfil:
                             bmFotoPerfil = bitmap;
                             strFotoPerfil =  DOCUMENTO_FOTO_PERFIL + ".jpg";
                             imgFotoPerfil.setImageBitmap(bitmap);
-                            imgFotoPerfil.setVisibility(View.VISIBLE);
+                            rlFotoPerfil.setVisibility(View.VISIBLE);
                             llFotoPerfil.setVisibility(View.GONE);
                             break;
                         case R.id.imgFotoComprobanteDomicilio:
                             bmFotoComprobanteDomicilio = bitmap;
                             strFotoComprobanteDomicilio =  DOCUMENTO_COMPROBANTE_DOMICILIO + ".jpg";
                             imgFotoComprobanteDomicilio.setImageBitmap(bitmap);
-                            imgFotoComprobanteDomicilio.setVisibility(View.VISIBLE);
+                            rlFotoComprobanteDomicilio.setVisibility(View.VISIBLE);
                             llFotoComprobanteDomicilio.setVisibility(View.GONE);
                             break;
                         default:
@@ -682,51 +731,24 @@ public class FragmentFormularioRegistro extends Fragment {
 
     public static Bitmap getBitmapFormUri(Activity ac, Uri uri) throws FileNotFoundException, IOException {
         InputStream input = ac.getContentResolver().openInputStream(uri);
-        BitmapFactory.Options onlyBoundsOptions = new BitmapFactory.Options();
-        onlyBoundsOptions.inJustDecodeBounds = true;
-        onlyBoundsOptions.inDither = true;//optional
-        onlyBoundsOptions.inPreferredConfig = Bitmap.Config.ARGB_8888;//optional
-        BitmapFactory.decodeStream(input, null, onlyBoundsOptions);
+        Bitmap bitmap = BitmapFactory.decodeStream(input);
         input.close();
-        int originalWidth = onlyBoundsOptions.outWidth;
-        int originalHeight = onlyBoundsOptions.outHeight;
-        if ((originalWidth == -1) || (originalHeight == -1))
-            return null;
-        //Image resolution is based on 480x800
-        float hh = 800f;//The height is set as 800f here
-        float ww = 480f;//Set the width here to 480f
-        //Zoom ratio. Because it is a fixed scale, only one data of height or width is used for calculation
-        int be = 1;//be=1 means no scaling
-        if (originalWidth > originalHeight && originalWidth > ww) {//If the width is large, scale according to the fixed size of the width
-            be = (int) (originalWidth / ww);
-        } else if (originalWidth < originalHeight && originalHeight > hh) {//If the height is high, scale according to the fixed size of the width
-            be = (int) (originalHeight / hh);
-        }
-        if (be <= 0)
-            be = 1;
-        //Proportional compression
-        BitmapFactory.Options bitmapOptions = new BitmapFactory.Options();
-        bitmapOptions.inSampleSize = be;//Set scaling
-        bitmapOptions.inDither = true;//optional
-        bitmapOptions.inPreferredConfig = Bitmap.Config.ARGB_8888;//optional
-        input = ac.getContentResolver().openInputStream(uri);
-        Bitmap bitmap = BitmapFactory.decodeStream(input, null, bitmapOptions);
-        input.close();
-
-        return compressImage(bitmap);//Mass compression again
+        return bitmap;
     }
 
-    public static Bitmap compressImage(Bitmap image) {
+    public Bitmap compressImage(Bitmap image) {
 
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         image.compress(Bitmap.CompressFormat.JPEG, 100, baos);//Quality compression method, here 100 means no compression, store the compressed data in the BIOS
-        int options = 100;
-        while (baos.toByteArray().length / 1024 > 100) {  //Cycle to determine if the compressed image is greater than 100kb, greater than continue compression
+        while ((baos.toByteArray().length / 1024) > pesoMaximo) {  //Cycle to determine if the compressed image is greater than 100kb, greater than continue compression
+            //Hacemos una regla de 3 para comprimir
+            int quality = pesoMaximo * 100 / (baos.toByteArray().length / 1024);
+            quality = quality > 100 ? 100 : quality;
             baos.reset();//Reset the BIOS to clear it
             //First parameter: picture format, second parameter: picture quality, 100 is the highest, 0 is the worst, third parameter: save the compressed data stream
-            image.compress(Bitmap.CompressFormat.JPEG, options, baos);//Here, the compression options are used to store the compressed data in the BIOS
-            options -= 10;//10 less each time
+            image.compress(Bitmap.CompressFormat.JPEG, quality, baos);//Here, the compression options are used to store the compressed data in the BIOS
         }
+
         ByteArrayInputStream isBm = new ByteArrayInputStream(baos.toByteArray());//Store the compressed data in ByteArrayInputStream
         Bitmap bitmap = BitmapFactory.decodeStream(isBm, null, null);//Generate image from ByteArrayInputStream data
         return bitmap;
@@ -734,7 +756,15 @@ public class FragmentFormularioRegistro extends Fragment {
 
     private String bitMapToBase64(Bitmap bitmap) {
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 70, byteArrayOutputStream);
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
+
+        int quality = pesoMaximo * 100 / (byteArrayOutputStream.toByteArray().length / 1024);
+
+        quality = quality > 100 ? 100 : quality;
+
+        byteArrayOutputStream.reset();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, quality, byteArrayOutputStream);
+
         byte[] byteArray = byteArrayOutputStream .toByteArray();
         String encoded = Base64.encodeToString(byteArray, Base64.DEFAULT);
         return encoded;
@@ -1672,6 +1702,7 @@ public class FragmentFormularioRegistro extends Fragment {
 
         Toast.makeText(getContext(), "Registro guardado localmente", Toast.LENGTH_SHORT).show();
         limpiarVista();
+        BottomBarActivity.cerrarLoading();
     }
 
     private void guadarSolicitudDispersionSERVER(SolicitudDispersion solicitudDispersion) {

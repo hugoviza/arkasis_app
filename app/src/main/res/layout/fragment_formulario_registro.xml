@@ -345,7 +345,8 @@
                     android:id="@+id/txtCelular"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="phone"/>
+                    android:inputType="phone"
+                    android:maxLength="13"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -464,7 +465,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="120dp"
                             android:orientation="horizontal"
-                            android:layout_gravity="center_horizontal">
+                            android:layout_gravity="center_horizontal"
+                            android:visibility="visible">
                             <Button
                                 android:id="@+id/btnAbrirCamaraFotoINEFrontal"
                                 android:layout_width="50dp"
@@ -480,15 +482,32 @@
                                 android:layout_gravity="center_vertical"
                                 style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"/>
                         </LinearLayout>
-                        <ImageButton
-                            android:id="@+id/imgFotoINEFrontal"
+                        <RelativeLayout
+                            android:id="@+id/rlFotoINEFrontal"
                             android:layout_width="match_parent"
                             android:layout_height="120dp"
-                            android:backgroundTint="@android:color/transparent"
-                            android:contentDescription="@string/seleccionar"
-                            android:src="@drawable/ic_baseline_add_24"
-                            android:scaleType="fitCenter"
-                            android:visibility="gone"/>
+                            android:visibility="gone">
+
+                            <ImageButton
+                                android:id="@+id/imgFotoINEFrontal"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:backgroundTint="@android:color/transparent"
+                                android:contentDescription="@string/seleccionar"
+                                android:scaleType="fitCenter"
+                                android:src="@drawable/ic_baseline_add_24"/>
+
+                            <ImageButton
+                                android:id="@+id/btnCancelarFotoINEFrontal"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_alignParentTop="true"
+                                android:layout_alignParentEnd="true"
+                                android:layout_marginTop="10dp"
+                                android:layout_marginEnd="10dp"
+                                android:src="@drawable/ic_baseline_cancel_24" />
+
+                        </RelativeLayout>
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
                 <com.google.android.material.card.MaterialCardView
@@ -531,15 +550,31 @@
                                 android:layout_gravity="center_vertical"
                                 style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"/>
                         </LinearLayout>
-                        <ImageButton
-                            android:id="@+id/imgFotoINEReverso"
+                        <RelativeLayout
+                            android:id="@+id/rlFotoINEReverso"
                             android:layout_width="match_parent"
                             android:layout_height="120dp"
-                            android:backgroundTint="@android:color/transparent"
-                            android:src="@drawable/ic_baseline_add_24"
-                            android:contentDescription="@string/seleccionar"
-                            android:visibility="gone"
-                            android:scaleType="fitCenter"/>
+                            android:visibility="gone">
+
+                            <ImageButton
+                                android:id="@+id/imgFotoINEReverso"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:backgroundTint="@android:color/transparent"
+                                android:src="@drawable/ic_baseline_add_24"
+                                android:contentDescription="@string/seleccionar"
+                                android:scaleType="fitCenter"/>
+
+                            <ImageButton
+                                android:id="@+id/btnCancelarFotoINEReverso"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_alignParentTop="true"
+                                android:layout_alignParentEnd="true"
+                                android:layout_marginTop="10dp"
+                                android:layout_marginEnd="10dp"
+                                android:src="@drawable/ic_baseline_cancel_24" />
+                        </RelativeLayout>
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
             </LinearLayout>
@@ -588,15 +623,33 @@
                                 android:layout_gravity="center_vertical"
                                 style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"/>
                         </LinearLayout>
-                        <ImageButton
-                            android:id="@+id/imgFotoPerfil"
+
+                        <RelativeLayout
+                            android:id="@+id/rlFotoPerfil"
                             android:layout_width="match_parent"
                             android:layout_height="120dp"
-                            android:backgroundTint="@android:color/transparent"
-                            android:contentDescription="@string/seleccionar"
-                            android:src="@drawable/ic_baseline_add_24"
-                            android:visibility="gone"
-                            android:scaleType="fitCenter"/>
+                            android:visibility="gone">
+
+                            <ImageButton
+                                android:id="@+id/imgFotoPerfil"
+                                android:layout_width="match_parent"
+                                android:layout_height="120dp"
+                                android:backgroundTint="@android:color/transparent"
+                                android:contentDescription="@string/seleccionar"
+                                android:src="@drawable/ic_baseline_add_24"
+                                android:scaleType="fitCenter"/>
+
+                            <ImageButton
+                                android:id="@+id/btnCancelarFotoPerfil"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_alignParentTop="true"
+                                android:layout_alignParentEnd="true"
+                                android:layout_marginTop="10dp"
+                                android:layout_marginEnd="10dp"
+                                android:src="@drawable/ic_baseline_cancel_24" />
+                        </RelativeLayout>
+
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
                 <com.google.android.material.card.MaterialCardView
@@ -639,15 +692,32 @@
                                 android:layout_gravity="center_vertical"
                                 style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"/>
                         </LinearLayout>
-                        <ImageButton
-                            android:id="@+id/imgFotoComprobanteDomicilio"
+                        <RelativeLayout
+                            android:id="@+id/rlFotoComprobanteDomicilio"
                             android:layout_width="match_parent"
                             android:layout_height="120dp"
-                            android:backgroundTint="@android:color/transparent"
-                            android:src="@drawable/ic_baseline_add_24"
-                            android:contentDescription="@string/seleccionar"
-                            android:visibility="gone"
-                            android:scaleType="fitCenter"/>
+                            android:visibility="gone">
+
+                            <ImageButton
+                                android:id="@+id/imgFotoComprobanteDomicilio"
+                                android:layout_width="match_parent"
+                                android:layout_height="120dp"
+                                android:backgroundTint="@android:color/transparent"
+                                android:src="@drawable/ic_baseline_add_24"
+                                android:contentDescription="@string/seleccionar"
+                                android:scaleType="fitCenter"/>
+
+                            <ImageButton
+                                android:id="@+id/btnCancelarFotoComprobanteDomicilio"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_alignParentTop="true"
+                                android:layout_alignParentEnd="true"
+                                android:layout_marginTop="10dp"
+                                android:layout_marginEnd="10dp"
+                                android:src="@drawable/ic_baseline_cancel_24" />
+                        </RelativeLayout>
+
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
             </LinearLayout>
