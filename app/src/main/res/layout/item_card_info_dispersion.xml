@@ -33,7 +33,7 @@
                     android:id="@+id/tvNombre"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Nombre cliente"
+                    android:text="NOMBRE CLIENTE"
                     android:textSize="16dp"
                     android:textColor="@color/black"/>
 
@@ -45,7 +45,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Estatus: "
+                        android:text="ESTATUS: "
                         android:textSize="12sp"/>
 
                     <TextView
@@ -85,7 +85,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Información personal"
+                    android:text="INFORMACIÓN PERSONAL"
                     />
 
                 <TextView

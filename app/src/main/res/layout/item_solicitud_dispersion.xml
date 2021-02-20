@@ -27,14 +27,31 @@
                 app:srcCompat="@drawable/ic_user"
                 />
 
-            <TextView
-                android:id="@+id/tvNombreCliente"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Nombre completo"
-                android:layout_gravity="center_vertical"
-                android:paddingLeft="16dp"
-                android:textStyle="bold"/>
+                android:orientation="vertical"
+                android:layout_gravity="center">
+
+                <TextView
+                    android:id="@+id/tvNombreCliente"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Nombre completo"
+                    android:layout_gravity="center_vertical"
+                    android:paddingLeft="16dp"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:id="@+id/tvEstatusSolicitud"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="ESTATUS SOLICITUD"
+                    android:paddingLeft="16dp"/>
+
+            </LinearLayout>
+
+
         </LinearLayout>
 
         <LinearLayout
@@ -126,8 +143,11 @@
                 android:id="@+id/txtEstatus"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="FECHASOLICITUD"
-                android:textSize="12sp"/>
+                android:text="estatus guardado"
+
+                android:textColor="#F44336"
+                android:textSize="12sp"
+                android:visibility="visible" />
         </LinearLayout>
 
     </LinearLayout>

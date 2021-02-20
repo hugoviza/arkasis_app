@@ -35,7 +35,7 @@
                 android:layout_marginLeft="15dp"
                 android:fontFamily="sans-serif"
                 android:gravity="center_vertical"
-                android:text="Datos generales"
+                android:text="DATOS GENERALES"
                 android:textColor="@color/font_primary"
                 android:textStyle="bold"
                 android:layout_weight="2"/>
@@ -82,7 +82,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Información personal"
+                    android:text="INFORMACIÓN PERSONAL"
                     />
 
                 <TextView
@@ -118,7 +118,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Curp"
+                        android:text="CURP"
                         android:textColor="@color/gray"/>
                 </LinearLayout>
             </LinearLayout>
@@ -148,7 +148,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Clave elector"
+                        android:text="CLAVE ELECTOR"
                         android:textColor="@color/gray"/>
                 </LinearLayout>
             </LinearLayout>
@@ -179,7 +179,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Genero"
+                        android:text="GÉNERO"
                         android:textColor="@color/gray"/>
                 </LinearLayout>
             </LinearLayout>
@@ -208,7 +208,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Fecha nacimiento"
+                        android:text="FECHA NACIMIENTO"
                         android:textColor="@color/gray"/>
                 </LinearLayout>
             </LinearLayout>
@@ -234,11 +234,11 @@
                         android:id="@+id/tvEstadoCivil"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Casado"/>
+                        android:text="SOLTERO"/>
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Estado civil"
+                        android:text="ESTADO CIVIL"
                         android:textColor="@color/gray"/>
                 </LinearLayout>
             </LinearLayout>
@@ -263,11 +263,11 @@
                         android:id="@+id/tvNacionalidad"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Mexicana"/>
+                        android:text="MEXICANA"/>
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Nacionalidad"
+                        android:text="NACIONALIDAD"
                         android:textColor="@color/gray"/>
                 </LinearLayout>
             </LinearLayout>
@@ -283,7 +283,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Datos del crédito"
+                    android:text="DATOS DEL CRÉDITO"
                     />
 
                 <TextView
@@ -320,7 +320,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Contacto"
+                    android:text="CONTACTO"
                     />
 
                 <TextView
@@ -354,7 +354,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Celular"
+                        android:text="CELULAR"
                         android:textColor="@color/gray"/>
                 </LinearLayout>
             </LinearLayout>
@@ -383,7 +383,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Teléfono"
+                        android:text="TELÉFONO"
                         android:textColor="@color/gray"/>
                 </LinearLayout>
             </LinearLayout>
@@ -412,7 +412,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Correo electrónico"
+                        android:text="CORREO ELECTRÓNICO"
                         android:textColor="@color/gray"/>
                 </LinearLayout>
             </LinearLayout>
@@ -427,7 +427,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Dirección"
+                    android:text="DIRECCIÓN"
                     />
 
                 <TextView
@@ -461,7 +461,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Domicilio actual"
+                        android:text="DOMICILIO"
                         android:textColor="@color/gray"/>
                 </LinearLayout>
             </LinearLayout>
@@ -490,7 +490,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Lugar nacimiento"
+                        android:text="LUGAR DE NACIMIENTO"
                         android:textColor="@color/gray"/>
                 </LinearLayout>
             </LinearLayout>
@@ -505,7 +505,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Cónyuge"
+                    android:text="CÓNYUGE"
                     />
 
                 <TextView
@@ -535,11 +535,11 @@
                         android:id="@+id/tvNombreConyuge"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Nombre completo"/>
+                        android:text="NOMBRE COMPLETO"/>
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Nombre"
+                        android:text="NOMBRE"
                         android:textColor="@color/gray"/>
                 </LinearLayout>
             </LinearLayout>
@@ -568,7 +568,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Fecha de nacimiento"
+                        android:text="FECHA NACIMIENTO"
                         android:textColor="@color/gray"/>
                 </LinearLayout>
             </LinearLayout>
@@ -597,7 +597,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Lugar de nacimiento"
+                        android:text="LUGAR NACIMIENTO"
                         android:textColor="@color/gray"/>
                 </LinearLayout>
             </LinearLayout>

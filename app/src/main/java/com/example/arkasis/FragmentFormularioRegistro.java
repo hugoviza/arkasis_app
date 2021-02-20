@@ -96,7 +96,6 @@ public class FragmentFormularioRegistro extends Fragment {
     private final int REQUEST_PERMISSION_CAMERA = 101;
     private final int REQUEST_IMAGE = 101;
 
-
     private final String DOCUMENTO_INE_FRONTAL = "evidencia_ine_frontal";
     private final String DOCUMENTO_INE_REVERSO = "evidencia_ine_reverso";
     private final String DOCUMENTO_FOTO_PERFIL = "evidencia_foto_perfil";
@@ -133,7 +132,7 @@ public class FragmentFormularioRegistro extends Fragment {
             btnAbrirCamaraFotoPerfil, btnAbrirGaleriaFotoPerfil,
             btnAbrirCamaraFotoComprobanteDomicilio, btnAbrirGaleriaFotoComprobanteDomicilio
     ;
-    LinearLayout llFotoINEFrontal, llFotoINEReverso, llFotoPerfil, llFotoComprobanteDomicilio;
+    LinearLayout llFotoINEFrontal, llFotoINEReverso, llFotoPerfil, llFotoComprobanteDomicilio, llSeparadorEquipandoHogar, llSeparadorMejoraVivienda;
     RelativeLayout rlFotoINEFrontal, rlFotoINEReverso, rlFotoPerfil, rlFotoComprobanteDomicilio;
     ImageButton imgFotoINEFrontal, imgFotoINEReverso, imgFotoPerfil, imgFotoComprobanteDomicilio;
     ImageButton btnCancelarFotoINEFrontal, btnCancelarFotoINEReverso, btnCancelarFotoPerfil, btnCancelarFotoComprobanteDomicilio;
@@ -331,6 +330,9 @@ public class FragmentFormularioRegistro extends Fragment {
             btnCancelarFotoINEReverso = view.findViewById(R.id.btnCancelarFotoINEReverso);
             btnCancelarFotoPerfil = view.findViewById(R.id.btnCancelarFotoPerfil);
             btnCancelarFotoComprobanteDomicilio = view.findViewById(R.id.btnCancelarFotoComprobanteDomicilio);
+
+            llSeparadorMejoraVivienda = view.findViewById(R.id.llSeparadorMejoraVivienda);
+            llSeparadorEquipandoHogar = view.findViewById(R.id.llSeparadorEquipandoHogar);
 
             usuario = Config.USUARIO_SESION;
             txtPromotor.setText(usuario.getUser());
@@ -771,6 +773,7 @@ public class FragmentFormularioRegistro extends Fragment {
     }
 
     private void habilitarProductoMejora(Boolean activo) {
+        llSeparadorMejoraVivienda.setVisibility(activo ? View.VISIBLE : View.GONE);
         txtMontoSolicitadoMejoraVivienda.setVisibility(activo ? View.VISIBLE : View.GONE);
         layoutMontoSolicitadoMejoraVivienda.setVisibility(activo ? View.VISIBLE : View.GONE);
 
@@ -803,6 +806,7 @@ public class FragmentFormularioRegistro extends Fragment {
     }
 
     private void habilitarProductoEquipandoHogar(Boolean activo) {
+        llSeparadorEquipandoHogar.setVisibility(activo ? View.VISIBLE : View.GONE);
         txtMontoSolicitadoEquipandoHogar.setVisibility(activo ? View.VISIBLE : View.GONE);
         layoutMontoSolicitadoEquipandoHogar.setVisibility(activo ? View.VISIBLE : View.GONE);
         layoutProductoEquipandoHogar.setVisibility(activo ? View.VISIBLE : View.GONE);
@@ -922,13 +926,13 @@ public class FragmentFormularioRegistro extends Fragment {
         for (EstadoCivil estadoCivil : arrayEstadoCivil) {
             lista.add(estadoCivil.getStrEstadoCivil());
         }
-        ArrayAdapter adapter = new ArrayAdapter(getContext(), R.layout.item_dropdown, lista);
+        ArrayAdapter adapter = new ArrayAdapter(parent, R.layout.item_dropdown, lista);
         txtEstadoCivil.setAdapter(adapter);
     }
 
     private void inicializarSelectorSucursales() {
         txtSucursal.setText("");
-        dialogBuscadorSucursales = new DialogBuscadorSucursales(getContext(), view);
+        dialogBuscadorSucursales = new DialogBuscadorSucursales(parent, view);
 
         txtSucursal.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -990,7 +994,7 @@ public class FragmentFormularioRegistro extends Fragment {
 
     private void inicializarSelectorCoordinador() {
         txtCoordinador.setText("");
-        dialogBuscarCoordinador = new DialogBuscarCoordinador(getContext(), view);
+        dialogBuscarCoordinador = new DialogBuscarCoordinador(parent, view);
 
         txtCoordinador.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -1036,7 +1040,7 @@ public class FragmentFormularioRegistro extends Fragment {
 
     private void inicializarSelectorPromotor() {
         txtPromotor.setText("");
-        dialogBuscarPromotor = new DialogBuscarCoordinador(getContext(), view);
+        dialogBuscarPromotor = new DialogBuscarCoordinador(parent, view);
         dialogBuscarPromotor.setTitle("Seleccione promotor");
 
         txtPromotor.setOnClickListener(new View.OnClickListener() {
@@ -1170,7 +1174,7 @@ public class FragmentFormularioRegistro extends Fragment {
     }
 
     private void inicializarSelectorCiudadMejora() {
-        dialogBuscadorMunicipios = new DialogBuscadorMunicipios(getContext(), view);
+        dialogBuscadorMunicipios = new DialogBuscadorMunicipios(parent, view);
         txtDomicilioMejoraMunicipio.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -1230,7 +1234,7 @@ public class FragmentFormularioRegistro extends Fragment {
     }
 
     private void inicializarSelectorActividades() {
-        dialogBuscadorActividades = new DialogBuscadorActividades(getContext(), view);
+        dialogBuscadorActividades = new DialogBuscadorActividades(parent, view);
         txtActividad.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
@@ -1287,7 +1291,7 @@ public class FragmentFormularioRegistro extends Fragment {
     }
 
     private void inicializarSelectorEstadoOrigen() {
-        dialogBuscadorEstados = new DialogBuscadorEstados(getContext(), view);
+        dialogBuscadorEstados = new DialogBuscadorEstados(parent, view);
         txtEstadoOrigen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -1448,7 +1452,7 @@ public class FragmentFormularioRegistro extends Fragment {
 
     private void buscarCURP() {
         if(!getEstatusConexionInternet()) {
-            Toast.makeText(getContext(), R.string.sin_conexion, Toast.LENGTH_SHORT).show();
+            Toast.makeText(parent, R.string.sin_conexion, Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -1468,7 +1472,7 @@ public class FragmentFormularioRegistro extends Fragment {
             @Override
             public void onResponse(Call<ResponseAPI> call, Response<ResponseAPI> response) {
                 if(response.body().getResultado() == null) {
-                    Toast.makeText(getContext(), "Cliente no encontrado", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(parent, "Cliente no encontrado", Toast.LENGTH_SHORT).show();
                 } else {
                     try {
                         if(response.body().getSuccess()) {
@@ -1476,11 +1480,11 @@ public class FragmentFormularioRegistro extends Fragment {
                             if(linkedTreeMaps.size() == 1) {
                                 inicializarFormulario(new Cliente(linkedTreeMaps.get(0)));
                             } else {
-                                Toast.makeText(getContext(), "Se han encontrado "+linkedTreeMaps.size()+" resultados", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(parent, "Se han encontrado "+linkedTreeMaps.size()+" resultados", Toast.LENGTH_SHORT).show();
                             }
                         }
                     } catch (Exception ex) {
-                        Toast.makeText(getContext(), "Error al cargar cliente", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(parent, "Error al cargar cliente", Toast.LENGTH_SHORT).show();
                     }
                 }
                 BottomBarActivity.cerrarLoading();
@@ -1489,7 +1493,7 @@ public class FragmentFormularioRegistro extends Fragment {
             @Override
             public void onFailure(Call<ResponseAPI> call, Throwable t) {
                 BottomBarActivity.cerrarLoading();
-                Toast.makeText(getContext(), getString(R.string.sin_acceso_servidor), Toast.LENGTH_SHORT).show();
+                Toast.makeText(parent, getString(R.string.sin_acceso_servidor), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -1700,7 +1704,7 @@ public class FragmentFormularioRegistro extends Fragment {
         TableSolicitudesDispersion table = new TableSolicitudesDispersion(getContext());
         table.insertar(solicitudDispersion);
 
-        Toast.makeText(getContext(), "Registro guardado localmente", Toast.LENGTH_SHORT).show();
+        Toast.makeText(parent, "Registro guardado localmente", Toast.LENGTH_SHORT).show();
         limpiarVista();
         BottomBarActivity.cerrarLoading();
     }
@@ -1719,13 +1723,13 @@ public class FragmentFormularioRegistro extends Fragment {
             @Override
             public void onResponse(Call<ResponseAPI> call, Response<ResponseAPI> response) {
                 if(response.body() == null ) {
-                    Toast.makeText(getContext(), "Error al guardar", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(parent, "Error al guardar", Toast.LENGTH_SHORT).show();
                     guadarSolicitudDispersionLOCAL(solicitudDispersion);
                 } else if(response.body().getResultado() == null) {
-                    Toast.makeText(getContext(), response.body().getMensaje(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(parent, response.body().getMensaje(), Toast.LENGTH_SHORT).show();
                     //No hay nada por hacer
                 } else {
-                    Toast.makeText(getContext(), "Guardado correctamente", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(parent, "Guardado correctamente", Toast.LENGTH_SHORT).show();
                     getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -1739,7 +1743,7 @@ public class FragmentFormularioRegistro extends Fragment {
 
             @Override
             public void onFailure(Call<ResponseAPI> call, Throwable t) {
-                Toast.makeText(getContext(), getString(R.string.sin_acceso_servidor), Toast.LENGTH_SHORT).show();
+                Toast.makeText(parent, getString(R.string.sin_acceso_servidor), Toast.LENGTH_SHORT).show();
                 guadarSolicitudDispersionLOCAL(solicitudDispersion);
                 BottomBarActivity.cerrarLoading();
             }

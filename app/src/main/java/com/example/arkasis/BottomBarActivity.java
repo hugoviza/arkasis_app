@@ -71,9 +71,14 @@ public class BottomBarActivity extends AppCompatActivity {
     public static final int ITEM_FIND = R.id.itemBuscar;
     public static final int ITEM_ADD = R.id.itemRegistrar;
 
+    public BottomBarActivity () {
+
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+        super.onCreate(null);
+
         setContentView(R.layout.activity_bottom_bar);
 
         bottom_navigation = findViewById(R.id.bottom_navigation);
@@ -105,7 +110,7 @@ public class BottomBarActivity extends AppCompatActivity {
 
             fragmentManager = this.getSupportFragmentManager();
 
-            fragmentDashboard = new FragmentDashboard();
+            fragmentDashboard = new FragmentDashboard(this);
             fragmentBuscarCliente = new FragmentBuscarCliente(this);
             fragmentFormularioRegistro = new FragmentFormularioRegistro(this);
 
@@ -194,7 +199,9 @@ public class BottomBarActivity extends AppCompatActivity {
                                     table.eliminar(estatus.getIdSolicitud());
                                 } else {
                                     int index = listIdSolicitudes.indexOf(estatus.getIdSolicitud());
-                                    table.actualizarEstatusInserccionServidor(listaSolicitudes.get(index));
+                                    SolicitudDispersion solicitudDispersion = listaSolicitudes.get(index);
+                                    solicitudDispersion.setStrEstatusInserccionServidor(estatus.getStrMensaje());
+                                    table.actualizarEstatusInserccionServidor(solicitudDispersion);
                                     contadorRegistrosFallidos++;
                                 }
                             } catch (Exception e) {
@@ -202,7 +209,7 @@ public class BottomBarActivity extends AppCompatActivity {
                             }
                         }
                         if(contadorRegistrosFallidos > 0) {
-                            Toast.makeText(BottomBarActivity.this, "Error al sincronizar "+contadorRegistrosFallidos+" solicitudes", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(BottomBarActivity.this, "Error al sincronizar "+contadorRegistrosFallidos+ (contadorRegistrosFallidos != 1 ? " solicitudes" : " solicitud"), Toast.LENGTH_SHORT).show();
                         } else {
                             Toast.makeText(BottomBarActivity.this, "Solicitudes sincronizadas correctamente", Toast.LENGTH_SHORT).show();
                         }

@@ -2,12 +2,13 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
     tools:context=".FragmentDashboard">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:padding="16dp"
         android:orientation="vertical"
         android:divider="@drawable/divider">
@@ -16,28 +17,23 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/tvBienvenida"
-            android:text="Bienvenido">
+            android:text="BIENVENIDO">
 
         </TextView>
 
         <!-- GRAFICAS -->
-        <LinearLayout
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingTop="16dp">
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Resumen de solicitudes de los últimos 90 días"
-                />
+            android:paddingTop="16dp"
+            android:text="RESUMEN DE SOLICITUDES DE LOS ÚLTIMOS 90 DÍAS"
+            />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/border_bottom"
-                />
-        </LinearLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/border_bottom"
+            />
 
         <lecho.lib.hellocharts.view.PieChartView
             android:id="@+id/pieChartResumenSolicitudesMensuales"
@@ -45,47 +41,40 @@
             android:layout_height="250dp" />
 
         <!-- ULTIMOS REGISTRADOS -->
-        <LinearLayout
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingTop="16dp">
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Ultimos 10 registrados"
-                />
+            android:paddingTop="16dp"
+            android:text="ÚLTIMAS 10 SOLICITUDES"
+            />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/border_bottom"
-                />
-        </LinearLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/border_bottom"
+            />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvList_ultimasSolicitudes"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="match_parent"
+            />
+
+
 
         <!-- SEPARADOR REGISTROS POR SINCRONIZAR -->
-        <LinearLayout
+        <TextView
+            android:paddingTop="16dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingTop="16dp">
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Solicitudes por sincronizar"
-                />
+            android:text="SOLICITUDES PENDIENTES DE SINCRONIZAR"
+            />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/border_bottom"
-                />
-        </LinearLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/border_bottom"
+            />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvList_solicitudes"
@@ -93,6 +82,6 @@
             android:layout_height="wrap_content">
 
         </androidx.recyclerview.widget.RecyclerView>
-    </LinearLayout>
 
+    </LinearLayout>
 </ScrollView>

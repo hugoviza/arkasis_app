@@ -24,6 +24,6 @@
         android:layout_gravity="center"
         android:textAlignment="center"
         android:layout_marginTop="26dp"
-        android:text="Cargando..." />
+        android:text="CARGANDO..." />
 
 </LinearLayout>

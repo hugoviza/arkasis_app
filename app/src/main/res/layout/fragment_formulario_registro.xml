@@ -22,7 +22,7 @@
                 android:id="@+id/btnLimpiar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Limpiar"
+                android:text="LIMPIAR"
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:textColor="@color/font_primary"/>
 
@@ -33,7 +33,7 @@
                 android:layout_marginLeft="15dp"
                 android:fontFamily="sans-serif"
                 android:gravity="center"
-                android:text="Solicitud de dispersión"
+                android:text="SOLICITUD DE DISPERSIÓN"
                 android:textColor="@color/font_primary"
                 android:textStyle="bold"
                 android:layout_weight="2"/>
@@ -42,7 +42,7 @@
                 android:id="@+id/btnGuardar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Guardar"
+                android:text="GUARDAR"
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:textColor="@color/font_primary"/>
 
@@ -64,7 +64,7 @@
                 android:id="@+id/layoutPromotor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Promotor"
+                android:hint="PROMOTOR"
                 app:endIconMode="custom"
                 app:endIconDrawable="@drawable/ic_baseline_arrow_drop_down_24"
                 app:endIconContentDescription="@string/seleccionar">
@@ -80,7 +80,7 @@
                 android:id="@+id/layoutSucursal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Sucursal"
+                android:hint="SUCURSAL"
                 app:endIconMode="custom"
                 app:endIconDrawable="@drawable/ic_baseline_arrow_drop_down_24"
                 app:endIconContentDescription="@string/seleccionar">
@@ -96,7 +96,7 @@
                 android:id="@+id/layoutCoordinador"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Coordinador"
+                android:hint="COORDINADOR"
                 app:endIconMode="custom"
                 app:endIconDrawable="@drawable/ic_baseline_arrow_drop_down_24"
                 app:endIconContentDescription="@string/seleccionar">
@@ -116,7 +116,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Información personal"
+                    android:text="INFORMACIÓN PERSONAL"
                     />
 
                 <TextView
@@ -130,7 +130,7 @@
                 android:id="@+id/layoutCURP"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Curp"
+                android:hint="CURP"
                 app:endIconMode="custom"
                 app:endIconDrawable="@drawable/ic_baseline_search_24"
                 app:endIconContentDescription="Buscar">
@@ -146,7 +146,7 @@
                 android:id="@+id/layoutNombre1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Primer nombre">
+                android:hint="PRIMER NOMBRE">
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/txtNombre1"
                     android:layout_width="match_parent"
@@ -158,7 +158,7 @@
                 android:id="@+id/layoutNombre2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Segundo nombre">
+                android:hint="SEGUNDO NOMBRE">
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/txtNombre2"
                     android:layout_width="match_parent"
@@ -170,7 +170,7 @@
                 android:id="@+id/layoutApellidoPaterno"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Apellido paterno">
+                android:hint="APELLIDO PATERNO">
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/txtApellidoPaterno"
                     android:layout_width="match_parent"
@@ -182,7 +182,7 @@
                 android:id="@+id/layoutApellidoMaterno"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Apellido materno">
+                android:hint="APELLIDO MATERNO">
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/txtApellidoMaterno"
                     android:layout_width="match_parent"
@@ -199,7 +199,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Sexo"/>
+                    android:text="SEXO"/>
                 <RadioGroup
                     android:id="@+id/radioSexo"
                     android:checkedButton="@id/radioSexoMujer"
@@ -227,7 +227,7 @@
                 android:id="@+id/layoutFechaNacimiento"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Fecha nacimiento"
+                android:hint="FECHA NACIMIENTO"
                 app:endIconMode="custom"
                 app:endIconDrawable="@drawable/ic_baseline_date_range_24"
                 app:endIconContentDescription="@string/seleccionar">
@@ -243,7 +243,7 @@
                 android:id="@+id/layoutEstadoCivil"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Estado civil"
+                android:hint="ESTADO CIVIL"
                 style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu">
 
                 <AutoCompleteTextView
@@ -260,12 +260,13 @@
                 android:id="@+id/layoutNacionalidad"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Nacionalidad">
+                android:hint="NACIONALIDAD">
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/txtNacionalidad"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textCapCharacters"/>
+                    android:inputType="textCapCharacters"
+                    android:text="MEXICANA"/>
             </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -278,7 +279,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Información laboral"
+                    android:text="INFORMACIÓN LABORAL"
                     />
 
                 <TextView
@@ -292,7 +293,7 @@
                 android:id="@+id/layoutOcupacion"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Ocupacion">
+                android:hint="OCUPACION">
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/txtOcupacion"
                     android:layout_width="match_parent"
@@ -304,7 +305,7 @@
                 android:id="@+id/layoutActividad"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Actividad"
+                android:hint="ACTIVIDAD"
                 app:endIconMode="custom"
                 app:endIconDrawable="@drawable/ic_baseline_arrow_drop_down_24"
                 app:endIconContentDescription="@string/seleccionar">
@@ -326,7 +327,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Contacto"
+                    android:text="CONTACTO"
                     />
 
                 <TextView
@@ -340,7 +341,7 @@
                 android:id="@+id/layoutCelular"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Celular">
+                android:hint="CELULAR">
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/txtCelular"
                     android:layout_width="match_parent"
@@ -353,7 +354,7 @@
                 android:id="@+id/layoutTelefono"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Teléfono">
+                android:hint="TELÉFONO">
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/txtTelefono"
                     android:layout_width="match_parent"
@@ -365,7 +366,7 @@
                 android:id="@+id/layoutEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Correo electrónico">
+                android:hint="CORREO ELECTRÓNICO">
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/txtEmail"
                     android:layout_width="match_parent"
@@ -382,7 +383,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Credencial de elector"
+                    android:text="CREDENCIAL ELECTOR"
                     />
 
                 <TextView
@@ -396,7 +397,7 @@
                 android:id="@+id/layoutClaveElector"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Clave elector">
+                android:hint="CLAVE ELECTOR">
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/txtClaveElector"
                     android:layout_width="match_parent"
@@ -409,7 +410,7 @@
                 android:id="@+id/layoutNumeroElector"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Número elector">
+                android:hint="NÚMERO ELECTOR">
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/txtNumeroElector"
                     android:layout_width="match_parent"
@@ -428,7 +429,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Digitalización" />
+                    android:text="DIGITALIZACIÓN" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -457,7 +458,7 @@
                             android:id="@+id/tvFotoINEFrontal"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Foto frontal INE"
+                            android:text="FRONTAL INE"
                             android:layout_gravity="center"
                             android:textAlignment="center"/>
                         <LinearLayout
@@ -528,7 +529,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:textAlignment="center"
-                            android:text="Foto reverso INE"/>
+                            android:text="REVERSO INE"/>
                         <LinearLayout
                             android:id="@+id/llFotoINEReverso"
                             android:layout_width="wrap_content"
@@ -599,7 +600,7 @@
                             android:id="@+id/tvFotoPerfil"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Foto rostro cliente"
+                            android:text="PERFIL CLIENTE"
                             android:layout_gravity="center"
                             android:textAlignment="center"/>
                         <LinearLayout
@@ -670,7 +671,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:textAlignment="center"
-                            android:text="Comprobante domicilio"/>
+                            android:text="COMP. DOMICILIO"/>
                         <LinearLayout
                             android:id="@+id/llFotoComprobanteDomicilio"
                             android:layout_width="wrap_content"
@@ -732,7 +733,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Lugar de nacimiento"
+                    android:text="LUGAR DE NACIMIENTO"
                     />
 
                 <TextView
@@ -746,7 +747,7 @@
                 android:id="@+id/layoutEstadoOrigen"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Estado"
+                android:hint="ESTADO"
                 app:endIconMode="custom"
                 app:endIconDrawable="@drawable/ic_baseline_arrow_drop_down_24"
                 app:endIconContentDescription="@string/seleccionar">
@@ -762,12 +763,13 @@
                 android:id="@+id/layoutPaisOrigen"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="País">
+                android:hint="PAÍS">
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/txtPaisOrigen"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textCapCharacters"/>
+                    android:inputType="textCapCharacters"
+                    android:text="MÉXICO"/>
             </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -781,7 +783,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Información del conyuge"
+                    android:text="INFORMACIÓN CONYUGE"
                     />
 
                 <TextView
@@ -795,7 +797,7 @@
                 android:id="@+id/layoutNombreConyuge"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Nombre completo">
+                android:hint="NOMBRE COMPLETO">
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/txtNombreConyuge"
                     android:layout_width="match_parent"
@@ -807,7 +809,7 @@
                 android:id="@+id/layoutLugarNacimientoConyuge"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Lugar de nacimiento">
+                android:hint="LUGAR DE NACIMIENTO">
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/txtLugarNacimientoConyuge"
                     android:layout_width="match_parent"
@@ -820,7 +822,7 @@
                 android:id="@+id/layoutFechaNacimientoConyuge"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Fecha de nacimiento"
+                android:hint="FECHA DE NACIMIENTO"
                 app:endIconMode="custom"
                 app:endIconDrawable="@drawable/ic_baseline_date_range_24"
                 app:endIconContentDescription="@string/seleccionar">
@@ -835,7 +837,7 @@
                 android:id="@+id/layoutOcupacionConyuge"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Ocupacion">
+                android:hint="OCUPACIÓN">
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/txtOcupacionConyuge"
                     android:layout_width="match_parent"
@@ -855,7 +857,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Dirección"
+                    android:text="DIRECCIÓN"
                     />
 
                 <TextView
@@ -869,7 +871,7 @@
                 android:id="@+id/layoutCodigoPostal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Código postal">
+                android:hint="CÓDIGO POSTAL">
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/txtCodigoPostal"
                     android:layout_width="match_parent"
@@ -882,7 +884,7 @@
                 android:id="@+id/layoutDomicilioMejora"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Dirección">
+                android:hint="DIRECCIÓN">
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/txtDomicilioMejora"
                     android:layout_width="match_parent"
@@ -899,7 +901,7 @@
                     android:id="@+id/layoutDomicilioMejoraNumExt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:hint="Número exterior"
+                    android:hint="NÚMERO EXTERIOR"
                     android:layout_weight="2">
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/txtDomicilioMejoraNumExt"
@@ -912,7 +914,7 @@
                     android:id="@+id/layoutDomicilioMejoraNumInt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:hint="Número interior"
+                    android:hint="NÚMERO INTERIOR"
                     android:layout_weight="2">
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/txtDomicilioMejoraNumInt"
@@ -926,7 +928,7 @@
                 android:id="@+id/layoutDomicilioMejoraColonia"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Colonia">
+                android:hint="COLONIA">
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/txtDomicilioMejoraColonia"
                     android:layout_width="match_parent"
@@ -938,7 +940,7 @@
                 android:id="@+id/layoutDomicilioMejoraMunicipio"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Municipio"
+                android:hint="MUNICIPIO"
                 app:endIconMode="custom"
                 app:endIconDrawable="@drawable/ic_baseline_arrow_drop_down_24"
                 app:endIconContentDescription="@string/seleccionar">
@@ -960,7 +962,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Referencia bancaria"
+                    android:text="REFERENCIA BANCARIA"
                     />
 
                 <TextView
@@ -974,7 +976,7 @@
                 android:id="@+id/layoutReferenciaBancaria"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Referencia">
+                android:hint="REFERENCIA">
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/txtReferenciaBancaria"
                     android:layout_width="match_parent"
@@ -986,7 +988,7 @@
                 android:id="@+id/layoutInstitucionBancaria"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Institución bancaria">
+                android:hint="INSTITUCIÓN BANCARIA">
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/txtInstitucionBancaria"
                     android:layout_width="match_parent"
@@ -1005,7 +1007,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Ingresos / Egresos"
+                    android:text="INGRESOS / EGRESOS"
                     />
 
                 <TextView
@@ -1019,7 +1021,7 @@
                 android:id="@+id/layoutIngresos"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Ingresos mensuales">
+                android:hint="INGRESOS MENSUALES">
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/txtIngresos"
                     android:layout_width="match_parent"
@@ -1031,7 +1033,7 @@
                 android:id="@+id/layoutEgresos"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Egresos mensuales">
+                android:hint="EGRESOS MENSUALES">
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/txtEgresos"
                     android:layout_width="match_parent"
@@ -1049,7 +1051,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Equipando tu hogar"
+                    android:text="PRODUCTOS"
                     />
 
                 <TextView
@@ -1066,7 +1068,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Productos"/>
+                    android:text="SELECCIONE PRODUCTO"/>
 
                 <RadioGroup
                     android:id="@+id/radioProducto"
@@ -1079,29 +1081,48 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="16sp"
-                        android:text="Mejora tu vivienda" />
+                        android:text="MEJORA TU VIVIENDA" />
 
                     <RadioButton
                         android:id="@+id/radioProductoEquipandoHogar"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Equipando tu hogar" />
+                        android:text="EQUIPANDO TU HOGAR" />
 
                     <RadioButton
                         android:id="@+id/radioProductoAmbos"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Ambos" />
+                        android:text="AMBOS" />
 
                 </RadioGroup>
 
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llSeparadorMejoraVivienda"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="16sp"
+                android:visibility="gone">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="PRODUCTO - MEJORA TU VIVIENDA"
+                    />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/border_bottom"
+                    />
             </LinearLayout>
             <!-- campos para poducto mejora -->
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/layoutMontoSolicitadoMejoraVivienda"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Monto solicitado - Mejora vivienda"
+                android:hint="MONTO SOLICITADO"
                 android:visibility="gone">
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/txtMontoSolicitadoMejoraVivienda"
@@ -1115,7 +1136,7 @@
                 android:id="@+id/layoutCodigoPostal_mejoraVivienda"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Código postal - Mejora vivienda">
+                android:hint="CÓDIGO POSTAL">
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/txtCodigoPostal_mejoraVivienda"
                     android:layout_width="match_parent"
@@ -1129,7 +1150,7 @@
                 android:id="@+id/layoutDomicilio_mejoraVivienda"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Dirección - Mejora vivienda">
+                android:hint="DIRECCIÓN">
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/txtDomicilio_mejoraVivienda"
                     android:layout_width="match_parent"
@@ -1147,7 +1168,7 @@
                     android:id="@+id/layoutNumExt_mejoraVivienda"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:hint="Número exterior - Mejora vivienda"
+                    android:hint="NÚMERO EXTERIOR"
                     android:layout_weight="2"
                     android:visibility="gone">
                     <com.google.android.material.textfield.TextInputEditText
@@ -1162,7 +1183,7 @@
                     android:id="@+id/layoutNumInt_mejoraVivienda"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:hint="Número interior - Mejora vivienda"
+                    android:hint="NÚMERO INTERIOR"
                     android:layout_weight="2"
                     android:visibility="gone">
                     <com.google.android.material.textfield.TextInputEditText
@@ -1178,7 +1199,7 @@
                 android:id="@+id/layoutColonia_mejoraVivienda"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Colonia - Mejora vivienda"
+                android:hint="COLONIA"
                 android:visibility="gone">
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/txtColonia_mejoraVivienda"
@@ -1192,7 +1213,7 @@
                 android:id="@+id/layoutMunicipio_mejoraVivienda"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Municipio - Mejora vivienda"
+                android:hint="MUNICIPIO"
                 app:endIconMode="custom"
                 app:endIconDrawable="@drawable/ic_baseline_arrow_drop_down_24"
                 app:endIconContentDescription="@string/seleccionar"
@@ -1208,11 +1229,30 @@
 
 
             <!-- campos para producto equipando -->
+            <LinearLayout
+                android:id="@+id/llSeparadorEquipandoHogar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="16sp"
+                android:visibility="gone">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="PRODUCTO - EQUIPANDO TU HOGAR"
+                    />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/border_bottom"
+                    />
+            </LinearLayout>
+
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/layoutMontoSolicitadoEquipandoHogar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Monto solicitado - Equipando tu hogar"
+                android:hint="MONTO SOLICITADO"
                 android:visibility="gone">
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/txtMontoSolicitadoEquipandoHogar"
@@ -1226,7 +1266,7 @@
                 android:id="@+id/layoutProductoEquipandoHogar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Producto - Equipando tu hogar"
+                android:hint="PRODUCTO SOLICITADO"
                 android:visibility="gone">
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/txtProductoEquipandoHogar"
@@ -1244,7 +1284,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Plazo"/>
+                    android:text="PLAZO"/>
 
                 <RadioGroup
                     android:id="@+id/radioPlazoProducto"
@@ -1257,14 +1297,14 @@
                         android:id="@+id/radioPlazoProducto12Meses"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="12 meses"
+                        android:text="12 MESES"
                         android:layout_marginRight="16sp"/>
 
                     <RadioButton
                         android:id="@+id/radioPlazoProducto24Meses"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="24 meses" />
+                        android:text="24 MESES" />
 
                 </RadioGroup>
 
@@ -1281,7 +1321,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Quedate en casa"
+                    android:text="QUEDATE EN CASA"
                     />
 
                 <TextView
@@ -1302,14 +1342,14 @@
                     android:id="@+id/radioQuedateEnCasaAplica"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Aplica"
+                    android:text="APLICA"
                     android:layout_marginRight="16sp"/>
 
                 <RadioButton
                     android:id="@+id/radioQuedateEnCasaNoAplica"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="No aplica" />
+                    android:text="NO APLICA" />
 
             </RadioGroup>
 

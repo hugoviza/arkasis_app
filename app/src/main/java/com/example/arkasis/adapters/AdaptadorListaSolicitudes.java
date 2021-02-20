@@ -61,7 +61,7 @@ public class AdaptadorListaSolicitudes extends RecyclerView.Adapter<AdaptadorLis
         SolicitudDispersion solicitudDispersion;
 
         ImageView imgPerfil;
-        TextView tvNombreCliente, tvCURPCliente, txtProducto, tvUbicacion, txtFechaSolicitud, txtMontoSolicitado, txtEstatus;
+        TextView tvNombreCliente, tvCURPCliente, txtProducto, tvUbicacion, txtFechaSolicitud, txtMontoSolicitado, txtEstatus, tvEstatusSolicitud;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
@@ -73,6 +73,7 @@ public class AdaptadorListaSolicitudes extends RecyclerView.Adapter<AdaptadorLis
             txtFechaSolicitud = itemView.findViewById(R.id.txtFechaSolicitud);
             txtMontoSolicitado = itemView.findViewById(R.id.txtMontoSolicitado);
             txtEstatus = itemView.findViewById(R.id.txtEstatus);
+            tvEstatusSolicitud = itemView.findViewById(R.id.tvEstatusSolicitud);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -91,8 +92,9 @@ public class AdaptadorListaSolicitudes extends RecyclerView.Adapter<AdaptadorLis
             txtFechaSolicitud.setText(solicitudDispersion.getStrFechaAlta());
             NumberFormat formatter = new DecimalFormat("#,###");
             txtMontoSolicitado.setText(formatter.format(solicitudDispersion.getDblMontoSolicitadoMejoraVivienda())+"");
+            tvEstatusSolicitud.setText(solicitudDispersion.getStrStatusSolicitud());
             if(solicitudDispersion.getStrEstatusInserccionServidor() != "") {
-                txtEstatus.setText(solicitudDispersion.getStrEstatusInserccionServidor());
+                txtEstatus.setText("Estatus de solicitud: " + solicitudDispersion.getStrEstatusInserccionServidor());
             } else {
                 txtEstatus.setVisibility(View.GONE);
             }

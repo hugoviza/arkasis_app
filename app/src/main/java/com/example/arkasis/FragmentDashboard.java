@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -42,18 +43,15 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class FragmentDashboard extends Fragment {
 
     private BottomBarActivity parent;
-    private AdaptadorListaSolicitudes adaptadorListaSolicitudes;
-    private RecyclerView rvList_solicitudes;
+    private AdaptadorListaSolicitudes adaptadorListaSolicitudes, adaptadorListaUltimasSolicitudes;
+
+    private RecyclerView rvList_solicitudes, rvList_ultimasSolicitudes;
 
     private View fragmentDashboardView;
     private Usuario usuario;
 
     //Graficas
     private PieChartView pieChartResumenSolicitudesMensuales;
-
-    public FragmentDashboard() {
-        // Required empty public constructor
-    }
 
     public FragmentDashboard(BottomBarActivity parent) {
         this.parent = parent;
@@ -65,8 +63,7 @@ public class FragmentDashboard extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         fragmentDashboardView = inflater.inflate(R.layout.fragment_dashboard, container, false);
         usuario = Config.USUARIO_SESION;
@@ -75,10 +72,71 @@ public class FragmentDashboard extends Fragment {
 
         pieChartResumenSolicitudesMensuales = fragmentDashboardView.findViewById(R.id.pieChartResumenSolicitudesMensuales);
 
+        rvList_ultimasSolicitudes = fragmentDashboardView.findViewById(R.id.rvList_ultimasSolicitudes);
+
         tvBienvenida.setText("Bienvenido " + usuario.getNombre());
+        inicializarListaUltimasSolicitudes();
         inicializarListaSolicitudesLocales();
         obtenerResumenSolicitudes();
         return fragmentDashboardView;
+    }
+
+    private void inicializarListaUltimasSolicitudes() {
+
+        adaptadorListaUltimasSolicitudes = new AdaptadorListaSolicitudes(new ArrayList<>(), fragmentDashboardView.getContext());
+        rvList_ultimasSolicitudes.setHasFixedSize(true);
+        rvList_ultimasSolicitudes.setLayoutManager(new LinearLayoutManager(fragmentDashboardView.getContext()));
+        rvList_ultimasSolicitudes.setAdapter(adaptadorListaUltimasSolicitudes);
+
+        adaptadorListaUltimasSolicitudes.setOnItemClickListener(position -> {
+            if(position != RecyclerView.NO_POSITION) {
+                //Selected data
+                SolicitudDispersion solicitudDispersion = adaptadorListaUltimasSolicitudes.getItem(position);
+            }
+        });
+
+        obtenerListaUltimas10Solicitudes();
+    }
+
+    private void obtenerListaUltimas10Solicitudes() {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(Config.URL_API)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        APIClientesInterface api = retrofit.create(APIClientesInterface.class);
+        Call<ResponseAPI> apiCall = api.getUltimasSolicitudes(usuario);
+
+        apiCall.enqueue(new Callback<ResponseAPI>() {
+            @Override
+            public void onResponse(Call<ResponseAPI> call, Response<ResponseAPI> response) {
+                if(response.body() == null || response.body().getResultado() == null) {
+
+                } else {
+                    try {
+                        List<SolicitudDispersion> lista = new ArrayList<>();
+
+                        if(response.body().getSuccess()) {
+                            for (LinkedTreeMap<Object, Object> treeMap : (ArrayList<LinkedTreeMap<Object, Object>>)response.body().getResultado()) {
+                                lista.add(new SolicitudDispersion(treeMap));
+                            }
+                        }
+
+                        if(adaptadorListaUltimasSolicitudes != null) {
+                            adaptadorListaUltimasSolicitudes.setListaSolicitudes(lista);
+                        }
+                    } catch (Exception ex) {
+                        Toast.makeText(getContext(), "Error al cargar lista de últimas solicitudes", Toast.LENGTH_SHORT).show();
+                        adaptadorListaUltimasSolicitudes.setListaSolicitudes(new ArrayList<>());
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseAPI> call, Throwable t) {
+                Toast.makeText(parent, getString(R.string.sin_acceso_servidor), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void inicializarListaSolicitudesLocales() {
@@ -128,14 +186,14 @@ public class FragmentDashboard extends Fragment {
                             inicializarGraficaPie(new ResumenSolicitudes(treeMap));
                         }
                     } catch (Exception ex) {
-                        Toast.makeText(getContext(), "Error al cargar datos de gráfica", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(parent, "Error al cargar datos de gráfica", Toast.LENGTH_SHORT).show();
                     }
                 }
             }
 
             @Override
             public void onFailure(Call<ResponseAPI> call, Throwable t) {
-                Toast.makeText(getContext(), getString(R.string.sin_acceso_servidor), Toast.LENGTH_SHORT).show();
+                Toast.makeText(parent, getString(R.string.sin_acceso_servidor), Toast.LENGTH_SHORT).show();
             }
         });
     }

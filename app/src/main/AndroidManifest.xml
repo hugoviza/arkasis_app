@@ -17,7 +17,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Arkasis"
         android:usesCleartextTraffic="true"
-        tools:replace="android:allowBackup">
+        tools:replace="android:allowBackup"
+        android:configChanges="orientation|keyboardHidden">
         <meta-data
             android:name="com.google.android.actions"
             android:resource="@xml/file_paths" />

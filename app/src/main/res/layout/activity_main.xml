@@ -22,7 +22,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/alegreya_sans_sc_bold"
-        android:text="Arkasis"
+        android:text="@string/app_name"
         android:textSize="65sp"
         app:layout_constraintBottom_toTopOf="@+id/ivLogoSecsa"
         app:layout_constraintEnd_toEndOf="parent"

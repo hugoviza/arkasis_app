@@ -1,5 +1,7 @@
 package com.example.arkasis.models;
 
+import com.google.gson.internal.LinkedTreeMap;
+
 public class SolicitudDispersion {
 
     private int idSolicitud;
@@ -154,6 +156,79 @@ public class SolicitudDispersion {
         this.strFotoPerfil_nombre = strFotoPerfil_nombre;
         this.strFotoComprobanteDomicilio_B64 = strFotoComprobanteDomicilio_B64;
         this.strFotoComprobanteDomicilio_nombre = strFotoComprobanteDomicilio_nombre;
+    }
+
+    public SolicitudDispersion(LinkedTreeMap<Object, Object> treeMap) {
+        this.idSolicitud = (int)Double.parseDouble(treeMap.get("idSolicitud").toString().trim());
+        this.strFechaAlta = treeMap.get("strFechaAlta").toString().trim();
+        this.strStatusSolicitud = treeMap.get("strStatusSolicitud").toString().trim();
+        this.idSucursal = treeMap.get("idSucursal").toString().trim();
+        this.strUsuario = treeMap.get("strUsuario").toString().trim();
+        this.idPromotor = treeMap.get("idPromotor").toString().trim();
+        this.strPromotor = treeMap.get("strPromotor").toString().trim();
+        this.strCordinador = treeMap.get("strCordinador").toString().trim();
+        this.idCliente = treeMap.get("idCliente").toString().trim();
+        this.strApellidoPaterno = treeMap.get("strApellidoPaterno").toString().trim();
+        this.strApellidoMaterno = treeMap.get("strApellidoMaterno").toString().trim();
+        this.strNombre1 = treeMap.get("strNombre1").toString().trim();
+        this.strNombre2 = treeMap.get("strNombre2").toString().trim();
+        this.strFechaNacimiento = treeMap.get("strFechaNacimiento").toString().trim();
+        this.idGenero = treeMap.get("idGenero").toString().trim();
+        this.strGenero = treeMap.get("strGenero").toString().trim();
+        this.strCURP = treeMap.get("strCURP").toString().trim();
+        this.strDomicilio = treeMap.get("strDomicilio").toString().trim();
+        this.strDomicilioCodigoPostal = treeMap.get("strDomicilioCodigoPostal").toString().trim();
+        this.strDomicilioNumExt = treeMap.get("strDomicilioNumExt").toString().trim();
+        this.strDomicilioNumInt = treeMap.get("strDomicilioNumInt").toString().trim();
+        this.strDomicilioColonia = treeMap.get("strDomicilioColonia").toString().trim();
+        this.idDomicilioEstado = treeMap.get("idDomicilioEstado").toString().trim();
+        this.strDomicilioEstado = treeMap.get("strDomicilioEstado").toString().trim();
+        this.idDomicilioMunicipio = treeMap.get("idDomicilioMunicipio").toString().trim();
+        this.strDomicilioMunicipio = treeMap.get("strDomicilioMunicipio").toString().trim();
+        this.strEstadoCivil = treeMap.get("strEstadoCivil").toString().trim();
+        this.idEstadoCivil = treeMap.get("idEstadoCivil").toString().trim();
+        this.strTelefono = treeMap.get("strTelefono").toString().trim();
+        this.strCelular = treeMap.get("strCelular").toString().trim();
+        this.strOcupacion = treeMap.get("strOcupacion").toString().trim();
+        this.idActividad = treeMap.get("idActividad").toString().trim();
+        this.strActividad = treeMap.get("strActividad").toString().trim();
+        this.strNumeroINE = treeMap.get("strNumeroINE").toString().trim();
+        this.strClaveINE = treeMap.get("strClaveINE").toString().trim();
+        this.strPais = treeMap.get("strPais").toString().trim();
+        this.strEstadoNacimiento = treeMap.get("strEstadoNacimiento").toString().trim();
+        this.strNacionalidad = treeMap.get("strNacionalidad").toString().trim();
+        this.strEmail = treeMap.get("strEmail").toString().trim();
+        this.strNombreConyuge = treeMap.get("strNombreConyuge").toString().trim();
+        this.strLugarNacimientoConyuge = treeMap.get("strLugarNacimientoConyuge").toString().trim();
+        this.strFechaNacimientoConyuge = treeMap.get("strFechaNacimientoConyuge").toString().trim();
+        this.strOcupacionConyuge = treeMap.get("strOcupacionConyuge").toString().trim();
+        this.strReferenciaBancaria = treeMap.get("strReferenciaBancaria").toString().trim();
+        this.strBanco = treeMap.get("strBanco").toString().trim();
+        this.strProducto = treeMap.get("strProducto").toString().trim();
+        this.intPlazo = (int)Double.parseDouble(treeMap.get("intPlazo").toString().trim());
+        this.intQuedateCasa = (int)Double.parseDouble(treeMap.get("intQuedateCasa").toString().trim());
+        this.dblMontoSolicitadoMejoraVivienda = Double.parseDouble(treeMap.get("dblMontoSolicitadoMejoraVivienda").toString().trim());
+        this.dblMontoSolicitadoEquipandoHogar = Double.parseDouble(treeMap.get("dblMontoSolicitadoEquipandoHogar").toString().trim());
+        this.dblIngresos = Double.parseDouble(treeMap.get("dblIngresos").toString().trim());
+        this.dblEgresos = Double.parseDouble(treeMap.get("dblEgresos").toString().trim());
+        this.strCNBV = treeMap.get("strCNBV").toString().trim();
+        this.strDomicilio_mejoraVivienda = treeMap.get("strDomicilio_mejoraVivienda").toString().trim();
+        this.strCodigoPostal_mejoraVivienda = treeMap.get("strCodigoPostal_mejoraVivienda").toString().trim();
+        this.strNumExt_mejoraVivienda = treeMap.get("strNumExt_mejoraVivienda").toString().trim();
+        this.strNumInt_mejoraVivienda = treeMap.get("strNumInt_mejoraVivienda").toString().trim();
+        this.strColonia_mejoraVivienda = treeMap.get("strColonia_mejoraVivienda").toString().trim();
+        this.idEstado_mejoraVivienda = treeMap.get("idEstado_mejoraVivienda").toString().trim();
+        this.strEstado_mejoraVivienda = treeMap.get("strEstado_mejoraVivienda").toString().trim();
+        this.idMunicipio_mejoraVivienda = treeMap.get("idMunicipio_mejoraVivienda").toString().trim();
+        this.strMunicipio_mejoraVivienda = treeMap.get("strMunicipio_mejoraVivienda").toString().trim();
+        this.strFotoINEFrontal_B64 = treeMap.get("strFotoINEFrontal_B64").toString().trim();
+        this.strFotoINEFrontal_nombre = treeMap.get("strFotoINEFrontal_nombre").toString().trim();
+        this.strFotoINEReverso_B64 = treeMap.get("strFotoINEReverso_B64").toString().trim();
+        this.strFotoINEReverso_nombre = treeMap.get("strFotoINEReverso_nombre").toString().trim();
+        this.strFotoPerfil_B64 = treeMap.get("strFotoPerfil_B64").toString().trim();
+        this.strFotoPerfil_nombre = treeMap.get("strFotoPerfil_nombre").toString().trim();
+        this.strFotoComprobanteDomicilio_B64 = treeMap.get("strFotoComprobanteDomicilio_B64").toString().trim();
+        this.strFotoComprobanteDomicilio_nombre = treeMap.get("strFotoComprobanteDomicilio_nombre").toString().trim();
     }
 
     public String getStrNombreCompleto() {

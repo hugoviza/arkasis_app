@@ -23,7 +23,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
-                android:text="Producto"
+                android:text="PRODUCTO"
                 android:layout_gravity="center"
                 android:textSize="16sp"
                 android:textStyle="bold" />
@@ -54,7 +54,7 @@
                 <TextView
                     android:layout_width="100sp"
                     android:layout_height="match_parent"
-                    android:text="Contrato:"
+                    android:text="CONTRATO:"
                     android:textSize="16sp"
                     android:textStyle="bold"
                     android:textAlignment="textEnd"/>
@@ -77,7 +77,7 @@
                 <TextView
                     android:layout_width="100sp"
                     android:layout_height="match_parent"
-                    android:text="Ministración:"
+                    android:text="MINISTRACIÓN:"
                     android:textSize="16sp"
                     android:textStyle="bold"
                     android:textAlignment="textEnd" />
@@ -101,7 +101,7 @@
                 <TextView
                     android:layout_width="100sp"
                     android:layout_height="match_parent"
-                    android:text="Vencimiento:"
+                    android:text="VENCIMIENTO:"
                     android:textSize="16sp"
                     android:textStyle="bold"
                     android:textAlignment="textEnd"/>
@@ -124,7 +124,7 @@
                 <TextView
                     android:layout_width="100sp"
                     android:layout_height="match_parent"
-                    android:text="Nº pagos:"
+                    android:text="TOTAL PAGOS:"
                     android:textSize="16sp"
                     android:textStyle="bold"
                     android:textAlignment="textEnd"/>
@@ -147,7 +147,7 @@
                 <TextView
                     android:layout_width="100sp"
                     android:layout_height="match_parent"
-                    android:text="Capital:"
+                    android:text="CAPITAL:"
                     android:textSize="16sp"
                     android:textStyle="bold"
                     android:textAlignment="textEnd" />
@@ -170,7 +170,7 @@
                 <TextView
                     android:layout_width="100sp"
                     android:layout_height="match_parent"
-                    android:text="Intereses:"
+                    android:text="INTERESES:"
                     android:textSize="16sp"
                     android:textStyle="bold"
                     android:textAlignment="textEnd" />
@@ -193,7 +193,7 @@
                 <TextView
                     android:layout_width="100sp"
                     android:layout_height="match_parent"
-                    android:text="Seguro:"
+                    android:text="SEGURO:"
                     android:textSize="16sp"
                     android:textStyle="bold"
                     android:textAlignment="textEnd"/>
@@ -216,7 +216,7 @@
                 <TextView
                     android:layout_width="100sp"
                     android:layout_height="match_parent"
-                    android:text="Total:"
+                    android:text="TOTAL:"
                     android:textSize="16sp"
                     android:textStyle="bold"
                     android:textAlignment="textEnd"/>
@@ -239,7 +239,7 @@
                 <TextView
                     android:layout_width="100sp"
                     android:layout_height="match_parent"
-                    android:text="Abono:"
+                    android:text="ABONO:"
                     android:textSize="16sp"
                     android:textStyle="bold"
                     android:textAlignment="textEnd"/>
@@ -266,7 +266,7 @@
             <TextView
                 android:layout_width="100sp"
                 android:layout_height="match_parent"
-                android:text="Saldo:"
+                android:text="SALDO:"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 android:textAlignment="textEnd" />

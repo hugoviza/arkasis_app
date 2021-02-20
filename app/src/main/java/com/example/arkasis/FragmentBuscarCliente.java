@@ -12,9 +12,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.example.arkasis.adapters.AdaptadorListaClientes;
+import com.example.arkasis.adapters.AdaptadorListaSolicitudes;
 import com.example.arkasis.componentes.DialogBuscadorMunicipios;
 import com.example.arkasis.config.Config;
 import com.example.arkasis.interfaces.APICatalogosInterface;
@@ -24,6 +27,7 @@ import com.example.arkasis.models.Cliente;
 import com.example.arkasis.models.Municipio;
 import com.example.arkasis.models.ResponseAPI;
 import com.example.arkasis.models.SaldoCliente;
+import com.example.arkasis.models.SolicitudDispersion;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.gson.internal.LinkedTreeMap;
@@ -60,9 +64,12 @@ public class FragmentBuscarCliente extends Fragment {
     private TextInputEditText txtBuscarCiudad, txtCURP;
     private Button btnBuscarCliente;
     private DialogBuscadorMunicipios dialogBuscadorMunicipios;
+    private RadioGroup radioBusqueda;
+    private RadioButton radioBusquedaCliente, radioBusquedaSolicitud;
 
     //Lista clientes
     private AdaptadorListaClientes adaptadorListaClientes;
+    private AdaptadorListaSolicitudes adaptadorListaSolicitudes;
     private RecyclerView rvList_clientes;
 
     //Variables
@@ -100,7 +107,15 @@ public class FragmentBuscarCliente extends Fragment {
             rvList_clientes = viewFragmentBuscarCliente.findViewById(R.id.rvList_clientes);
             layoutCiudadOrigen = viewFragmentBuscarCliente.findViewById(R.id.layoutCiudadOrigen);
 
-            incializarListaClientes();
+            radioBusqueda = viewFragmentBuscarCliente.findViewById(R.id.radioBusqueda);
+            radioBusquedaCliente = viewFragmentBuscarCliente.findViewById(R.id.radioBusquedaCliente);
+            radioBusquedaSolicitud = viewFragmentBuscarCliente.findViewById(R.id.radioBusquedaSolicitud);
+
+
+            rvList_clientes = viewFragmentBuscarCliente.findViewById(R.id.rvList_clientes);
+            rvList_clientes.setHasFixedSize(true);
+            rvList_clientes.setLayoutManager(new LinearLayoutManager(viewFragmentBuscarCliente.getContext()));
+
             inicializarSelectorMunicipio();
 
             btnBuscarCliente.setOnClickListener(new View.OnClickListener() {
@@ -111,8 +126,11 @@ public class FragmentBuscarCliente extends Fragment {
                     cliente.setStrEstado(municipioSeleccionado != null ? municipioSeleccionado.getStrEstado() : "");
                     cliente.setStrNombre1(txtCURP.getText().toString().trim());
 
-                    adaptadorListaClientes.buscarClientes(cliente);
-                    closeKeyBoard();
+                    if(radioBusqueda.getCheckedRadioButtonId() == R.id.radioBusquedaCliente) {
+                        buscarCliente(cliente);
+                    } else {
+                        buscarSolicitudes(cliente);
+                    }
                 }
             });
         }
@@ -136,21 +154,92 @@ public class FragmentBuscarCliente extends Fragment {
         return false;
     }
 
-    public void incializarListaClientes() {
-        adaptadorListaClientes = new AdaptadorListaClientes(viewFragmentBuscarCliente.getContext());
-        rvList_clientes = viewFragmentBuscarCliente.findViewById(R.id.rvList_clientes);
-        rvList_clientes.setHasFixedSize(true);
-        rvList_clientes.setLayoutManager(new LinearLayoutManager(viewFragmentBuscarCliente.getContext()));
-        rvList_clientes.setAdapter(adaptadorListaClientes);
-        adaptadorListaClientes.setOnItemClickListener(new AdaptadorListaClientes.OnItemClickListener() {
-            @Override
-            public void onItemClick(int position) {
-                if(position == RecyclerView.NO_POSITION) {
-                    //No hay nada por hacer
-                } else {
+    public void buscarCliente(Cliente cliente) {
+        if(adaptadorListaClientes == null) {
+            adaptadorListaClientes = new AdaptadorListaClientes(viewFragmentBuscarCliente.getContext());
+            adaptadorListaClientes.setOnItemClickListener(new AdaptadorListaClientes.OnItemClickListener() {
+                @Override
+                public void onItemClick(int position) {
+                    if(position == RecyclerView.NO_POSITION) {
+                        //No hay nada por hacer
+                    } else {
 
-                    consultarSaldosDeClientes (adaptadorListaClientes.getItem(position));
+                        consultarSaldosDeClientes (adaptadorListaClientes.getItem(position));
+                    }
                 }
+            });
+        }
+
+        rvList_clientes.setAdapter(adaptadorListaClientes);
+
+        adaptadorListaClientes.buscarClientes(cliente);
+        closeKeyBoard();
+    }
+
+    public void buscarSolicitudes(Cliente cliente) {
+        if(adaptadorListaSolicitudes == null) {
+            adaptadorListaSolicitudes = new AdaptadorListaSolicitudes(new ArrayList<>(), viewFragmentBuscarCliente.getContext());
+            adaptadorListaSolicitudes.setOnItemClickListener(new AdaptadorListaSolicitudes.OnItemClickListener() {
+                @Override
+                public void onItemClick(int position) {
+                    if(position == RecyclerView.NO_POSITION) {
+                        //No hay nada por hacer
+                    } else {
+                        //consultarSaldosDeClientes (adaptadorListaClientes.getItem(position));
+                    }
+                }
+            });
+        }
+
+        rvList_clientes.setAdapter(adaptadorListaSolicitudes);
+        closeKeyBoard();
+
+        //Hacemos un post para descargar las solicitudes del cliente o prospecto
+        consultarSolicitudesClientes(cliente);
+
+    }
+
+    public void consultarSolicitudesClientes(Cliente cliente) {
+
+        BottomBarActivity.abrirLoading("Consultando solicitudes");
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(Config.URL_API)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        APIClientesInterface api = retrofit.create(APIClientesInterface.class);
+        Call<ResponseAPI> apiCall = api.getSolicitudes(cliente);
+
+        apiCall.enqueue(new Callback<ResponseAPI>() {
+            @Override
+            public void onResponse(Call<ResponseAPI> call, Response<ResponseAPI> response) {
+                if(response.body() == null || response.body().getResultado() == null) {
+                    // Si no hay datos solo abrimos el dialogo de info
+                    //abrirActivity_verInfoCliente(cliente);
+                    Toast.makeText(parent, "No se encontraron solicitudes", Toast.LENGTH_SHORT).show();
+                } else {
+                    List<SolicitudDispersion> lista = new ArrayList<>();
+                    if(response.body().getSuccess()) {
+                        for (LinkedTreeMap<Object, Object> treeMap : (ArrayList<LinkedTreeMap<Object, Object>>)response.body().getResultado()) {
+                            try {
+                                lista.add(new SolicitudDispersion(treeMap));
+                            } catch (Exception e) {
+                                Toast.makeText(parent, "Error en solicitude de cliente", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    }
+
+                    adaptadorListaSolicitudes.setListaSolicitudes(lista);
+                }
+
+                BottomBarActivity.cerrarLoading();
+            }
+
+            @Override
+            public void onFailure(Call<ResponseAPI> call, Throwable t) {
+                Toast.makeText(parent, getString(R.string.sin_acceso_servidor), Toast.LENGTH_SHORT).show();
+                BottomBarActivity.cerrarLoading();
             }
         });
     }
@@ -218,7 +307,7 @@ public class FragmentBuscarCliente extends Fragment {
 
     public void inicializarSelectorMunicipio() {
         txtBuscarCiudad.setText("");
-        dialogBuscadorMunicipios = new DialogBuscadorMunicipios(getContext(), viewFragmentBuscarCliente);
+        dialogBuscadorMunicipios = new DialogBuscadorMunicipios(parent, viewFragmentBuscarCliente);
 
         txtBuscarCiudad.setOnClickListener(new View.OnClickListener() {
             @Override

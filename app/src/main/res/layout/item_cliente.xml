@@ -44,7 +44,7 @@
                         android:id="@+id/tvNombreCliente"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Nombre completo"
+                        android:text="NOMBRE COMPLETO"
                         android:textStyle="bold"/>
                 </LinearLayout>
 
@@ -76,7 +76,7 @@
                         android:id="@+id/tvUbicacion"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Ciudad residencia"
+                        android:text="CIUDAD RESIDENCIA"
                         android:textSize="12sp"/>
                 </LinearLayout>
 
@@ -84,8 +84,9 @@
                     android:id="@+id/tvEstatusCliente"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Estatus de cotización"
+                    android:text="ESTATUS DE COTIZACIÓN"
                     android:textAlignment="textEnd"
+                    android:visibility="gone"
                     android:textSize="12sp"></TextView>
             </LinearLayout>
 
