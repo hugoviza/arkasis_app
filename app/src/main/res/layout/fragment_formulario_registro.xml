@@ -1371,7 +1371,7 @@
             </LinearLayout>
 
 
-            <!-- Quedate en casa  -->
+            <!-- Quedate en casa
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -1411,7 +1411,7 @@
                     android:text="NO APLICA" />
 
             </RadioGroup>
-
+-->
         </LinearLayout>
     </ScrollView>
 

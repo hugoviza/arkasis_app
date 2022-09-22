@@ -157,7 +157,7 @@ public class FragmentFormularioRegistro extends Fragment {
             layoutReferenciaBancaria, layoutInstitucionBancaria,
             layoutIngresos, layoutEgresos, layoutMontoSolicitadoMejoraVivienda, layoutMontoSolicitadoEquipandoHogar, layoutProductoEquipandoHogar,
             layoutCodigoPostal_mejoraVivienda, layoutDomicilio_mejoraVivienda, layoutNumExt_mejoraVivienda, layoutNumInt_mejoraVivienda, layoutColonia_mejoraVivienda, layoutMunicipio_mejoraVivienda;
-    RadioGroup radioSexo, radioPlazoProducto, radioQuedateEnCasa, radioProducto;
+    RadioGroup radioSexo, radioPlazoProducto, radioProducto;
     AutoCompleteTextView txtEstadoCivil;
     DialogBuscadorSucursales dialogBuscadorSucursales;
     DialogBuscarCoordinador dialogBuscarCoordinador, dialogBuscarPromotor;
@@ -283,7 +283,6 @@ public class FragmentFormularioRegistro extends Fragment {
             txtMontoSolicitadoMejoraVivienda = view.findViewById(R.id.txtMontoSolicitadoMejoraVivienda);
             txtMontoSolicitadoEquipandoHogar = view.findViewById(R.id.txtMontoSolicitadoEquipandoHogar);
             radioPlazoProducto = view.findViewById(R.id.radioPlazoProducto);
-            radioQuedateEnCasa = view.findViewById(R.id.radioQuedateEnCasa);
             radioProducto = view.findViewById(R.id.radioProducto);
 
             txtProductoEquipandoHogar = view.findViewById(R.id.txtProductoEquipandoHogar);
@@ -1590,7 +1589,6 @@ public class FragmentFormularioRegistro extends Fragment {
         txtLugarNacimientoConyuge.setText(cliente.getStrLugarNacimientoConyuge());
 
         radioPlazoProducto.check(R.id.radioPlazoProducto12Meses);
-        radioQuedateEnCasa.check(R.id.radioQuedateEnCasaNoAplica);
         resetearProducto();
     }
 
@@ -1674,7 +1672,6 @@ public class FragmentFormularioRegistro extends Fragment {
         txtIngresos.setText("");
         txtEgresos.setText("");
         radioPlazoProducto.check(R.id.radioPlazoProducto12Meses);
-        radioQuedateEnCasa.check(R.id.radioQuedateEnCasaNoAplica);
 
         resetearProducto();
 
@@ -1764,7 +1761,10 @@ public class FragmentFormularioRegistro extends Fragment {
         solicitudDispersion.setIdCliente(clienteSeleccionado != null ? clienteSeleccionado.getIdCliente() : "");
 
         Date hoy = new Date();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss", new Locale("es", "ES"));
+        SimpleDateFormat dateFormat = null;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+            dateFormat = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss", new Locale("es", "ES"));
+        }
         solicitudDispersion.setStrFechaAlta(dateFormat.format(hoy));
         //NOMBRE CLIENTE
         solicitudDispersion.setStrCURP(txtCURP.getText().toString().toUpperCase());
@@ -1838,7 +1838,6 @@ public class FragmentFormularioRegistro extends Fragment {
         solicitudDispersion.setStrFechaNacimientoConyuge(datFechaNacimientoConyuge != null ? dateFormat.format(datFechaNacimientoConyuge) : "");
         //PRODUCTO
         solicitudDispersion.setIntPlazo(radioPlazoProducto.getCheckedRadioButtonId() == R.id.radioPlazoProducto12Meses ? 12 : 24);
-        solicitudDispersion.setIntQuedateCasa(radioQuedateEnCasa.getCheckedRadioButtonId() == R.id.radioQuedateEnCasaAplica ? 1 : 0);
 
         if(radioProducto.getCheckedRadioButtonId() == R.id.radioProductoMejoraVivienda || radioProducto.getCheckedRadioButtonId() == R.id.radioProductoAmbos ) {
             solicitudDispersion.setDblMontoSolicitadoMejoraVivienda(Double.parseDouble(txtMontoSolicitadoMejoraVivienda.getText().toString().trim()));
