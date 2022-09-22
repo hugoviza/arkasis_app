@@ -3,6 +3,7 @@ package com.example.arkasis.models;
 import com.google.gson.internal.LinkedTreeMap;
 
 import java.io.Serializable;
+import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeMap;
@@ -268,7 +269,7 @@ public class Cliente implements Serializable {
     }
 
     public void setStrEstado(String strEstado) {
-        this.strEstado = strEstado;
+        this.strEstado = this.cleanString(strEstado);
     }
 
     public String getIdMunicipio() {
@@ -284,7 +285,7 @@ public class Cliente implements Serializable {
     }
 
     public void setStrMunicipio(String strMunicipio) {
-        this.strMunicipio = strMunicipio;
+        this.strMunicipio = this.cleanString(strMunicipio);
     }
 
     public String getStrClaveGrupo() {
@@ -405,5 +406,11 @@ public class Cliente implements Serializable {
 
     public void setStrOcupacionConyuge(String strOcupacionConyuge) {
         this.strOcupacionConyuge = strOcupacionConyuge;
+    }
+
+    public String cleanString(String texto) {
+        texto = Normalizer.normalize(texto, Normalizer.Form.NFD);
+        texto = texto.replaceAll("[\\p{InCombiningDiacriticalMarks}]", "");
+        return texto;
     }
 }
