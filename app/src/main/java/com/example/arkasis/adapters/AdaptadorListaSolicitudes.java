@@ -91,7 +91,7 @@ public class AdaptadorListaSolicitudes extends RecyclerView.Adapter<AdaptadorLis
             tvUbicacion.setText(solicitudDispersion.getStrDomicilioCompleto());
             txtFechaSolicitud.setText(solicitudDispersion.getStrFechaAlta());
             NumberFormat formatter = new DecimalFormat("#,###");
-            txtMontoSolicitado.setText(formatter.format(solicitudDispersion.getDblMontoSolicitadoMejoraVivienda())+"");
+            txtMontoSolicitado.setText(formatter.format(solicitudDispersion.getDblMontoSolicitadoEquipandoHogar())+"");
             tvEstatusSolicitud.setText(solicitudDispersion.getStrStatusSolicitud());
             if(solicitudDispersion.getStrEstatusInserccionServidor() != "") {
                 txtEstatus.setText("Estatus de solicitud: " + solicitudDispersion.getStrEstatusInserccionServidor());
