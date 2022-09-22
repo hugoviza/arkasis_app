@@ -1297,7 +1297,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="PRODUCTO - EQUIPANDO TU HOGAR" />
+                    android:text="PRODUCTO - INDIVIDUAL" />
 
                 <TextView
                     android:layout_width="match_parent"
