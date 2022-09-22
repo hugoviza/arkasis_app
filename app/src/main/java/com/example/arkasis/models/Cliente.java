@@ -98,6 +98,10 @@ public class Cliente implements Serializable {
     }
 
     public String getStrDomicilio() {
+        return strDireccion.trim() != "" ? strDireccion.trim() : "";
+    }
+
+    public String getStrDomicilioCompleto() {
         String direccion = strDireccion.trim()+(strDireccionNumero.trim() != "" ? " #"+strDireccionNumero.trim() : "")+" "+strDireccionNumeroInterno.trim();
         return (direccion.trim() != "" ? direccion.trim()+", " : "")+strColonia+" "+strMunicipio+", "+strEstado ;
     }

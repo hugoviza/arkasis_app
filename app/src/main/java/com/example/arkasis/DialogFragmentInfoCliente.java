@@ -175,7 +175,7 @@ public class DialogFragmentInfoCliente extends DialogFragment {
         tvCelular.setText(cliente.getStrCelular());
         tvTelefono.setText(cliente.getStrTelefono());
         tvMail.setText(cliente.getStrEmail());
-        tvDomicilio.setText(cliente.getStrDomicilio());
+        tvDomicilio.setText(cliente.getStrDomicilioCompleto());
         tvLugarNacimiento.setText(cliente.getStrLugarNacimiento());
 
         DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
