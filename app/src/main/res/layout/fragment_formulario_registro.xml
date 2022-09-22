@@ -1124,166 +1124,16 @@
                     android:orientation="vertical">
 
                     <RadioButton
-                        android:id="@+id/radioProductoMejoraVivienda"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="16sp"
-                        android:focusable="auto"
-                        android:text="INDIVIDUAL"
-                        android:visibility="invisible" />
-
-                    <RadioButton
                         android:id="@+id/radioProductoEquipandoHogar"
                         android:layout_width="wrap_content"
+                        android:focusable="auto"
                         android:layout_height="wrap_content"
+                        android:checked="true"
                         android:text="INDIVIDUAL" />
-
-                    <RadioButton
-                        android:id="@+id/radioProductoAmbos"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="AMBOS"
-                        android:visibility="invisible" />
 
                 </RadioGroup>
 
             </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/llSeparadorMejoraVivienda"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16sp"
-                android:orientation="vertical"
-                android:visibility="gone">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="PRODUCTO - MEJORA TU VIVIENDA" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/border_bottom" />
-            </LinearLayout>
-            <!-- campos para poducto mejora -->
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/layoutMontoSolicitadoMejoraVivienda"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="MONTO SOLICITADO"
-                android:visibility="gone">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/txtMontoSolicitadoMejoraVivienda"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="number"
-                    android:visibility="gone" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/layoutCodigoPostal_mejoraVivienda"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="CÓDIGO POSTAL">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/txtCodigoPostal_mejoraVivienda"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="textCapCharacters"
-                    android:maxLength="5"
-                    android:visibility="gone" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/layoutDomicilio_mejoraVivienda"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="DIRECCIÓN">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/txtDomicilio_mejoraVivienda"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="textCapCharacters"
-                    android:visibility="gone" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/layoutNumExt_mejoraVivienda"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="2"
-                    android:hint="NÚMERO EXTERIOR"
-                    android:visibility="gone">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/txtNumExt_mejoraVivienda"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:inputType="textCapCharacters"
-                        android:visibility="gone" />
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/layoutNumInt_mejoraVivienda"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="2"
-                    android:hint="NÚMERO INTERIOR"
-                    android:visibility="gone">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/txtNumInt_mejoraVivienda"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:inputType="textCapCharacters"
-                        android:visibility="gone" />
-                </com.google.android.material.textfield.TextInputLayout>
-            </LinearLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/layoutColonia_mejoraVivienda"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="COLONIA"
-                android:visibility="gone">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/txtColonia_mejoraVivienda"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="textCapCharacters"
-                    android:visibility="gone" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/layoutMunicipio_mejoraVivienda"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="MUNICIPIO"
-                android:visibility="gone"
-                app:endIconContentDescription="@string/seleccionar"
-                app:endIconDrawable="@drawable/ic_baseline_arrow_drop_down_24"
-                app:endIconMode="custom">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/txtMunicipio_mejoraVivienda"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="textCapCharacters"
-                    android:visibility="gone" />
-            </com.google.android.material.textfield.TextInputLayout>
-            <!-- campos para poducto mejora -->
-
 
             <!-- campos para producto equipando -->
             <LinearLayout

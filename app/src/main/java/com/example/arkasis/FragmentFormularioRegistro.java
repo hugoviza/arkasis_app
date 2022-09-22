@@ -132,7 +132,7 @@ public class FragmentFormularioRegistro extends Fragment {
             btnAbrirCamaraFotoPerfil, btnAbrirGaleriaFotoPerfil,
             btnAbrirCamaraFotoComprobanteDomicilio, btnAbrirGaleriaFotoComprobanteDomicilio
     ;
-    LinearLayout llFotoINEFrontal, llFotoINEReverso, llFotoPerfil, llFotoComprobanteDomicilio, llSeparadorEquipandoHogar, llSeparadorMejoraVivienda;
+    LinearLayout llFotoINEFrontal, llFotoINEReverso, llFotoPerfil, llFotoComprobanteDomicilio, llSeparadorEquipandoHogar;
     RelativeLayout rlFotoINEFrontal, rlFotoINEReverso, rlFotoPerfil, rlFotoComprobanteDomicilio;
     ImageButton imgFotoINEFrontal, imgFotoINEReverso, imgFotoPerfil, imgFotoComprobanteDomicilio;
     ImageButton btnCancelarFotoINEFrontal, btnCancelarFotoINEReverso, btnCancelarFotoPerfil, btnCancelarFotoComprobanteDomicilio;
@@ -142,8 +142,7 @@ public class FragmentFormularioRegistro extends Fragment {
             txtNombreConyuge, txtLugarNacimientoConyuge, txtFechaNacimientoConyuge, txtOcupacionConyuge,
             txtCodigoPostal, txtDomicilioMejora, txtDomicilioMejoraNumExt, txtDomicilioMejoraNumInt,
             txtDomicilioMejoraColonia, txtDomicilioMejoraMunicipio, txtReferenciaBancaria, txtInstitucionBancaria,
-            txtIngresos, txtEgresos, txtMontoSolicitadoMejoraVivienda, txtMontoSolicitadoEquipandoHogar, txtProductoEquipandoHogar,
-            txtCodigoPostal_mejoraVivienda, txtDomicilio_mejoraVivienda, txtNumExt_mejoraVivienda, txtNumInt_mejoraVivienda, txtColonia_mejoraVivienda, txtMunicipio_mejoraVivienda
+            txtIngresos, txtEgresos, txtMontoSolicitadoEquipandoHogar, txtProductoEquipandoHogar
     ;
     TextInputLayout layoutSucursal, layoutCoordinador, layoutCURP, layoutPromotor,
             layoutNombre1, layoutNombre2, layoutApellidoPaterno, layoutApellidoMaterno,
@@ -155,13 +154,13 @@ public class FragmentFormularioRegistro extends Fragment {
             layoutNombreConyuge, layoutLugarNacimientoConyuge, layoutFechaNacimientoConyuge,layoutOcupacionConyuge,
             layoutCodigoPostal, layoutDomicilioMejora, layoutDomicilioMejoraNumExt, layoutDomicilioMejoraNumInt, layoutDomicilioMejoraColonia, layoutDomicilioMejoraMunicipio,
             layoutReferenciaBancaria, layoutInstitucionBancaria,
-            layoutIngresos, layoutEgresos, layoutMontoSolicitadoMejoraVivienda, layoutMontoSolicitadoEquipandoHogar, layoutProductoEquipandoHogar,
-            layoutCodigoPostal_mejoraVivienda, layoutDomicilio_mejoraVivienda, layoutNumExt_mejoraVivienda, layoutNumInt_mejoraVivienda, layoutColonia_mejoraVivienda, layoutMunicipio_mejoraVivienda;
+            layoutIngresos, layoutEgresos, layoutMontoSolicitadoEquipandoHogar, layoutProductoEquipandoHogar
+    ;
     RadioGroup radioSexo, radioPlazoProducto, radioProducto;
     AutoCompleteTextView txtEstadoCivil;
     DialogBuscadorSucursales dialogBuscadorSucursales;
     DialogBuscarCoordinador dialogBuscarCoordinador, dialogBuscarPromotor;
-    DialogBuscadorMunicipios dialogBuscadorMunicipios, dialogBuscadorMunicipios_mejoraVivienda;
+    DialogBuscadorMunicipios dialogBuscadorMunicipios;
     DialogBuscadorEstados dialogBuscadorEstados;
     DialogBuscadorActividades dialogBuscadorActividades;
 
@@ -171,7 +170,6 @@ public class FragmentFormularioRegistro extends Fragment {
     Usuario usuario;
     Estado estadoNacimiento;
     Municipio municipioMejora;
-    Municipio municipio_mejoraVivienda;
     Bitmap bmFotoINEFrontal, bmFotoINEReverso, bmFotoPerfil, bmFotoComprobanteDomicilio;
     String strFotoINEFrontal, strFotoINEReverso, strFotoPerfil, strFotoComprobanteDomicilio;
 
@@ -278,28 +276,13 @@ public class FragmentFormularioRegistro extends Fragment {
             txtIngresos = view.findViewById(R.id.txtIngresos);
             layoutEgresos = view.findViewById(R.id.layoutEgresos);
             txtEgresos = view.findViewById(R.id.txtEgresos);
-            layoutMontoSolicitadoMejoraVivienda = view.findViewById(R.id.layoutMontoSolicitadoMejoraVivienda);
             layoutMontoSolicitadoEquipandoHogar = view.findViewById(R.id.layoutMontoSolicitadoEquipandoHogar);
-            txtMontoSolicitadoMejoraVivienda = view.findViewById(R.id.txtMontoSolicitadoMejoraVivienda);
             txtMontoSolicitadoEquipandoHogar = view.findViewById(R.id.txtMontoSolicitadoEquipandoHogar);
             radioPlazoProducto = view.findViewById(R.id.radioPlazoProducto);
             radioProducto = view.findViewById(R.id.radioProducto);
 
             txtProductoEquipandoHogar = view.findViewById(R.id.txtProductoEquipandoHogar);
             layoutProductoEquipandoHogar = view.findViewById(R.id.layoutProductoEquipandoHogar);
-
-            txtCodigoPostal_mejoraVivienda = view.findViewById(R.id.txtCodigoPostal_mejoraVivienda);
-            layoutCodigoPostal_mejoraVivienda = view.findViewById(R.id.layoutCodigoPostal_mejoraVivienda);
-            txtDomicilio_mejoraVivienda = view.findViewById(R.id.txtDomicilio_mejoraVivienda);
-            layoutDomicilio_mejoraVivienda = view.findViewById(R.id.layoutDomicilio_mejoraVivienda);
-            txtNumExt_mejoraVivienda = view.findViewById(R.id.txtNumExt_mejoraVivienda);
-            layoutNumExt_mejoraVivienda = view.findViewById(R.id.layoutNumExt_mejoraVivienda);
-            txtNumInt_mejoraVivienda = view.findViewById(R.id.txtNumInt_mejoraVivienda);
-            layoutNumInt_mejoraVivienda = view.findViewById(R.id.layoutNumInt_mejoraVivienda);
-            txtColonia_mejoraVivienda = view.findViewById(R.id.txtColonia_mejoraVivienda);
-            layoutColonia_mejoraVivienda = view.findViewById(R.id.layoutColonia_mejoraVivienda);
-            txtMunicipio_mejoraVivienda = view.findViewById(R.id.txtMunicipio_mejoraVivienda);
-            layoutMunicipio_mejoraVivienda = view.findViewById(R.id.layoutMunicipio_mejoraVivienda);
 
             imgFotoINEFrontal = view.findViewById(R.id.imgFotoINEFrontal);
             imgFotoINEReverso = view.findViewById(R.id.imgFotoINEReverso);
@@ -330,7 +313,6 @@ public class FragmentFormularioRegistro extends Fragment {
             btnCancelarFotoPerfil = view.findViewById(R.id.btnCancelarFotoPerfil);
             btnCancelarFotoComprobanteDomicilio = view.findViewById(R.id.btnCancelarFotoComprobanteDomicilio);
 
-            llSeparadorMejoraVivienda = view.findViewById(R.id.llSeparadorMejoraVivienda);
             llSeparadorEquipandoHogar = view.findViewById(R.id.llSeparadorEquipandoHogar);
 
             usuario = Config.USUARIO_SESION;
@@ -345,12 +327,13 @@ public class FragmentFormularioRegistro extends Fragment {
             inicializarSelectorCiudadMejora();
             inicializarSelectorActividades();
             inicializarBuscadorCurp();
-            inicializarMunicipio_mejoraVivienda();
             inicializarSelectoresImagenesGaleria();
             inicializarSelectoresImagenesCamara();
             inicializarBotonesCancelarSeleccionImagen();
 
             BottomBarActivity.cerrarLoading();
+
+            habilitarProductoEquipandoHogar(true);
 
             btnLimpiar.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -375,21 +358,11 @@ public class FragmentFormularioRegistro extends Fragment {
                 public void onCheckedChanged(RadioGroup group, int checkedId) {
 
                     switch (checkedId) {
-                        case R.id.radioProductoMejoraVivienda:
-                            limpiarProductoEquipandoHogar();
-                            copiarDireccionMejora();
-                            habilitarProductoEquipandoHogar(false);
-                            habilitarProductoMejora(true);
-                            break;
                         case R.id.radioProductoEquipandoHogar:
-                            limpiarProductoMejora();
                             habilitarProductoEquipandoHogar(true);
-                            habilitarProductoMejora(false);
                             break;
                         default:
                             habilitarProductoEquipandoHogar(true);
-                            copiarDireccionMejora();
-                            habilitarProductoMejora(true);
                     }
                 }
             });
@@ -400,15 +373,6 @@ public class FragmentFormularioRegistro extends Fragment {
         }
 
         return view;
-    }
-
-    private void copiarDireccionMejora() {
-        txtCodigoPostal_mejoraVivienda.setText(txtCodigoPostal.getText());
-        txtDomicilio_mejoraVivienda.setText(txtDomicilioMejora.getText());
-        txtNumExt_mejoraVivienda.setText(txtDomicilioMejoraNumExt.getText());
-        txtNumInt_mejoraVivienda.setText(txtDomicilioMejoraNumInt.getText());
-        txtColonia_mejoraVivienda.setText(txtDomicilioMejoraColonia.getText());
-        txtMunicipio_mejoraVivienda.setText(txtDomicilioMejoraMunicipio.getText());
     }
 
     private void inicializarSelectoresImagenesGaleria() {
@@ -771,50 +735,12 @@ public class FragmentFormularioRegistro extends Fragment {
         return encoded;
     }
 
-    private void habilitarProductoMejora(Boolean activo) {
-        llSeparadorMejoraVivienda.setVisibility(activo ? View.VISIBLE : View.GONE);
-        txtMontoSolicitadoMejoraVivienda.setVisibility(activo ? View.VISIBLE : View.GONE);
-        layoutMontoSolicitadoMejoraVivienda.setVisibility(activo ? View.VISIBLE : View.GONE);
-
-        txtCodigoPostal_mejoraVivienda.setVisibility(activo ? View.VISIBLE : View.GONE);
-        txtDomicilio_mejoraVivienda.setVisibility(activo ? View.VISIBLE : View.GONE);
-        txtNumExt_mejoraVivienda.setVisibility(activo ? View.VISIBLE : View.GONE);
-        txtNumInt_mejoraVivienda.setVisibility(activo ? View.VISIBLE : View.GONE);
-        txtColonia_mejoraVivienda.setVisibility(activo ? View.VISIBLE : View.GONE);
-        txtMunicipio_mejoraVivienda.setVisibility(activo ? View.VISIBLE : View.GONE);
-        layoutCodigoPostal_mejoraVivienda.setVisibility(activo ? View.VISIBLE : View.GONE);
-        layoutDomicilio_mejoraVivienda.setVisibility(activo ? View.VISIBLE : View.GONE);
-        layoutNumExt_mejoraVivienda.setVisibility(activo ? View.VISIBLE : View.GONE);
-        layoutNumInt_mejoraVivienda.setVisibility(activo ? View.VISIBLE : View.GONE);
-        layoutColonia_mejoraVivienda.setVisibility(activo ? View.VISIBLE : View.GONE);
-        layoutMunicipio_mejoraVivienda.setVisibility(activo ? View.VISIBLE : View.GONE);
-    }
-
-    private void limpiarProductoMejora() {
-        txtMontoSolicitadoMejoraVivienda.setText("");
-
-        txtCodigoPostal_mejoraVivienda.setText("");
-        txtDomicilio_mejoraVivienda.setText("");
-        txtNumExt_mejoraVivienda.setText("");
-        txtNumInt_mejoraVivienda.setText("");
-        txtColonia_mejoraVivienda.setText("");
-
-        municipio_mejoraVivienda = null;
-        seleccionarMunicipio_mejoraVivienda(null);
-
-    }
-
     private void habilitarProductoEquipandoHogar(Boolean activo) {
         llSeparadorEquipandoHogar.setVisibility(activo ? View.VISIBLE : View.GONE);
         txtMontoSolicitadoEquipandoHogar.setVisibility(activo ? View.VISIBLE : View.GONE);
         layoutMontoSolicitadoEquipandoHogar.setVisibility(activo ? View.VISIBLE : View.GONE);
         layoutProductoEquipandoHogar.setVisibility(activo ? View.VISIBLE : View.GONE);
         txtProductoEquipandoHogar.setVisibility(activo ? View.VISIBLE : View.GONE);
-    }
-
-    private void limpiarProductoEquipandoHogar() {
-        txtMontoSolicitadoEquipandoHogar.setText("");
-        txtProductoEquipandoHogar.setText("");
     }
 
     private Boolean getEstatusConexionInternet(){
@@ -1110,66 +1036,6 @@ public class FragmentFormularioRegistro extends Fragment {
             layoutCoordinador.setEndIconContentDescription(LIMPIAR_CAMPO);
         }
         layoutCoordinador.setError(null);
-    }
-
-    private void inicializarMunicipio_mejoraVivienda() {
-        dialogBuscadorMunicipios_mejoraVivienda = new DialogBuscadorMunicipios(getContext(), view);
-        txtMunicipio_mejoraVivienda.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialogBuscadorMunicipios_mejoraVivienda.show();
-            }
-        });
-
-        txtMunicipio_mejoraVivienda.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if(hasFocus) {
-                    dialogBuscadorMunicipios_mejoraVivienda.show();
-                }
-            }
-        });
-
-        dialogBuscadorMunicipios_mejoraVivienda.setOnItemClickListener(new DialogBuscadorMunicipios.OnItemClickListener() {
-            @Override
-            public void onItemClick(Municipio municipio) {
-                if(municipio != null) {
-                    seleccionarMunicipio_mejoraVivienda(municipio.getStrNombreMunicipioEstado());
-                    municipio_mejoraVivienda = municipio;
-                    dialogBuscadorMunicipios_mejoraVivienda.close();
-                } else {
-                    seleccionarMunicipio_mejoraVivienda(null);
-                }
-                closeKeyBoard();
-            }
-        });
-
-        layoutMunicipio_mejoraVivienda.setEndIconOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(layoutMunicipio_mejoraVivienda.getEndIconContentDescription() == LIMPIAR_CAMPO) {
-                    seleccionarMunicipio_mejoraVivienda(null);
-                    closeKeyBoard();
-                } else {
-                    dialogBuscadorMunicipios_mejoraVivienda.show();
-                }
-            }
-        });
-    }
-
-    private void seleccionarMunicipio_mejoraVivienda(String strMunicipio) {
-        if(strMunicipio == null) {
-            txtMunicipio_mejoraVivienda.setText("");
-            dialogBuscadorMunicipios_mejoraVivienda.limpiar();
-            layoutMunicipio_mejoraVivienda.setEndIconDrawable(R.drawable.ic_baseline_arrow_drop_down_24);
-            layoutMunicipio_mejoraVivienda.setEndIconContentDescription(SELECCIONAR);
-            municipio_mejoraVivienda = null;
-        } else {
-            txtMunicipio_mejoraVivienda.setText(strMunicipio);
-            layoutMunicipio_mejoraVivienda.setEndIconDrawable(R.drawable.ic_baseline_cancel_24);
-            layoutMunicipio_mejoraVivienda.setEndIconContentDescription(LIMPIAR_CAMPO);
-        }
-        layoutMunicipio_mejoraVivienda.setError(null);
     }
 
     private void inicializarSelectorCiudadMejora() {
@@ -1593,28 +1459,11 @@ public class FragmentFormularioRegistro extends Fragment {
     }
 
     public void resetearProducto() {
-        radioProducto.check(R.id.radioProductoMejoraVivienda);
+        radioProducto.check(R.id.radioProductoEquipandoHogar);
 
-        txtMontoSolicitadoMejoraVivienda.setVisibility(View.VISIBLE);
-        txtMontoSolicitadoMejoraVivienda.setText("");
-        txtMontoSolicitadoEquipandoHogar.setVisibility(View.GONE);
+        txtMontoSolicitadoEquipandoHogar.setVisibility(View.VISIBLE);
         txtMontoSolicitadoEquipandoHogar.setText("");
-
-
-        txtCodigoPostal_mejoraVivienda.setText("");
-        txtDomicilio_mejoraVivienda.setText("");
-        txtNumExt_mejoraVivienda.setText("");
-        txtNumInt_mejoraVivienda.setText("");
-        txtColonia_mejoraVivienda.setText("");
-        //CIUDAD DE LA MEJORA
-        seleccionarMunicipio_mejoraVivienda(null);
-        municipio_mejoraVivienda = null;
-
-        txtCodigoPostal_mejoraVivienda.setVisibility(View.VISIBLE);
-        txtDomicilio_mejoraVivienda.setVisibility(View.VISIBLE);
-        txtNumExt_mejoraVivienda.setVisibility(View.VISIBLE);
-        txtNumInt_mejoraVivienda.setVisibility(View.VISIBLE);
-        txtColonia_mejoraVivienda.setVisibility(View.VISIBLE);
+        txtProductoEquipandoHogar.setText("");
     }
 
     public void limpiarVista() {
@@ -1762,9 +1611,7 @@ public class FragmentFormularioRegistro extends Fragment {
 
         Date hoy = new Date();
         SimpleDateFormat dateFormat = null;
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
-            dateFormat = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss", new Locale("es", "ES"));
-        }
+        dateFormat = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss", new Locale("es", "ES"));
         solicitudDispersion.setStrFechaAlta(dateFormat.format(hoy));
         //NOMBRE CLIENTE
         solicitudDispersion.setStrCURP(txtCURP.getText().toString().toUpperCase());
@@ -1839,33 +1686,20 @@ public class FragmentFormularioRegistro extends Fragment {
         //PRODUCTO
         solicitudDispersion.setIntPlazo(radioPlazoProducto.getCheckedRadioButtonId() == R.id.radioPlazoProducto12Meses ? 12 : 24);
 
-        if(radioProducto.getCheckedRadioButtonId() == R.id.radioProductoMejoraVivienda || radioProducto.getCheckedRadioButtonId() == R.id.radioProductoAmbos ) {
-            solicitudDispersion.setDblMontoSolicitadoMejoraVivienda(Double.parseDouble(txtMontoSolicitadoMejoraVivienda.getText().toString().trim()));
-            //DOMICILIO
-            solicitudDispersion.setStrCodigoPostal_mejoraVivienda(txtCodigoPostal_mejoraVivienda.getText().toString().trim().toUpperCase());
-            solicitudDispersion.setStrDomicilio_mejoraVivienda(txtDomicilio_mejoraVivienda.getText().toString().trim().toUpperCase());
-            solicitudDispersion.setStrNumExt_mejoraVivienda(txtNumExt_mejoraVivienda.getText().toString().trim().toUpperCase());
-            solicitudDispersion.setStrNumInt_mejoraVivienda(txtNumInt_mejoraVivienda.getText().toString().trim().toUpperCase());
-            solicitudDispersion.setStrColonia_mejoraVivienda(txtColonia_mejoraVivienda.getText().toString().trim().toUpperCase());
-            solicitudDispersion.setIdMunicipio_mejoraVivienda(municipio_mejoraVivienda != null ? municipio_mejoraVivienda.getIdMunicipio() : "");
-            solicitudDispersion.setIdEstado_mejoraVivienda(municipio_mejoraVivienda != null ? municipio_mejoraVivienda.getIdEstado() : "");
-            solicitudDispersion.setStrMunicipio_mejoraVivienda(municipio_mejoraVivienda != null ? municipio_mejoraVivienda.getStrMunicipio().toUpperCase() : "");
-            solicitudDispersion.setStrEstado_mejoraVivienda(municipio_mejoraVivienda != null ? municipio_mejoraVivienda.getStrEstado().toUpperCase() : "");
-        } else {
-            solicitudDispersion.setDblMontoSolicitadoMejoraVivienda(0);
-            //DOMICILIO
-            solicitudDispersion.setStrCodigoPostal_mejoraVivienda("");
-            solicitudDispersion.setStrDomicilio_mejoraVivienda("");
-            solicitudDispersion.setStrNumExt_mejoraVivienda("");
-            solicitudDispersion.setStrNumInt_mejoraVivienda("");
-            solicitudDispersion.setStrColonia_mejoraVivienda("");
-            solicitudDispersion.setIdMunicipio_mejoraVivienda("");
-            solicitudDispersion.setIdEstado_mejoraVivienda("");
-            solicitudDispersion.setStrMunicipio_mejoraVivienda("");
-            solicitudDispersion.setStrEstado_mejoraVivienda("");
-        }
 
-        if(radioProducto.getCheckedRadioButtonId() == R.id.radioProductoEquipandoHogar || radioProducto.getCheckedRadioButtonId() == R.id.radioProductoAmbos ) {
+        solicitudDispersion.setDblMontoSolicitadoMejoraVivienda(0);
+        //DOMICILIO
+        solicitudDispersion.setStrCodigoPostal_mejoraVivienda("");
+        solicitudDispersion.setStrDomicilio_mejoraVivienda("");
+        solicitudDispersion.setStrNumExt_mejoraVivienda("");
+        solicitudDispersion.setStrNumInt_mejoraVivienda("");
+        solicitudDispersion.setStrColonia_mejoraVivienda("");
+        solicitudDispersion.setIdMunicipio_mejoraVivienda("");
+        solicitudDispersion.setIdEstado_mejoraVivienda("");
+        solicitudDispersion.setStrMunicipio_mejoraVivienda("");
+        solicitudDispersion.setStrEstado_mejoraVivienda("");
+
+        if(radioProducto.getCheckedRadioButtonId() == R.id.radioProductoEquipandoHogar) {
             solicitudDispersion.setDblMontoSolicitadoEquipandoHogar(Double.parseDouble(txtMontoSolicitadoEquipandoHogar.getText().toString().trim()));
             solicitudDispersion.setStrProducto(txtProductoEquipandoHogar.getText().toString().trim().toUpperCase());
         } else {
@@ -2089,17 +1923,17 @@ public class FragmentFormularioRegistro extends Fragment {
         }
 
         if(txtReferenciaBancaria.getText().toString().trim().length() == 0) {
-            layoutReferenciaBancaria.setError("Ingrese referencia bancaria");
-            txtReferenciaBancaria.requestFocus();
-            return false;
+            // layoutReferenciaBancaria.setError("Ingrese referencia bancaria");
+            // txtReferenciaBancaria.requestFocus();
+            // return false;
         } else {
             layoutReferenciaBancaria.setError(null);
         }
 
         if(txtInstitucionBancaria.getText().toString().trim().length() == 0) {
-            layoutInstitucionBancaria.setError("Ingrese nombre del banco");
-            txtInstitucionBancaria.requestFocus();
-            return false;
+            // layoutInstitucionBancaria.setError("Ingrese nombre del banco");
+            // txtInstitucionBancaria.requestFocus();
+            // return false;
         } else {
             layoutInstitucionBancaria.setError(null);
         }
@@ -2126,59 +1960,7 @@ public class FragmentFormularioRegistro extends Fragment {
             return false;
         }
 
-        //Validaciones de producto mejora
-        if(radioProducto.getCheckedRadioButtonId() == R.id.radioProductoMejoraVivienda || radioProducto.getCheckedRadioButtonId() == R.id.radioProductoAmbos ) {
-            if(txtMontoSolicitadoMejoraVivienda.getText().toString().trim().length() == 0) {
-                layoutMontoSolicitadoMejoraVivienda.setError("Ingrese una cantidad");
-                txtMontoSolicitadoMejoraVivienda.requestFocus();
-                return false;
-            } else {
-                layoutMontoSolicitadoMejoraVivienda.setError(null);
-            }
-
-            if(txtCodigoPostal_mejoraVivienda.getText().toString().trim().length() == 0) {
-                layoutCodigoPostal_mejoraVivienda.setError("Ingrese código postal");
-                txtCodigoPostal_mejoraVivienda.requestFocus();
-                return false;
-            } else {
-                layoutCodigoPostal_mejoraVivienda.setError(null);
-            }
-
-            if(txtDomicilio_mejoraVivienda.getText().toString().trim().length() == 0) {
-                layoutDomicilio_mejoraVivienda.setError("Ingrese dirección de la mejora");
-                txtDomicilio_mejoraVivienda.requestFocus();
-                return false;
-            } else {
-                layoutDomicilio_mejoraVivienda.setError(null);
-            }
-
-            if(txtNumExt_mejoraVivienda.getText().toString().trim().length() == 0) {
-                layoutNumExt_mejoraVivienda.setError("Ingrese número exterior");
-                txtNumExt_mejoraVivienda.requestFocus();
-                return false;
-            } else {
-                layoutNumExt_mejoraVivienda.setError(null);
-            }
-
-            if(txtColonia_mejoraVivienda.getText().toString().trim().length() == 0) {
-                layoutColonia_mejoraVivienda.setError("Ingrese colonia");
-                txtColonia_mejoraVivienda.requestFocus();
-                return false;
-            } else {
-                layoutColonia_mejoraVivienda.setError(null);
-            }
-
-            if(txtMunicipio_mejoraVivienda.getText().toString().trim().length() == 0) {
-                layoutMunicipio_mejoraVivienda.setError("Selccione municipio");
-                txtMunicipio_mejoraVivienda.requestFocus();
-                return false;
-            } else {
-                layoutMunicipio_mejoraVivienda.setError(null);
-            }
-        }
-        //FIN Validaciones de producto mejora
-
-        if(radioProducto.getCheckedRadioButtonId() == R.id.radioProductoEquipandoHogar || radioProducto.getCheckedRadioButtonId() == R.id.radioProductoAmbos) {
+        if(radioProducto.getCheckedRadioButtonId() == R.id.radioProductoEquipandoHogar) {
 
             if(txtMontoSolicitadoEquipandoHogar.getText().toString().trim().length() == 0) {
                 layoutMontoSolicitadoEquipandoHogar.setError("Ingrese una cantidad");
