@@ -52,28 +52,30 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:showDividers="middle"
             android:divider="@drawable/divider"
-            android:padding="16dp">
+            android:orientation="vertical"
+            android:padding="16dp"
+            android:showDividers="middle">
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/layoutPromotor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="PROMOTOR"
-                app:endIconMode="custom"
+                app:endIconContentDescription="@string/seleccionar"
                 app:endIconDrawable="@drawable/ic_baseline_arrow_drop_down_24"
-                app:endIconContentDescription="@string/seleccionar">
+                app:endIconMode="custom">
+
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/txtPromotor"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textCapCharacters"
-                    android:editable="false"/>
+                    android:editable="false"
+                    android:inputType="textCapCharacters" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -81,15 +83,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="SUCURSAL"
-                app:endIconMode="custom"
+                app:endIconContentDescription="@string/seleccionar"
                 app:endIconDrawable="@drawable/ic_baseline_arrow_drop_down_24"
-                app:endIconContentDescription="@string/seleccionar">
+                app:endIconMode="custom">
+
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/txtSucursal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textCapCharacters"
-                    android:editable="false"/>
+                    android:editable="false"
+                    android:inputType="textCapCharacters" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -97,15 +100,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="COORDINADOR"
-                app:endIconMode="custom"
+                app:endIconContentDescription="@string/seleccionar"
                 app:endIconDrawable="@drawable/ic_baseline_arrow_drop_down_24"
-                app:endIconContentDescription="@string/seleccionar">
+                app:endIconMode="custom">
+
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/txtCoordinador"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textCapCharacters"
-                    android:editable="false"/>
+                    android:editable="false"
+                    android:inputType="textCapCharacters" />
             </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -113,17 +117,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="INFORMACIÓN PERSONAL"
-                    />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/border_bottom"
-                    />
+                    android:text="INFORMACIÓN PERSONAL" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/border_bottom" />
             </LinearLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -131,15 +134,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="CURP"
-                app:endIconMode="custom"
+                app:endIconContentDescription="Buscar"
                 app:endIconDrawable="@drawable/ic_baseline_search_24"
-                app:endIconContentDescription="Buscar">
+                app:endIconMode="custom">
+
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/txtCURP"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textCapCharacters"
-                    android:maxLength="18"/>
+                    android:maxLength="18" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -147,11 +151,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="PRIMER NOMBRE">
+
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/txtNombre1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textCapCharacters"/>
+                    android:inputType="textCapCharacters" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -159,11 +164,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="SEGUNDO NOMBRE">
+
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/txtNombre2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textCapCharacters"/>
+                    android:inputType="textCapCharacters" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -171,11 +177,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="APELLIDO PATERNO">
+
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/txtApellidoPaterno"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textCapCharacters"/>
+                    android:inputType="textCapCharacters" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -183,36 +190,38 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="APELLIDO MATERNO">
+
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/txtApellidoMaterno"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textCapCharacters"/>
+                    android:inputType="textCapCharacters" />
             </com.google.android.material.textfield.TextInputLayout>
-
 
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="SEXO"/>
+                    android:text="SEXO" />
+
                 <RadioGroup
                     android:id="@+id/radioSexo"
-                    android:checkedButton="@id/radioSexoMujer"
-                    android:orientation="horizontal"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:checkedButton="@id/radioSexoMujer"
+                    android:orientation="horizontal">
 
                     <RadioButton
                         android:id="@+id/radioSexoHombre"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="HOMBRE"
-                        android:layout_marginRight="16sp"/>
+                        android:layout_marginRight="16sp"
+                        android:text="HOMBRE" />
 
                     <RadioButton
                         android:id="@+id/radioSexoMujer"
@@ -228,31 +237,31 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="FECHA NACIMIENTO"
-                app:endIconMode="custom"
+                app:endIconContentDescription="@string/seleccionar"
                 app:endIconDrawable="@drawable/ic_baseline_date_range_24"
-                app:endIconContentDescription="@string/seleccionar">
+                app:endIconMode="custom">
+
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/txtFechaNacimiento"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="text"
-                    android:editable="false"/>
+                    android:editable="false"
+                    android:inputType="text" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/layoutEstadoCivil"
+                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="ESTADO CIVIL"
-                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu">
+                android:hint="ESTADO CIVIL">
 
                 <AutoCompleteTextView
                     android:id="@+id/txtEstadoCivil"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="none"
                     android:editable="false"
-                />
+                    android:inputType="none" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -261,12 +270,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="NACIONALIDAD">
+
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/txtNacionalidad"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textCapCharacters"
-                    android:text="MEXICANA"/>
+                    android:text="MEXICANA" />
             </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -274,19 +284,18 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginTop="16sp">
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="INFORMACIÓN LABORAL"
-                    />
+                android:layout_marginTop="16sp"
+                android:orientation="vertical">
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/border_bottom"
-                    />
+                    android:text="INFORMACIÓN LABORAL" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/border_bottom" />
             </LinearLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -294,11 +303,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="OCUPACION">
+
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/txtOcupacion"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textCapCharacters"/>
+                    android:inputType="textCapCharacters" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -306,15 +316,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="ACTIVIDAD"
-                app:endIconMode="custom"
+                app:endIconContentDescription="@string/seleccionar"
                 app:endIconDrawable="@drawable/ic_baseline_arrow_drop_down_24"
-                app:endIconContentDescription="@string/seleccionar">
+                app:endIconMode="custom">
+
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/txtActividad"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textCapCharacters"
-                    android:editable="false"/>
+                    android:editable="false"
+                    android:inputType="textCapCharacters" />
             </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -322,19 +333,18 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginTop="16sp">
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="CONTACTO"
-                    />
+                android:layout_marginTop="16sp"
+                android:orientation="vertical">
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/border_bottom"
-                    />
+                    android:text="CONTACTO" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/border_bottom" />
             </LinearLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -342,12 +352,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="CELULAR">
+
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/txtCelular"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="phone"
-                    android:maxLength="10"/>
+                    android:maxLength="10" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -355,12 +366,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="TELÉFONO">
+
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/txtTelefono"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="phone"
-                    android:maxLength="10"/>
+                    android:maxLength="10" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -368,30 +380,30 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="CORREO ELECTRÓNICO">
+
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/txtEmail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textEmailAddress"/>
+                    android:inputType="textEmailAddress" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <!-- CREDENCIAL DE ELECTOR  -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginTop="16sp">
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="CREDENCIAL ELECTOR"
-                    />
+                android:layout_marginTop="16sp"
+                android:orientation="vertical">
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/border_bottom"
-                    />
+                    android:text="CREDENCIAL ELECTOR" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/border_bottom" />
             </LinearLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -399,12 +411,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="CLAVE ELECTOR">
+
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/txtClaveElector"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textCapCharacters"
-                    android:maxLength="18"/>
+                    android:maxLength="18" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -412,20 +425,21 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="NÚMERO ELECTOR">
+
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/txtNumeroElector"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textCapCharacters"
-                    android:maxLength="20"/>
+                    android:maxLength="20" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <!-- FOTOS  -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginTop="16sp">
+                android:layout_marginTop="16sp"
+                android:orientation="vertical">
 
                 <TextView
                     android:layout_width="match_parent"
@@ -435,55 +449,61 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/border_bottom"
-                    />
+                    android:background="@drawable/border_bottom" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
+
                 <com.google.android.material.card.MaterialCardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:checkable="true"
+                    android:layout_margin="5dp"
                     android:layout_weight="1"
-                    android:layout_margin="5dp">
+                    android:checkable="true"
+                    android:clickable="true"
+                    android:focusable="true">
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="vertical">
+
                         <TextView
                             android:id="@+id/tvFotoINEFrontal"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="FRONTAL INE"
                             android:layout_gravity="center"
-                            android:textAlignment="center"/>
+                            android:text="FRONTAL INE"
+                            android:textAlignment="center" />
+
                         <LinearLayout
                             android:id="@+id/llFotoINEFrontal"
                             android:layout_width="wrap_content"
                             android:layout_height="120dp"
-                            android:orientation="horizontal"
                             android:layout_gravity="center_horizontal"
+                            android:orientation="horizontal"
                             android:visibility="visible">
+
                             <Button
                                 android:id="@+id/btnAbrirCamaraFotoINEFrontal"
+                                style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
                                 android:layout_width="50dp"
                                 android:layout_height="50dp"
-                                app:icon="@drawable/ic_baseline_photo_camera_24"
                                 android:layout_gravity="center_vertical"
-                                style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"/>
+                                app:icon="@drawable/ic_baseline_photo_camera_24" />
+
                             <Button
                                 android:id="@+id/btnAbrirGaleriaFotoINEFrontal"
+                                style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
                                 android:layout_width="50dp"
                                 android:layout_height="50dp"
-                                app:icon="@drawable/ic_baseline_image_search_24"
                                 android:layout_gravity="center_vertical"
-                                style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"/>
+                                app:icon="@drawable/ic_baseline_image_search_24" />
                         </LinearLayout>
+
                         <RelativeLayout
                             android:id="@+id/rlFotoINEFrontal"
                             android:layout_width="match_parent"
@@ -497,7 +517,7 @@
                                 android:backgroundTint="@android:color/transparent"
                                 android:contentDescription="@string/seleccionar"
                                 android:scaleType="fitCenter"
-                                android:src="@drawable/ic_baseline_add_24"/>
+                                android:src="@drawable/ic_baseline_add_24" />
 
                             <ImageButton
                                 android:id="@+id/btnCancelarFotoINEFrontal"
@@ -512,46 +532,53 @@
                         </RelativeLayout>
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
+
                 <com.google.android.material.card.MaterialCardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:checkable="true"
+                    android:layout_margin="5dp"
                     android:layout_weight="1"
-                    android:layout_margin="5dp">
+                    android:checkable="true"
+                    android:clickable="true"
+                    android:focusable="true">
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="vertical">
+
                         <TextView
                             android:id="@+id/tvFotoINEReverso"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:textAlignment="center"
-                            android:text="REVERSO INE"/>
+                            android:text="REVERSO INE"
+                            android:textAlignment="center" />
+
                         <LinearLayout
                             android:id="@+id/llFotoINEReverso"
                             android:layout_width="wrap_content"
                             android:layout_height="120dp"
-                            android:orientation="horizontal"
-                            android:layout_gravity="center_horizontal">
+                            android:layout_gravity="center_horizontal"
+                            android:orientation="horizontal">
+
                             <Button
                                 android:id="@+id/btnAbrirCamaraFotoINEReverso"
+                                style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
                                 android:layout_width="50dp"
                                 android:layout_height="50dp"
-                                app:icon="@drawable/ic_baseline_photo_camera_24"
                                 android:layout_gravity="center_vertical"
-                                style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"/>
+                                app:icon="@drawable/ic_baseline_photo_camera_24" />
+
                             <Button
                                 android:id="@+id/btnAbrirGaleriaFotoINEReverso"
+                                style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
                                 android:layout_width="50dp"
                                 android:layout_height="50dp"
-                                app:icon="@drawable/ic_baseline_image_search_24"
                                 android:layout_gravity="center_vertical"
-                                style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"/>
+                                app:icon="@drawable/ic_baseline_image_search_24" />
                         </LinearLayout>
+
                         <RelativeLayout
                             android:id="@+id/rlFotoINEReverso"
                             android:layout_width="match_parent"
@@ -563,9 +590,9 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:backgroundTint="@android:color/transparent"
-                                android:src="@drawable/ic_baseline_add_24"
                                 android:contentDescription="@string/seleccionar"
-                                android:scaleType="fitCenter"/>
+                                android:scaleType="fitCenter"
+                                android:src="@drawable/ic_baseline_add_24" />
 
                             <ImageButton
                                 android:id="@+id/btnCancelarFotoINEReverso"
@@ -585,45 +612,51 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
+
                 <com.google.android.material.card.MaterialCardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:checkable="true"
+                    android:layout_margin="5dp"
                     android:layout_weight="1"
-                    android:layout_margin="5dp">
+                    android:checkable="true"
+                    android:clickable="true"
+                    android:focusable="true">
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="vertical">
+
                         <TextView
                             android:id="@+id/tvFotoPerfil"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="PERFIL CLIENTE"
                             android:layout_gravity="center"
-                            android:textAlignment="center"/>
+                            android:text="PERFIL CLIENTE"
+                            android:textAlignment="center" />
+
                         <LinearLayout
                             android:id="@+id/llFotoPerfil"
                             android:layout_width="wrap_content"
                             android:layout_height="120dp"
-                            android:orientation="horizontal"
-                            android:layout_gravity="center_horizontal">
+                            android:layout_gravity="center_horizontal"
+                            android:orientation="horizontal">
+
                             <Button
                                 android:id="@+id/btnAbrirCamaraFotoPerfil"
+                                style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
                                 android:layout_width="50dp"
                                 android:layout_height="50dp"
-                                app:icon="@drawable/ic_baseline_photo_camera_24"
                                 android:layout_gravity="center_vertical"
-                                style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"/>
+                                app:icon="@drawable/ic_baseline_photo_camera_24" />
+
                             <Button
                                 android:id="@+id/btnAbrirGaleriaFotoPerfil"
+                                style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
                                 android:layout_width="50dp"
                                 android:layout_height="50dp"
-                                app:icon="@drawable/ic_baseline_image_search_24"
                                 android:layout_gravity="center_vertical"
-                                style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"/>
+                                app:icon="@drawable/ic_baseline_image_search_24" />
                         </LinearLayout>
 
                         <RelativeLayout
@@ -638,8 +671,8 @@
                                 android:layout_height="120dp"
                                 android:backgroundTint="@android:color/transparent"
                                 android:contentDescription="@string/seleccionar"
-                                android:src="@drawable/ic_baseline_add_24"
-                                android:scaleType="fitCenter"/>
+                                android:scaleType="fitCenter"
+                                android:src="@drawable/ic_baseline_add_24" />
 
                             <ImageButton
                                 android:id="@+id/btnCancelarFotoPerfil"
@@ -654,46 +687,53 @@
 
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
+
                 <com.google.android.material.card.MaterialCardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:checkable="true"
+                    android:layout_margin="5dp"
                     android:layout_weight="1"
-                    android:layout_margin="5dp">
+                    android:checkable="true"
+                    android:clickable="true"
+                    android:focusable="true">
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="vertical">
+
                         <TextView
                             android:id="@+id/tvFotoComprobanteDomicilio"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:textAlignment="center"
-                            android:text="COMP. DOMICILIO"/>
+                            android:text="COMP. DOMICILIO"
+                            android:textAlignment="center" />
+
                         <LinearLayout
                             android:id="@+id/llFotoComprobanteDomicilio"
                             android:layout_width="wrap_content"
                             android:layout_height="120dp"
-                            android:orientation="horizontal"
-                            android:layout_gravity="center_horizontal">
+                            android:layout_gravity="center_horizontal"
+                            android:orientation="horizontal">
+
                             <Button
                                 android:id="@+id/btnAbrirCamaraFotoComprobanteDomicilio"
+                                style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
                                 android:layout_width="50dp"
                                 android:layout_height="50dp"
-                                app:icon="@drawable/ic_baseline_photo_camera_24"
                                 android:layout_gravity="center_vertical"
-                                style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"/>
+                                app:icon="@drawable/ic_baseline_photo_camera_24" />
+
                             <Button
                                 android:id="@+id/btnAbrirGaleriaFotoComprobanteDomicilio"
+                                style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
                                 android:layout_width="50dp"
                                 android:layout_height="50dp"
-                                app:icon="@drawable/ic_baseline_image_search_24"
                                 android:layout_gravity="center_vertical"
-                                style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"/>
+                                app:icon="@drawable/ic_baseline_image_search_24" />
                         </LinearLayout>
+
                         <RelativeLayout
                             android:id="@+id/rlFotoComprobanteDomicilio"
                             android:layout_width="match_parent"
@@ -705,9 +745,9 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="120dp"
                                 android:backgroundTint="@android:color/transparent"
-                                android:src="@drawable/ic_baseline_add_24"
                                 android:contentDescription="@string/seleccionar"
-                                android:scaleType="fitCenter"/>
+                                android:scaleType="fitCenter"
+                                android:src="@drawable/ic_baseline_add_24" />
 
                             <ImageButton
                                 android:id="@+id/btnCancelarFotoComprobanteDomicilio"
@@ -729,19 +769,18 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginTop="16sp">
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="LUGAR DE NACIMIENTO"
-                    />
+                android:layout_marginTop="16sp"
+                android:orientation="vertical">
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/border_bottom"
-                    />
+                    android:text="LUGAR DE NACIMIENTO" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/border_bottom" />
             </LinearLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -749,15 +788,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="ESTADO"
-                app:endIconMode="custom"
+                app:endIconContentDescription="@string/seleccionar"
                 app:endIconDrawable="@drawable/ic_baseline_arrow_drop_down_24"
-                app:endIconContentDescription="@string/seleccionar">
+                app:endIconMode="custom">
+
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/txtEstadoOrigen"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textCapCharacters"
-                    android:editable="false"/>
+                    android:editable="false"
+                    android:inputType="textCapCharacters" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -765,33 +805,32 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="PAÍS">
+
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/txtPaisOrigen"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textCapCharacters"
-                    android:text="MÉXICO"/>
+                    android:text="MÉXICO" />
             </com.google.android.material.textfield.TextInputLayout>
-
 
 
             <!-- INFORMACION DEL CONYUGE  -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginTop="16sp">
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="INFORMACIÓN CONYUGE"
-                    />
+                android:layout_marginTop="16sp"
+                android:orientation="vertical">
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/border_bottom"
-                    />
+                    android:text="INFORMACIÓN CONYUGE" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/border_bottom" />
             </LinearLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -799,11 +838,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="NOMBRE COMPLETO">
+
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/txtNombreConyuge"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textCapCharacters"/>
+                    android:inputType="textCapCharacters" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -811,11 +851,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="LUGAR DE NACIMIENTO">
+
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/txtLugarNacimientoConyuge"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textCapCharacters"/>
+                    android:inputType="textCapCharacters" />
             </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -824,14 +865,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="FECHA DE NACIMIENTO"
-                app:endIconMode="custom"
+                app:endIconContentDescription="@string/seleccionar"
                 app:endIconDrawable="@drawable/ic_baseline_date_range_24"
-                app:endIconContentDescription="@string/seleccionar">
+                app:endIconMode="custom">
+
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/txtFechaNacimientoConyuge"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textCapCharacters"/>
+                    android:inputType="textCapCharacters" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -839,33 +881,31 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="OCUPACIÓN">
+
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/txtOcupacionConyuge"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textCapCharacters"/>
+                    android:inputType="textCapCharacters" />
             </com.google.android.material.textfield.TextInputLayout>
-
-
 
 
             <!-- DIRECCION DE LA MEJORA  -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginTop="16sp">
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="DIRECCIÓN"
-                    />
+                android:layout_marginTop="16sp"
+                android:orientation="vertical">
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/border_bottom"
-                    />
+                    android:text="DIRECCIÓN" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/border_bottom" />
             </LinearLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -873,12 +913,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="CÓDIGO POSTAL">
+
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/txtCodigoPostal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textCapCharacters"
-                    android:maxLength="5"/>
+                    android:maxLength="5" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -886,11 +927,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="DIRECCIÓN">
+
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/txtDomicilioMejora"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textCapCharacters"/>
+                    android:inputType="textCapCharacters" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <LinearLayout
@@ -902,26 +944,28 @@
                     android:id="@+id/layoutDomicilioMejoraNumExt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:hint="NÚMERO EXTERIOR"
-                    android:layout_weight="2">
+                    android:layout_weight="2"
+                    android:hint="NÚMERO EXTERIOR">
+
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/txtDomicilioMejoraNumExt"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="textCapCharacters"/>
+                        android:inputType="textCapCharacters" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/layoutDomicilioMejoraNumInt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:hint="NÚMERO INTERIOR"
-                    android:layout_weight="2">
+                    android:layout_weight="2"
+                    android:hint="NÚMERO INTERIOR">
+
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/txtDomicilioMejoraNumInt"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="textCapCharacters"/>
+                        android:inputType="textCapCharacters" />
                 </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
 
@@ -930,11 +974,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="COLONIA">
+
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/txtDomicilioMejoraColonia"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textCapCharacters"/>
+                    android:inputType="textCapCharacters" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -942,35 +987,34 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="MUNICIPIO"
-                app:endIconMode="custom"
+                app:endIconContentDescription="@string/seleccionar"
                 app:endIconDrawable="@drawable/ic_baseline_arrow_drop_down_24"
-                app:endIconContentDescription="@string/seleccionar">
+                app:endIconMode="custom">
+
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/txtDomicilioMejoraMunicipio"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textCapCharacters"/>
+                    android:inputType="textCapCharacters" />
             </com.google.android.material.textfield.TextInputLayout>
-
 
 
             <!-- REFERENCIA BANCARIA  -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginTop="16sp">
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="REFERENCIA BANCARIA"
-                    />
+                android:layout_marginTop="16sp"
+                android:orientation="vertical">
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/border_bottom"
-                    />
+                    android:text="REFERENCIA BANCARIA" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/border_bottom" />
             </LinearLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -978,11 +1022,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="REFERENCIA">
+
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/txtReferenciaBancaria"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textCapCharacters"/>
+                    android:inputType="textCapCharacters" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -990,32 +1035,31 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="INSTITUCIÓN BANCARIA">
+
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/txtInstitucionBancaria"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textCapCharacters"/>
+                    android:inputType="textCapCharacters" />
             </com.google.android.material.textfield.TextInputLayout>
-
 
 
             <!-- DATOS DEL CREDITO  -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginTop="16sp">
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="INGRESOS / EGRESOS"
-                    />
+                android:layout_marginTop="16sp"
+                android:orientation="vertical">
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/border_bottom"
-                    />
+                    android:text="INGRESOS / EGRESOS" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/border_bottom" />
             </LinearLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -1023,11 +1067,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="INGRESOS MENSUALES">
+
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/txtIngresos"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="number"/>
+                    android:inputType="number" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -1035,11 +1080,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="EGRESOS MENSUALES">
+
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/txtEgresos"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="number"/>
+                    android:inputType="number" />
             </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -1047,54 +1093,57 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginTop="16sp">
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="PRODUCTOS"
-                    />
+                android:layout_marginTop="16sp"
+                android:orientation="vertical">
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/border_bottom"
-                    />
+                    android:text="PRODUCTOS" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/border_bottom" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="SELECCIONE PRODUCTO"/>
+                    android:text="SELECCIONE PRODUCTO" />
 
                 <RadioGroup
                     android:id="@+id/radioProducto"
-                    android:orientation="vertical"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
                     <RadioButton
                         android:id="@+id/radioProductoMejoraVivienda"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="16sp"
-                        android:text="MEJORA TU VIVIENDA" />
+                        android:focusable="auto"
+                        android:text="INDIVIDUAL"
+                        android:visibility="invisible" />
 
                     <RadioButton
                         android:id="@+id/radioProductoEquipandoHogar"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="EQUIPANDO TU HOGAR" />
+                        android:text="INDIVIDUAL" />
 
                     <RadioButton
                         android:id="@+id/radioProductoAmbos"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="AMBOS" />
+                        android:text="AMBOS"
+                        android:visibility="invisible" />
 
                 </RadioGroup>
 
@@ -1104,19 +1153,19 @@
                 android:id="@+id/llSeparadorMejoraVivienda"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
                 android:layout_marginTop="16sp"
+                android:orientation="vertical"
                 android:visibility="gone">
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="PRODUCTO - MEJORA TU VIVIENDA"
-                    />
+                    android:text="PRODUCTO - MEJORA TU VIVIENDA" />
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/border_bottom"
-                    />
+                    android:background="@drawable/border_bottom" />
             </LinearLayout>
             <!-- campos para poducto mejora -->
             <com.google.android.material.textfield.TextInputLayout
@@ -1125,12 +1174,13 @@
                 android:layout_height="wrap_content"
                 android:hint="MONTO SOLICITADO"
                 android:visibility="gone">
+
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/txtMontoSolicitadoMejoraVivienda"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="number"
-                    android:visibility="gone"/>
+                    android:visibility="gone" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -1138,13 +1188,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="CÓDIGO POSTAL">
+
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/txtCodigoPostal_mejoraVivienda"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textCapCharacters"
                     android:maxLength="5"
-                    android:visibility="gone"/>
+                    android:visibility="gone" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -1152,12 +1203,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="DIRECCIÓN">
+
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/txtDomicilio_mejoraVivienda"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textCapCharacters"
-                    android:visibility="gone"/>
+                    android:visibility="gone" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <LinearLayout
@@ -1169,30 +1221,32 @@
                     android:id="@+id/layoutNumExt_mejoraVivienda"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:hint="NÚMERO EXTERIOR"
                     android:layout_weight="2"
+                    android:hint="NÚMERO EXTERIOR"
                     android:visibility="gone">
+
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/txtNumExt_mejoraVivienda"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="textCapCharacters"
-                        android:visibility="gone"/>
+                        android:visibility="gone" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/layoutNumInt_mejoraVivienda"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:hint="NÚMERO INTERIOR"
                     android:layout_weight="2"
+                    android:hint="NÚMERO INTERIOR"
                     android:visibility="gone">
+
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/txtNumInt_mejoraVivienda"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="textCapCharacters"
-                        android:visibility="gone"/>
+                        android:visibility="gone" />
                 </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
 
@@ -1202,12 +1256,13 @@
                 android:layout_height="wrap_content"
                 android:hint="COLONIA"
                 android:visibility="gone">
+
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/txtColonia_mejoraVivienda"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textCapCharacters"
-                    android:visibility="gone"/>
+                    android:visibility="gone" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -1215,16 +1270,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="MUNICIPIO"
-                app:endIconMode="custom"
-                app:endIconDrawable="@drawable/ic_baseline_arrow_drop_down_24"
+                android:visibility="gone"
                 app:endIconContentDescription="@string/seleccionar"
-                android:visibility="gone">
+                app:endIconDrawable="@drawable/ic_baseline_arrow_drop_down_24"
+                app:endIconMode="custom">
+
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/txtMunicipio_mejoraVivienda"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textCapCharacters"
-                    android:visibility="gone"/>
+                    android:visibility="gone" />
             </com.google.android.material.textfield.TextInputLayout>
             <!-- campos para poducto mejora -->
 
@@ -1234,19 +1290,19 @@
                 android:id="@+id/llSeparadorEquipandoHogar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
                 android:layout_marginTop="16sp"
+                android:orientation="vertical"
                 android:visibility="gone">
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="PRODUCTO - EQUIPANDO TU HOGAR"
-                    />
+                    android:text="PRODUCTO - EQUIPANDO TU HOGAR" />
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/border_bottom"
-                    />
+                    android:background="@drawable/border_bottom" />
             </LinearLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -1255,26 +1311,28 @@
                 android:layout_height="wrap_content"
                 android:hint="MONTO SOLICITADO"
                 android:visibility="gone">
+
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/txtMontoSolicitadoEquipandoHogar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:visibility="gone"
-                    android:inputType="number"/>
+                    android:inputType="number"
+                    android:visibility="gone" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/layoutProductoEquipandoHogar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="PRODUCTO SOLICITADO"
+                android:hint="DESTINO DEL CRÉDITO"
                 android:visibility="gone">
+
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/txtProductoEquipandoHogar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:visibility="gone"
-                    android:inputType="textCapCharacters"/>
+                    android:inputType="textCapCharacters"
+                    android:visibility="gone" />
             </com.google.android.material.textfield.TextInputLayout>
             <!-- FIN campos para producto equipando -->
 
@@ -1282,24 +1340,25 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="PLAZO"/>
+                    android:text="PLAZO" />
 
                 <RadioGroup
                     android:id="@+id/radioPlazoProducto"
-                    android:checkedButton="@id/radioPlazoProducto12Meses"
-                    android:orientation="horizontal"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:checkedButton="@id/radioPlazoProducto12Meses"
+                    android:orientation="horizontal">
 
                     <RadioButton
                         android:id="@+id/radioPlazoProducto12Meses"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="12 MESES"
-                        android:layout_marginRight="16sp"/>
+                        android:layout_marginRight="16sp"
+                        android:text="12 MESES" />
 
                     <RadioButton
                         android:id="@+id/radioPlazoProducto24Meses"
@@ -1312,44 +1371,43 @@
             </LinearLayout>
 
 
-
             <!-- Quedate en casa  -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginTop="16sp">
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="QUEDATE EN CASA"
-                    />
+                android:layout_marginTop="16sp"
+                android:orientation="vertical">
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/border_bottom"
-                    />
+                    android:text="QUEDATE EN CASA" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/border_bottom" />
             </LinearLayout>
 
             <RadioGroup
                 android:id="@+id/radioQuedateEnCasa"
-                android:checkedButton="@id/radioQuedateEnCasaNoAplica"
-                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:checkedButton="@id/radioQuedateEnCasaNoAplica"
+                android:orientation="horizontal">
 
                 <RadioButton
                     android:id="@+id/radioQuedateEnCasaAplica"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="APLICA"
-                    android:layout_marginRight="16sp"/>
+                    android:layout_marginRight="16sp"
+                    android:text="APLICA" />
 
                 <RadioButton
                     android:id="@+id/radioQuedateEnCasaNoAplica"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:clickable="true"
                     android:text="NO APLICA" />
 
             </RadioGroup>

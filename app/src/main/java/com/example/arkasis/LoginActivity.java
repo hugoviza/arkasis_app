@@ -94,7 +94,7 @@ public class LoginActivity extends AppCompatActivity {
                             abrirDashboard();
                         }
                     } else {
-                        Toast.makeText(LoginActivity.this, response.body().getMensaje(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LoginActivity.this, "error al conectar", Toast.LENGTH_SHORT).show();
                     }
                 }
 
