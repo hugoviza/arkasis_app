@@ -93,10 +93,10 @@ public class AdaptadorListaSolicitudes extends RecyclerView.Adapter<AdaptadorLis
             NumberFormat formatter = new DecimalFormat("#,###");
             txtMontoSolicitado.setText(formatter.format(solicitudDispersion.getDblMontoSolicitadoEquipandoHogar())+"");
             tvEstatusSolicitud.setText(solicitudDispersion.getStrStatusSolicitud());
-            if(solicitudDispersion.getStrEstatusInserccionServidor() != "") {
+            if(solicitudDispersion.getStrEstatusInserccionServidor().trim().length() > 0) {
                 txtEstatus.setText("Estatus de solicitud: " + solicitudDispersion.getStrEstatusInserccionServidor());
             } else {
-                txtEstatus.setVisibility(View.GONE);
+                txtEstatus.setText("Estatus de solicitud: Pendiente");
             }
         }
     }
