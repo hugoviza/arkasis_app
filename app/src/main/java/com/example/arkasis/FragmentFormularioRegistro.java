@@ -42,6 +42,7 @@ import com.example.arkasis.componentes.DialogBuscadorActividades;
 import com.example.arkasis.componentes.DialogBuscadorEstados;
 import com.example.arkasis.componentes.DialogBuscadorMunicipios;
 import com.example.arkasis.componentes.DialogBuscadorSucursales;
+import com.example.arkasis.componentes.DialogBuscadorTipoVencimiento;
 import com.example.arkasis.componentes.DialogBuscarCoordinador;
 import com.example.arkasis.config.Config;
 import com.example.arkasis.interfaces.APIClientesInterface;
@@ -55,6 +56,7 @@ import com.example.arkasis.models.Municipio;
 import com.example.arkasis.models.ResponseAPI;
 import com.example.arkasis.models.SolicitudDispersion;
 import com.example.arkasis.models.Sucursal;
+import com.example.arkasis.models.TipoVencimiento;
 import com.example.arkasis.models.Usuario;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
@@ -142,7 +144,8 @@ public class FragmentFormularioRegistro extends Fragment {
             txtNombreConyuge, txtLugarNacimientoConyuge, txtFechaNacimientoConyuge, txtOcupacionConyuge,
             txtCodigoPostal, txtDomicilioMejora, txtDomicilioMejoraNumExt, txtDomicilioMejoraNumInt,
             txtDomicilioMejoraColonia, txtDomicilioMejoraMunicipio, txtReferenciaBancaria, txtInstitucionBancaria,
-            txtIngresos, txtEgresos, txtMontoSolicitadoEquipandoHogar, txtProductoEquipandoHogar
+            txtIngresos, txtEgresos, txtMontoSolicitadoEquipandoHogar, txtProductoEquipandoHogar,
+            txtPlazo, txtTipoVencimiento, txtNumPagos
     ;
     TextInputLayout layoutSucursal, layoutCoordinador, layoutCURP, layoutPromotor,
             layoutNombre1, layoutNombre2, layoutApellidoPaterno, layoutApellidoMaterno,
@@ -154,11 +157,13 @@ public class FragmentFormularioRegistro extends Fragment {
             layoutNombreConyuge, layoutLugarNacimientoConyuge, layoutFechaNacimientoConyuge,layoutOcupacionConyuge,
             layoutCodigoPostal, layoutDomicilioMejora, layoutDomicilioMejoraNumExt, layoutDomicilioMejoraNumInt, layoutDomicilioMejoraColonia, layoutDomicilioMejoraMunicipio,
             layoutReferenciaBancaria, layoutInstitucionBancaria,
-            layoutIngresos, layoutEgresos, layoutMontoSolicitadoEquipandoHogar, layoutProductoEquipandoHogar
+            layoutIngresos, layoutEgresos, layoutMontoSolicitadoEquipandoHogar, layoutProductoEquipandoHogar,
+            layoutPlazo, layoutTipoVencimiento, layoutNumPagos
     ;
-    RadioGroup radioSexo, radioPlazoProducto, radioProducto;
+    RadioGroup radioSexo, radioProducto, radioContrato;
     AutoCompleteTextView txtEstadoCivil;
     DialogBuscadorSucursales dialogBuscadorSucursales;
+    DialogBuscadorTipoVencimiento dialogBuscadorTipoVencimiento;
     DialogBuscarCoordinador dialogBuscarCoordinador, dialogBuscarPromotor;
     DialogBuscadorMunicipios dialogBuscadorMunicipios;
     DialogBuscadorEstados dialogBuscadorEstados;
@@ -278,8 +283,14 @@ public class FragmentFormularioRegistro extends Fragment {
             txtEgresos = view.findViewById(R.id.txtEgresos);
             layoutMontoSolicitadoEquipandoHogar = view.findViewById(R.id.layoutMontoSolicitadoEquipandoHogar);
             txtMontoSolicitadoEquipandoHogar = view.findViewById(R.id.txtMontoSolicitadoEquipandoHogar);
-            radioPlazoProducto = view.findViewById(R.id.radioPlazoProducto);
+            layoutPlazo = view.findViewById(R.id.layoutPlazo);
+            txtPlazo = view.findViewById(R.id.txtPlazo);
             radioProducto = view.findViewById(R.id.radioProducto);
+            txtTipoVencimiento = view.findViewById(R.id.txtTipoVencimiento);
+            layoutTipoVencimiento = view.findViewById(R.id.layoutTipoVencimiento);
+            txtNumPagos = view.findViewById(R.id.txtNumPagos);
+            layoutNumPagos = view.findViewById(R.id.layoutNumPagos);
+            radioContrato = view.findViewById(R.id.radioContrato);
 
             txtProductoEquipandoHogar = view.findViewById(R.id.txtProductoEquipandoHogar);
             layoutProductoEquipandoHogar = view.findViewById(R.id.layoutProductoEquipandoHogar);
@@ -330,10 +341,28 @@ public class FragmentFormularioRegistro extends Fragment {
             inicializarSelectoresImagenesGaleria();
             inicializarSelectoresImagenesCamara();
             inicializarBotonesCancelarSeleccionImagen();
+            inicializarSelectorTipoVencimiento();
 
             BottomBarActivity.cerrarLoading();
 
             habilitarProductoEquipandoHogar(true);
+
+            txtNumPagos.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    calcularPlazos();
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+
+                }
+            });
 
             btnLimpiar.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -882,6 +911,7 @@ public class FragmentFormularioRegistro extends Fragment {
                     seleccionarSucursal(sucursal.getStrSucursal());
                     dialogBuscadorSucursales.close();
                     dialogBuscarCoordinador.setIdSucursal(sucursal.getIdSucursal() + "");
+                    dialogBuscadorTipoVencimiento.setIdSucursal(Integer.toString(sucursal.getIdSucursal()));
                 } else {
                     seleccionarSucursal(null);
                 }
@@ -908,6 +938,7 @@ public class FragmentFormularioRegistro extends Fragment {
             dialogBuscadorSucursales.limpiar();
             layoutSucursal.setEndIconDrawable(R.drawable.ic_baseline_arrow_drop_down_24);
             layoutSucursal.setEndIconContentDescription(SELECCIONAR);
+            dialogBuscadorTipoVencimiento.setIdSucursal("");
         } else {
             txtSucursal.setText(strSucursal);
             layoutSucursal.setEndIconDrawable(R.drawable.ic_baseline_cancel_24);
@@ -915,6 +946,70 @@ public class FragmentFormularioRegistro extends Fragment {
         }
         layoutSucursal.setError(null);
         seleccionarCoordinador(null);
+    }
+
+    private void inicializarSelectorTipoVencimiento() {
+        txtTipoVencimiento.setText("");
+        dialogBuscadorTipoVencimiento = new DialogBuscadorTipoVencimiento(parent, view);
+
+        txtSucursal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialogBuscadorTipoVencimiento.show();
+            }
+        });
+
+        txtTipoVencimiento.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(hasFocus) {
+                    dialogBuscadorTipoVencimiento.show();
+                }
+            }
+        });
+
+        dialogBuscadorTipoVencimiento.setOnItemClickListener(new DialogBuscadorTipoVencimiento.OnItemClickListener() {
+            @Override
+            public void onItemClick(TipoVencimiento tipoVencimiento) {
+                if(tipoVencimiento != null) {
+                    seleccionarTipoVencimiento(tipoVencimiento.getStrTipoVencimiento());
+                    dialogBuscadorTipoVencimiento.close();
+                    dialogBuscadorTipoVencimiento.setIdTipoVencimiento(tipoVencimiento.getIdTipoVencimiento() + "");
+                } else {
+                    seleccionarTipoVencimiento(null);
+                }
+                closeKeyBoard();
+                calcularPlazos();
+
+            }
+        });
+
+        layoutTipoVencimiento.setEndIconOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(layoutTipoVencimiento.getEndIconContentDescription() == LIMPIAR_CAMPO) {
+                    seleccionarTipoVencimiento(null);
+                    closeKeyBoard();
+                } else {
+                    dialogBuscadorTipoVencimiento.show();
+                }
+                calcularPlazos();
+            }
+        });
+    }
+
+    private void seleccionarTipoVencimiento(String strTipoVencimiento) {
+        if(strTipoVencimiento == null) {
+            txtTipoVencimiento.setText("");
+            dialogBuscadorTipoVencimiento.limpiar();
+            layoutTipoVencimiento.setEndIconDrawable(R.drawable.ic_baseline_arrow_drop_down_24);
+            layoutTipoVencimiento.setEndIconContentDescription(SELECCIONAR);
+        } else {
+            txtTipoVencimiento.setText(strTipoVencimiento);
+            layoutTipoVencimiento.setEndIconDrawable(R.drawable.ic_baseline_cancel_24);
+            layoutTipoVencimiento.setEndIconContentDescription(LIMPIAR_CAMPO);
+        }
+        layoutTipoVencimiento.setError(null);
     }
 
     private void inicializarSelectorCoordinador() {
@@ -1454,13 +1549,12 @@ public class FragmentFormularioRegistro extends Fragment {
         txtNombreConyuge.setText(cliente.getStrNombreConyuge());
         txtLugarNacimientoConyuge.setText(cliente.getStrLugarNacimientoConyuge());
 
-        radioPlazoProducto.check(R.id.radioPlazoProducto12Meses);
+        txtPlazo.setText("");
         resetearProducto();
     }
 
     public void resetearProducto() {
         radioProducto.check(R.id.radioProductoEquipandoHogar);
-
         txtMontoSolicitadoEquipandoHogar.setVisibility(View.VISIBLE);
         txtMontoSolicitadoEquipandoHogar.setText("");
         txtProductoEquipandoHogar.setText("");
@@ -1520,7 +1614,17 @@ public class FragmentFormularioRegistro extends Fragment {
         txtInstitucionBancaria.setText("");
         txtIngresos.setText("");
         txtEgresos.setText("");
-        radioPlazoProducto.check(R.id.radioPlazoProducto12Meses);
+
+        // Plazo
+        txtPlazo.setText("");
+        txtTipoVencimiento.setText("");
+        txtNumPagos.setText("");
+        dialogBuscadorTipoVencimiento.setIdSucursal("");
+        layoutPlazo.setError(null);
+        layoutNumPagos.setError(null);
+        layoutTipoVencimiento.setError(null);
+        layoutTipoVencimiento.setEndIconDrawable(R.drawable.ic_baseline_arrow_drop_down_24);
+        layoutTipoVencimiento.setEndIconContentDescription("Buscar");
 
         resetearProducto();
 
@@ -1611,7 +1715,7 @@ public class FragmentFormularioRegistro extends Fragment {
 
         Date hoy = new Date();
         SimpleDateFormat dateFormat = null;
-        dateFormat = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss", new Locale("es", "ES"));
+        dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", new Locale("es", "ES"));
         solicitudDispersion.setStrFechaAlta(dateFormat.format(hoy));
         //NOMBRE CLIENTE
         solicitudDispersion.setStrCURP(txtCURP.getText().toString().toUpperCase());
@@ -1623,7 +1727,7 @@ public class FragmentFormularioRegistro extends Fragment {
         solicitudDispersion.setIdGenero(radioSexo.getCheckedRadioButtonId() == R.id.radioSexoMujer ? "2" : "1");
         solicitudDispersion.setStrGenero(radioSexo.getCheckedRadioButtonId() == R.id.radioSexoMujer ? "MUJER" : "HOMBRE");
         //FECHA NACIMIENTO
-        dateFormat = new SimpleDateFormat("YYYY-MM-dd", new Locale("es", "ES"));
+        dateFormat = new SimpleDateFormat("yyyy-MM-dd", new Locale("es", "ES"));
         solicitudDispersion.setStrFechaNacimiento(datFechaNacimiento != null ? dateFormat.format(datFechaNacimiento) : "");
         //ESTADO CIVIL
         String idEstadoCivil = "";
@@ -1684,7 +1788,7 @@ public class FragmentFormularioRegistro extends Fragment {
         solicitudDispersion.setStrLugarNacimientoConyuge(txtLugarNacimientoConyuge.getText().toString().trim().toUpperCase());
         solicitudDispersion.setStrFechaNacimientoConyuge(datFechaNacimientoConyuge != null ? dateFormat.format(datFechaNacimientoConyuge) : "");
         //PRODUCTO
-        solicitudDispersion.setIntPlazo(radioPlazoProducto.getCheckedRadioButtonId() == R.id.radioPlazoProducto12Meses ? 12 : 24);
+        solicitudDispersion.setIntPlazo(Integer.parseInt(txtPlazo.getText().toString()));
 
 
         solicitudDispersion.setDblMontoSolicitadoMejoraVivienda(0);
@@ -1706,6 +1810,27 @@ public class FragmentFormularioRegistro extends Fragment {
             solicitudDispersion.setDblMontoSolicitadoEquipandoHogar(0);
             solicitudDispersion.setStrProducto("");
         }
+
+        if(dialogBuscadorTipoVencimiento.getSelectedItem() != null) {
+            TipoVencimiento tipoVencimiento = dialogBuscadorTipoVencimiento.getSelectedItem();
+            solicitudDispersion.setIdTipoVencimiento(tipoVencimiento.getIdTipoVencimiento());
+            solicitudDispersion.setStrTipoVencimiento(tipoVencimiento.getStrTipoVencimiento());
+        }
+        solicitudDispersion.setIntNumPagos(Integer.parseInt(txtNumPagos.getText().toString()));
+        solicitudDispersion.setIntPlazo(Integer.parseInt(txtPlazo.getText().toString()));
+
+        switch (radioContrato.getCheckedRadioButtonId()) {
+            case R.id.radioContratoUnicamenteAcreditado:
+                solicitudDispersion.setIdTipoContratoIndividual("1");
+                break;
+            case R.id.radioContratoAcreditadoYAval:
+                solicitudDispersion.setIdTipoContratoIndividual("2");
+                break;
+            case R.id.radioContratoAcreditadoYDosAvales:
+                solicitudDispersion.setIdTipoContratoIndividual("3");
+                break;
+        }
+
 
         return solicitudDispersion;
     }
@@ -1979,6 +2104,42 @@ public class FragmentFormularioRegistro extends Fragment {
             }
         }
 
+        // validar que hayan seleccionado el tipo de vencimiento
+        if(dialogBuscadorTipoVencimiento.getSelectedItem() == null) {
+            layoutTipoVencimiento.setError("Seleccione tipo de vencimiento");
+            txtTipoVencimiento.requestFocus();
+            return false;
+        } else {
+            layoutTipoVencimiento.setError(null);
+        }
+        // validar que hayan ingresado num pagos
+        if(txtNumPagos.getText().toString().trim().length() == 0) {
+            layoutNumPagos.setError("Ingrese número de pagos");
+            txtNumPagos.requestFocus();
+            return false;
+        } else if(Integer.parseInt(txtNumPagos.getText().toString()) < 1) {
+            layoutNumPagos.setError("Número de pagos debe ser mayor a cero");
+            txtNumPagos.requestFocus();
+            return false;
+        } else {
+            layoutNumPagos.setError(null);
+        }
+
+        if(txtPlazo.getText().toString().trim().length() == 0) {
+            layoutPlazo.setError("Ingrese plazo");
+            txtPlazo.requestFocus();
+            return false;
+        } else if(Integer.parseInt(txtPlazo.getText().toString()) < 1) {
+            layoutPlazo.setError("Ingrese plazo mayor a cero");
+            txtPlazo.requestFocus();
+            return false;
+        } else {
+            layoutPlazo.setError(null);
+        }
+
+        // recalcular plazos
+        calcularPlazos();
+
         return true;
     }
 
@@ -1989,5 +2150,21 @@ public class FragmentFormularioRegistro extends Fragment {
                     getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
+    }
+
+    private void calcularPlazos() {
+        // Para calcular plazos requerimos
+        // 1. Que hayan seleccionado Tipo de vencimiento
+        // 2. Que hayan seleccionado Numero de pagos
+
+        if(txtNumPagos.getText().toString().trim().length() == 0 || dialogBuscadorTipoVencimiento.getSelectedItem() == null) {
+            txtPlazo.setText("0");
+            return;
+        }
+
+        int numDias = dialogBuscadorTipoVencimiento.getSelectedItem().getIntNumDias();
+        int numPagos = Integer.parseInt(txtNumPagos.getText().toString());
+        int plazo = Math.round(numPagos * numDias / 30);
+        txtPlazo.setText(Integer.toString(plazo));
     }
 }

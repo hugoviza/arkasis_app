@@ -58,6 +58,10 @@ public class SolicitudDispersion {
     private double dblIngresos = 0;
     private double dblEgresos = 0;
     private String strEstatusInserccionServidor = "";
+    private int idTipoVencimiento = 0;
+    private String strTipoVencimiento = "";
+    private String idTipoContratoIndividual = "";
+    private int intNumPagos = 0;
 
     private String strDomicilio_mejoraVivienda = "";
     private String strCodigoPostal_mejoraVivienda = "";
@@ -81,8 +85,7 @@ public class SolicitudDispersion {
     public SolicitudDispersion() {
     }
 
-
-    public SolicitudDispersion(int idSolicitud, String strFechaAlta, String strStatusSolicitud, String idSucursal, String strUsuario, String idPromotor, String strPromotor, String strCordinador, String idCliente, String strApellidoPaterno, String strApellidoMaterno, String strNombre1, String strNombre2, String strFechaNacimiento, String idGenero, String strGenero, String strCURP, String strDomicilio, String strDomicilioCodigoPostal, String strDomicilioNumExt, String strDomicilioNumInt, String strDomicilioColonia, String idDomicilioEstado, String strDomicilioEstado, String idDomicilioMunicipio, String strDomicilioMunicipio, String strEstadoCivil, String idEstadoCivil, String strTelefono, String strCelular, String strOcupacion, String idActividad, String strActividad, String strNumeroINE, String strClaveINE, String strPais, String strEstadoNacimiento, String strNacionalidad, String strEmail, String strNombreConyuge, String strLugarNacimientoConyuge, String strFechaNacimientoConyuge, String strOcupacionConyuge, String strReferenciaBancaria, String strBanco, String strProducto, int intPlazo, int intQuedateCasa, double dblMontoSolicitadoMejoraVivienda, double dblMontoSolicitadoEquipandoHogar, double dblIngresos, double dblEgresos, String strEstatusInserccionServidor, String strCNBV, String strDomicilio_mejoraVivienda, String strCodigoPostal_mejoraVivienda, String strNumExt_mejoraVivienda, String strNumInt_mejoraVivienda, String strColonia_mejoraVivienda, String idEstado_mejoraVivienda, String strEstado_mejoraVivienda, String idMunicipio_mejoraVivienda, String strMunicipio_mejoraVivienda, String strFotoINEFrontal_B64, String strFotoINEFrontal_nombre, String strFotoINEReverso_B64, String strFotoINEReverso_nombre, String strFotoPerfil_B64, String strFotoPerfil_nombre, String strFotoComprobanteDomicilio_B64, String strFotoComprobanteDomicilio_nombre) {
+    public SolicitudDispersion(int idSolicitud, String strFechaAlta, String strStatusSolicitud, String idSucursal, String strUsuario, String idPromotor, String strPromotor, String strCordinador, String idCliente, String strApellidoPaterno, String strApellidoMaterno, String strNombre1, String strNombre2, String strFechaNacimiento, String idGenero, String strGenero, String strCURP, String strDomicilio, String strDomicilioCodigoPostal, String strDomicilioNumExt, String strDomicilioNumInt, String strDomicilioColonia, String idDomicilioEstado, String strDomicilioEstado, String idDomicilioMunicipio, String strDomicilioMunicipio, String strEstadoCivil, String idEstadoCivil, String strTelefono, String strCelular, String strOcupacion, String idActividad, String strActividad, String strNumeroINE, String strClaveINE, String strPais, String strEstadoNacimiento, String strNacionalidad, String strEmail, String strNombreConyuge, String strLugarNacimientoConyuge, String strFechaNacimientoConyuge, String strOcupacionConyuge, String strReferenciaBancaria, String strBanco, String strProducto, int intPlazo, int intQuedateCasa, double dblMontoSolicitadoMejoraVivienda, double dblMontoSolicitadoEquipandoHogar, double dblIngresos, double dblEgresos, String strEstatusInserccionServidor, String strCNBV, String strDomicilio_mejoraVivienda, String strCodigoPostal_mejoraVivienda, String strNumExt_mejoraVivienda, String strNumInt_mejoraVivienda, String strColonia_mejoraVivienda, String idEstado_mejoraVivienda, String strEstado_mejoraVivienda, String idMunicipio_mejoraVivienda, String strMunicipio_mejoraVivienda, String strFotoINEFrontal_B64, String strFotoINEFrontal_nombre, String strFotoINEReverso_B64, String strFotoINEReverso_nombre, String strFotoPerfil_B64, String strFotoPerfil_nombre, String strFotoComprobanteDomicilio_B64, String strFotoComprobanteDomicilio_nombre, int idTipoVencimiento, String strTipoVencimiento, String idTipoContratoIndividual, int intNumPagos) {
         this.idSolicitud = idSolicitud;
         this.strFechaAlta = strFechaAlta;
         this.strStatusSolicitud = strStatusSolicitud;
@@ -136,6 +139,10 @@ public class SolicitudDispersion {
         this.dblIngresos = dblIngresos;
         this.dblEgresos = dblEgresos;
         this.strCNBV = strCNBV;
+        this.idTipoVencimiento = idTipoVencimiento;
+        this.strTipoVencimiento = strTipoVencimiento;
+        this.idTipoContratoIndividual = idTipoContratoIndividual;
+        this.intNumPagos = intNumPagos;
 
         this.strEstatusInserccionServidor = strEstatusInserccionServidor;
         this.strDomicilio_mejoraVivienda = strDomicilio_mejoraVivienda;
@@ -810,5 +817,37 @@ public class SolicitudDispersion {
 
     public void setStrFotoComprobanteDomicilio_nombre(String strFotoComprobanteDomicilio_nombre) {
         this.strFotoComprobanteDomicilio_nombre = strFotoComprobanteDomicilio_nombre;
+    }
+
+    public int getIdTipoVencimiento() {
+        return idTipoVencimiento;
+    }
+
+    public void setIdTipoVencimiento(int idTipoVencimiento) {
+        this.idTipoVencimiento = idTipoVencimiento;
+    }
+
+    public String getStrTipoVencimiento() {
+        return strTipoVencimiento;
+    }
+
+    public void setStrTipoVencimiento(String strTipoVencimiento) {
+        this.strTipoVencimiento = strTipoVencimiento;
+    }
+
+    public String getIdTipoContratoIndividual() {
+        return idTipoContratoIndividual;
+    }
+
+    public void setIdTipoContratoIndividual(String idTipoContratoIndividual) {
+        this.idTipoContratoIndividual = idTipoContratoIndividual;
+    }
+
+    public int getIntNumPagos() {
+        return intNumPagos;
+    }
+
+    public void setIntNumPagos(int intNumPagos) {
+        this.intNumPagos = intNumPagos;
     }
 }

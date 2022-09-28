@@ -122,11 +122,11 @@ public class DialogBuscadorActividades {
             @Override
             public void onItemClick(int position) {
                 if (position != RecyclerView.NO_POSITION) {
-                    onItemClickListener.onItemClick(adaptadorListaActividades.getItem(position));
                     actividadSeleccionada = adaptadorListaActividades.getItem(position);
+                    onItemClickListener.onItemClick(adaptadorListaActividades.getItem(position));
                 } else {
-                    onItemClickListener.onItemClick(null);
                     actividadSeleccionada = null;
+                    onItemClickListener.onItemClick(null);
                 }
             }
         });

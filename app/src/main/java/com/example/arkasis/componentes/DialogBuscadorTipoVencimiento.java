@@ -7,7 +7,6 @@ import android.graphics.drawable.ColorDrawable;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -17,31 +16,34 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.arkasis.R;
-import com.example.arkasis.adapters.AdaptadorListaEstados;
-import com.example.arkasis.models.Estado;
+import com.example.arkasis.adapters.AdaptadorListaTipoVencimiento;
+import com.example.arkasis.models.Sucursal;
+import com.example.arkasis.models.TipoVencimiento;
 
-public class DialogBuscadorEstados {
+public class DialogBuscadorTipoVencimiento {
     private Context context;
     private View parent;
     private Dialog dialog;
 
     //Dialog componentes
+    TextView tvTitle;
     EditText txtBuscar;
     RecyclerView recycler_view;
     Button btnCerrar;
 
     //Data
-    AdaptadorListaEstados adaptadorListaEstados;
-    Estado estadoSeleccionado;
+    AdaptadorListaTipoVencimiento adaptadorLista;
+    TipoVencimiento tipoVencimientoSeleccionado;
+    String idTipoVencimiento, idSucursal;
 
     //Eventos
-    OnItemClickListener onItemClickListener;
+    DialogBuscadorTipoVencimiento.OnItemClickListener onItemClickListener;
 
     public interface OnItemClickListener {
-        void onItemClick(Estado estado);
+        void onItemClick(TipoVencimiento tipoVencimiento);
     }
 
-    public DialogBuscadorEstados(Context context, View parent) {
+    public DialogBuscadorTipoVencimiento(Context context, View parent) {
         this.context = context;
         this.parent = parent;
     }
@@ -52,7 +54,6 @@ public class DialogBuscadorEstados {
             dialog.show();
         } else{
             dialog.show();
-            adaptadorListaEstados.getFilter().filter("");
         }
     }
 
@@ -66,7 +67,12 @@ public class DialogBuscadorEstados {
         if(txtBuscar != null) {
             txtBuscar.setText("");
         }
-        estadoSeleccionado = null;
+        idTipoVencimiento = null;
+        tipoVencimientoSeleccionado = null;
+    }
+
+    public boolean isShowing() {
+        return dialog != null ? dialog.isShowing() : false;
     }
 
     private void init() {
@@ -81,17 +87,17 @@ public class DialogBuscadorEstados {
 
         txtBuscar = dialog.findViewById(R.id.txtBuscar);
         btnCerrar = dialog.findViewById(R.id.btnCerrar);
-        TextView tvTitle = dialog.findViewById(R.id.tvTitle);
+        tvTitle = dialog.findViewById(R.id.tvTitle);
 
-        tvTitle.setText("Seleccione estado");
-        txtBuscar.requestFocus();
-        showSoftKeyboard(txtBuscar);
+        tvTitle.setText("Seleccione tipo vencimiento");
 
-        adaptadorListaEstados = new AdaptadorListaEstados(context);
+        adaptadorLista = new AdaptadorListaTipoVencimiento(dialog.getContext());
         recycler_view = dialog.findViewById(R.id.recycler_view);
         recycler_view.setHasFixedSize(true);
         recycler_view.setLayoutManager(new LinearLayoutManager(dialog.getContext()));
-        recycler_view.setAdapter(adaptadorListaEstados);
+        recycler_view.setAdapter(adaptadorLista);
+
+        adaptadorLista.setIdSucursal(idSucursal == null ? "" : idSucursal);
 
         btnCerrar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -108,7 +114,7 @@ public class DialogBuscadorEstados {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                adaptadorListaEstados.getFilter().filter(s);
+                adaptadorLista.getFilter().filter(s);
             }
 
             @Override
@@ -117,34 +123,40 @@ public class DialogBuscadorEstados {
             }
         });
 
-        adaptadorListaEstados.setOnItemClickListener(new AdaptadorListaEstados.OnItemClickListener() {
+        adaptadorLista.setOnItemClickListener(new AdaptadorListaTipoVencimiento.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
                 if (position != RecyclerView.NO_POSITION) {
-                    estadoSeleccionado = adaptadorListaEstados.getItem(position);
-                    onItemClickListener.onItemClick(adaptadorListaEstados.getItem(position));
+                    tipoVencimientoSeleccionado = adaptadorLista.getItem(position);
+                    onItemClickListener.onItemClick(adaptadorLista.getItem(position));
                 } else {
-                    estadoSeleccionado = null;
+                    tipoVencimientoSeleccionado = null;
                     onItemClickListener.onItemClick(null);
                 }
             }
         });
     }
 
-    public Estado getSelectedItem() {
-        return estadoSeleccionado;
+    public TipoVencimiento getSelectedItem() {
+        return tipoVencimientoSeleccionado;
     }
 
-    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+    public void setOnItemClickListener(DialogBuscadorTipoVencimiento.OnItemClickListener onItemClickListener) {
         this.onItemClickListener = onItemClickListener;
     }
 
-    public void showSoftKeyboard(View view) {
-        if(view.requestFocus()){
-            InputMethodManager imm = (InputMethodManager)
-                    parent.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.showSoftInput(view,InputMethodManager.SHOW_IMPLICIT);
+    public void setIdSucursal(String idSucursal) {
+        this.idSucursal = idSucursal == null ? "" : idSucursal;
+        this.limpiar();
+        if(adaptadorLista != null) {
+            this.adaptadorLista.setIdSucursal(idSucursal == null ? "" : idSucursal);
         }
     }
 
+    public void setIdTipoVencimiento(String idTipoVencimiento) {
+        this.idTipoVencimiento = idTipoVencimiento == null ? "" : idTipoVencimiento;
+        if(adaptadorLista != null) {
+            this.adaptadorLista.setIdTipoVencimiento(idTipoVencimiento == null ? "" : idTipoVencimiento);
+        }
+    }
 }

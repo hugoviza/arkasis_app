@@ -72,4 +72,22 @@ public interface APICatalogosInterface {
     })
     @GET("api/catalogos/coordinadores/total")
     Call<ResponseAPI> getTotalCoordinadores();
+
+    // TIPO DE VENCIMIENTO
+    @Headers({
+            "x-api-key: " + Config.API_KEY,
+            "Content-Type: application/json"
+    })
+    @GET("api/catalogos/tipovencimiento")
+    Call<ResponseAPI> getAllTipoVencimiento();
+
+    @Headers({
+            "x-api-key: " + Config.API_KEY,
+            "Content-Type: application/json"
+    })
+    @GET("api/catalogos/tipovencimiento/total")
+    Call<ResponseAPI> getTotalTipoVencimiento();
+
+
+
 }

@@ -128,11 +128,11 @@ public class DialogBuscarCoordinador {
             @Override
             public void onItemClick(int position) {
                 if (position != RecyclerView.NO_POSITION) {
-                    onItemClickListener.onItemClick(adaptadorListaCoordinadores.getItem(position));
                     coordinadorSeleccionado = adaptadorListaCoordinadores.getItem(position);
+                    onItemClickListener.onItemClick(adaptadorListaCoordinadores.getItem(position));
                 } else {
-                    onItemClickListener.onItemClick(null);
                     coordinadorSeleccionado = null;
+                    onItemClickListener.onItemClick(null);
 
                 }
             }

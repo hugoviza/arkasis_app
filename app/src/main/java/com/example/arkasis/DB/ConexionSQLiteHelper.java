@@ -18,6 +18,7 @@ public class ConexionSQLiteHelper extends SQLiteOpenHelper {
         db.execSQL(MigracionesSQL.CREAR_TABLA_MUNICIPIOS);
         db.execSQL(MigracionesSQL.CREAR_TABLA_SUCURSALES);
         db.execSQL(MigracionesSQL.CREAR_TABLA_COORDINADORES);
+        db.execSQL(MigracionesSQL.CREAR_TABLA_TIPO_VENCIMIENTO);
         db.execSQL(MigracionesSQL.CREAR_TABLA_SOLICITUDESDISPERSION);
     }
 
@@ -28,12 +29,14 @@ public class ConexionSQLiteHelper extends SQLiteOpenHelper {
         db.execSQL(MigracionesSQL.DROP_TABLA_MUNICIPIOS);
         db.execSQL(MigracionesSQL.DROP_TABLA_SUCURSALES);
         db.execSQL(MigracionesSQL.DROP_TABLA_COORDINADORES);
+        db.execSQL(MigracionesSQL.DROP_TABLA_TIPO_VENCIMIENTO);
         db.execSQL(MigracionesSQL.DROP_TABLA_SOLICITUDESDISPERSION);
 
         db.execSQL(MigracionesSQL.CREAR_TABLA_ACTIVIDADES);
         db.execSQL(MigracionesSQL.CREAR_TABLA_MUNICIPIOS);
         db.execSQL(MigracionesSQL.CREAR_TABLA_SUCURSALES);
         db.execSQL(MigracionesSQL.CREAR_TABLA_COORDINADORES);
+        db.execSQL(MigracionesSQL.CREAR_TABLA_TIPO_VENCIMIENTO);
         db.execSQL(MigracionesSQL.CREAR_TABLA_SOLICITUDESDISPERSION);
     }
 }

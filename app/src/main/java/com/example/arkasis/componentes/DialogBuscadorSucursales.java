@@ -122,11 +122,11 @@ public class DialogBuscadorSucursales {
             @Override
             public void onItemClick(int position) {
                 if (position != RecyclerView.NO_POSITION) {
-                    onItemClickListener.onItemClick(adaptadorListaSucursal.getItem(position));
                     sucursalSeleccionada = adaptadorListaSucursal.getItem(position);
+                    onItemClickListener.onItemClick(adaptadorListaSucursal.getItem(position));
                 } else {
-                    onItemClickListener.onItemClick(null);
                     sucursalSeleccionada = null;
+                    onItemClickListener.onItemClick(null);
                 }
             }
         });

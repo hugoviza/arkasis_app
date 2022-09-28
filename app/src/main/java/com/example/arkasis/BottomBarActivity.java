@@ -26,6 +26,7 @@ import com.example.arkasis.DB.tablas.TableCoordinadores;
 import com.example.arkasis.DB.tablas.TableMunicipios;
 import com.example.arkasis.DB.tablas.TableSolicitudesDispersion;
 import com.example.arkasis.DB.tablas.TableSucursal;
+import com.example.arkasis.DB.tablas.TableTipoVencimiento;
 import com.example.arkasis.config.Config;
 import com.example.arkasis.interfaces.APICatalogosInterface;
 import com.example.arkasis.interfaces.APISolicitudDispersion;
@@ -37,6 +38,7 @@ import com.example.arkasis.models.Municipio;
 import com.example.arkasis.models.ResponseAPI;
 import com.example.arkasis.models.SolicitudDispersion;
 import com.example.arkasis.models.Sucursal;
+import com.example.arkasis.models.TipoVencimiento;
 import com.example.arkasis.models.Usuario;
 import com.example.arkasis.utilerias.CustomReceiver;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -161,6 +163,13 @@ public class BottomBarActivity extends AppCompatActivity {
 
     public void actualizarCatalogos(){
         if(bitActualizarCatalogo) {
+            // Vamos a ir sincronizando catalogo por catalogo
+            // 1. Actividades
+            // 2. Municipios
+            // 3. Sucursales
+            // 4. Coordinadores
+            // 5. Tipo vencimiento
+
             validarCatalogoActividades();
             bitActualizarCatalogo = false;
         }
@@ -602,6 +611,8 @@ public class BottomBarActivity extends AppCompatActivity {
                     Integer totalRegistrosAPI = Integer.parseInt(response.body().getResultado().toString().trim());
                     if(totalRegistrosLocal.intValue() != totalRegistrosAPI.intValue()) {
                         descargarCatalogoCoordinadores();
+                    } else {
+                        validarCatalogoTipoVencimiento();
                     }
                 }
             }
@@ -653,6 +664,103 @@ public class BottomBarActivity extends AppCompatActivity {
                                 }
                             }
                             cerrarLoading();
+                            validarCatalogoTipoVencimiento();
+                        }
+
+                        @Override
+                        public void onFailure(Call<ResponseAPI> call, Throwable t) {
+                            cerrarLoading();
+                            Toast.makeText(BottomBarActivity.this, getString(R.string.sin_acceso_servidor), Toast.LENGTH_SHORT).show();
+                            validarCatalogoTipoVencimiento();
+                        }
+                    });
+                } catch (Exception e) {
+                    cerrarLoading();
+                    Toast.makeText(BottomBarActivity.this, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    validarCatalogoTipoVencimiento();
+                }
+            }
+        }, 300);
+
+    }
+
+    public void validarCatalogoTipoVencimiento() {
+
+        TableTipoVencimiento table = new TableTipoVencimiento(BottomBarActivity.this);
+        Integer totalRegistrosLocal = table.getCount();
+
+        if(totalRegistrosLocal.intValue() == 0) {
+            descargarCatalogoTipoVencimiento();
+            return;
+        }
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(Config.URL_API)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        APICatalogosInterface api = retrofit.create(APICatalogosInterface.class);
+        Call<ResponseAPI> apiCall = api.getTotalTipoVencimiento();
+        apiCall.enqueue(new Callback<ResponseAPI>() {
+            @Override
+            public void onResponse(Call<ResponseAPI> call, Response<ResponseAPI> response) {
+                if(response.body() == null || response.body().getResultado() == null) {
+                    //No hay nada por hacer
+                } else {
+                    Integer totalRegistrosAPI = Integer.parseInt(response.body().getResultado().toString().trim());
+                    if(totalRegistrosLocal.intValue() != totalRegistrosAPI.intValue()) {
+                        descargarCatalogoTipoVencimiento();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseAPI> call, Throwable t) {
+                Toast.makeText(BottomBarActivity.this, getString(R.string.sin_acceso_servidor), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    public void descargarCatalogoTipoVencimiento() {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Retrofit retrofit = new Retrofit.Builder()
+                            .baseUrl(Config.URL_API)
+                            .addConverterFactory(GsonConverterFactory.create())
+                            .build();
+
+                    APICatalogosInterface api = retrofit.create(APICatalogosInterface.class);
+                    Call<ResponseAPI> apiCall = api.getAllTipoVencimiento();
+                    abrirLoading("Actualizando catálogo de tipo de vencimiento");
+
+                    apiCall.enqueue(new Callback<ResponseAPI>() {
+                        @Override
+                        public void onResponse(Call<ResponseAPI> call, Response<ResponseAPI> response) {
+                            if(response.body() == null || response.body().getResultado() == null) {
+                                //No hay nada por hacer
+                            } else {
+                                //limpiamos la tabla antes de insertar nuevos datos
+                                TableTipoVencimiento table = new TableTipoVencimiento(BottomBarActivity.this);
+                                table.truncate();
+                                int totalErrores = 0;
+
+                                if(response.body().getSuccess()) {
+                                    for (LinkedTreeMap<Object, Object> treeMap : (ArrayList<LinkedTreeMap<Object, Object>>)response.body().getResultado()) {
+                                        try {
+                                            table.insertar(new TipoVencimiento(treeMap));
+                                        } catch (Exception e) {
+                                            totalErrores++;
+                                        }
+                                    }
+                                }
+
+                                if(totalErrores > 0) {
+                                    Toast.makeText(BottomBarActivity.this, "Se han encontrado errores en " + totalErrores + " registros de tipo de vincimiento", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                            cerrarLoading();
                         }
 
                         @Override
@@ -669,5 +777,4 @@ public class BottomBarActivity extends AppCompatActivity {
         }, 300);
 
     }
-
 }

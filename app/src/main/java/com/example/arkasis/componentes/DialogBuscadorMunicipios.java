@@ -120,11 +120,11 @@ public class DialogBuscadorMunicipios {
             @Override
             public void onItemClick(int position) {
                 if (position != RecyclerView.NO_POSITION) {
-                    onItemClickListener.onItemClick(adaptadorListaMunicipios.getItem(position));
                     municipioSeleccionado = adaptadorListaMunicipios.getItem(position);
+                    onItemClickListener.onItemClick(adaptadorListaMunicipios.getItem(position));
                 } else {
-                    onItemClickListener.onItemClick(null);
                     municipioSeleccionado = null;
+                    onItemClickListener.onItemClick(null);
                 }
             }
         });

@@ -1196,72 +1196,99 @@
                     android:layout_height="wrap_content"
                     android:text="PLAZO" />
 
-                <RadioGroup
-                    android:id="@+id/radioPlazoProducto"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:checkedButton="@id/radioPlazoProducto12Meses"
-                    android:orientation="horizontal">
-
-                    <RadioButton
-                        android:id="@+id/radioPlazoProducto12Meses"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="16sp"
-                        android:text="12 MESES" />
-
-                    <RadioButton
-                        android:id="@+id/radioPlazoProducto24Meses"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="24 MESES" />
-
-                </RadioGroup>
-
             </LinearLayout>
 
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layoutTipoVencimiento"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="TIPO VENCIMIENTO"
+                app:endIconContentDescription="@string/seleccionar"
+                app:endIconDrawable="@drawable/ic_baseline_arrow_drop_down_24"
+                app:endIconMode="custom">
 
-            <!-- Quedate en casa
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/txtTipoVencimiento"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:editable="false"
+                    android:inputType="textCapCharacters" />
+            </com.google.android.material.textfield.TextInputLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16sp"
+                android:orientation="horizontal">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/layoutNumPagos"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:hint="NÚMERO DE PAGOS">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/txtNumPagos"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="number" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/layoutPlazo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:hint="PLAZO">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/txtPlazo"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:enabled="false"
+                        android:inputType="number" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="vertical">
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="QUEDATE EN CASA" />
+                    android:text="CONTRATO INDIVIDUAL" />
 
-                <TextView
+                <RadioGroup
+                    android:id="@+id/radioContrato"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/border_bottom" />
+                    android:checkedButton="@id/radioContratoUnicamenteAcreditado"
+                    android:orientation="vertical">
+
+                    <RadioButton
+                        android:id="@+id/radioContratoUnicamenteAcreditado"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="UNICAMENTE ACREDITADO" />
+
+                    <RadioButton
+                        android:id="@+id/radioContratoAcreditadoYAval"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="CREDITADO Y UN AVAL" />
+
+                    <RadioButton
+                        android:id="@+id/radioContratoAcreditadoYDosAvales"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="ACREDITADO Y DOS AVALES" />
+
+                </RadioGroup>
             </LinearLayout>
 
-            <RadioGroup
-                android:id="@+id/radioQuedateEnCasa"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:checkedButton="@id/radioQuedateEnCasaNoAplica"
-                android:orientation="horizontal">
-
-                <RadioButton
-                    android:id="@+id/radioQuedateEnCasaAplica"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="16sp"
-                    android:text="APLICA" />
-
-                <RadioButton
-                    android:id="@+id/radioQuedateEnCasaNoAplica"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:clickable="true"
-                    android:text="NO APLICA" />
-
-            </RadioGroup>
--->
         </LinearLayout>
     </ScrollView>
 

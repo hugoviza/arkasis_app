@@ -5,6 +5,7 @@ import com.example.arkasis.DB.tablas.TableCoordinadores;
 import com.example.arkasis.DB.tablas.TableMunicipios;
 import com.example.arkasis.DB.tablas.TableSolicitudesDispersion;
 import com.example.arkasis.DB.tablas.TableSucursal;
+import com.example.arkasis.DB.tablas.TableTipoVencimiento;
 import com.example.arkasis.models.SolicitudDispersion;
 
 public class MigracionesSQL {
@@ -33,6 +34,13 @@ public class MigracionesSQL {
                     " ("+TableCoordinadores.col_idCoordinador+" INTEGER PRIMARY KEY, "+
                     TableCoordinadores.col_idSucursal+" INTEGER, "+
                     TableCoordinadores.col_strNombre+" TEXT)";
+
+    public static final String CREAR_TABLA_TIPO_VENCIMIENTO =
+            "CREATE TABLE IF NOT EXISTS "+ TableTipoVencimiento.table+
+                    " ("+TableTipoVencimiento.col_idTipoVencimiento+" INTEGER PRIMARY KEY, "+
+                    TableTipoVencimiento.col_strTipoVencimiento+" TEXT, "+
+                    TableTipoVencimiento.col_idSucursal+" INTEGER, "+
+                    TableTipoVencimiento.col_intNumDias+" INTEGER)";
 
     public static final String CREAR_TABLA_SOLICITUDESDISPERSION =
             "CREATE TABLE IF NOT EXISTS "+ TableSolicitudesDispersion.table+
@@ -106,9 +114,14 @@ public class MigracionesSQL {
                     + TableSolicitudesDispersion.col_strFotoPerfil_B64 + " TEXT, "
                     + TableSolicitudesDispersion.col_strFotoPerfil_nombre + " TEXT, "
                     + TableSolicitudesDispersion.col_strFotoComprobanteDomicilio_B64 + " TEXT, "
-                    + TableSolicitudesDispersion.col_strFotoComprobanteDomicilio_nombre + " TEXT "
+                    + TableSolicitudesDispersion.col_strFotoComprobanteDomicilio_nombre + " TEXT, "
+                    + TableSolicitudesDispersion.col_idTipoVencimiento + " INTEGER, "
+                    + TableSolicitudesDispersion.col_strTipoVencimiento + " TEXT, "
+                    + TableSolicitudesDispersion.col_idTipoContratoIndividual + " TEXT, "
+                    + TableSolicitudesDispersion.col_intNumPagos + " INTEGER "
                     + " )";
 
+    public static final String TRUNCATE_TABLA_TIPO_VENCIMIENTO = "DELETE FROM " + TableActividades.table;
     public static final String TRUNCATE_TABLA_ACTIVIDADES = "DELETE FROM " + TableActividades.table;
     public static final String TRUNCATE_TABLA_MUNICIPIOS = "DELETE FROM " + TableMunicipios.table;
     public static final String TRUNCATE_TABLA_SUCURSALES = "DELETE FROM " + TableSucursal.table;
@@ -120,5 +133,6 @@ public class MigracionesSQL {
     public static final String DROP_TABLA_SUCURSALES = "DROP TABLE IF EXISTS " + TableSucursal.table;
     public static final String DROP_TABLA_COORDINADORES = "DROP TABLE IF EXISTS " + TableCoordinadores.table;
     public static final String DROP_TABLA_SOLICITUDESDISPERSION = "DROP TABLE IF EXISTS " + TableSolicitudesDispersion.table;
+    public static final String DROP_TABLA_TIPO_VENCIMIENTO = "DROP TABLE IF EXISTS " + TableTipoVencimiento.table;
 
 }
