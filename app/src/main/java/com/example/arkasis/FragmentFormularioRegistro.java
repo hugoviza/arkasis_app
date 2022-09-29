@@ -1787,9 +1787,6 @@ public class FragmentFormularioRegistro extends Fragment {
         solicitudDispersion.setStrOcupacionConyuge(txtOcupacionConyuge.getText().toString().trim().toUpperCase());
         solicitudDispersion.setStrLugarNacimientoConyuge(txtLugarNacimientoConyuge.getText().toString().trim().toUpperCase());
         solicitudDispersion.setStrFechaNacimientoConyuge(datFechaNacimientoConyuge != null ? dateFormat.format(datFechaNacimientoConyuge) : "");
-        //PRODUCTO
-        solicitudDispersion.setIntPlazo(Integer.parseInt(txtPlazo.getText().toString()));
-
 
         solicitudDispersion.setDblMontoSolicitadoMejoraVivienda(0);
         //DOMICILIO
@@ -1817,7 +1814,7 @@ public class FragmentFormularioRegistro extends Fragment {
             solicitudDispersion.setStrTipoVencimiento(tipoVencimiento.getStrTipoVencimiento());
         }
         solicitudDispersion.setIntNumPagos(Integer.parseInt(txtNumPagos.getText().toString()));
-        solicitudDispersion.setIntPlazo(Integer.parseInt(txtPlazo.getText().toString()));
+        solicitudDispersion.setDblPlazo(Double.parseDouble(txtPlazo.getText().toString()));
 
         switch (radioContrato.getCheckedRadioButtonId()) {
             case R.id.radioContratoUnicamenteAcreditado:
@@ -2129,7 +2126,7 @@ public class FragmentFormularioRegistro extends Fragment {
             layoutPlazo.setError("Ingrese plazo");
             txtPlazo.requestFocus();
             return false;
-        } else if(Integer.parseInt(txtPlazo.getText().toString()) < 1) {
+        } else if(Double.parseDouble(txtPlazo.getText().toString()) < 1) {
             layoutPlazo.setError("Ingrese plazo mayor a cero");
             txtPlazo.requestFocus();
             return false;
@@ -2163,8 +2160,8 @@ public class FragmentFormularioRegistro extends Fragment {
         }
 
         int numDias = dialogBuscadorTipoVencimiento.getSelectedItem().getIntNumDias();
-        int numPagos = Integer.parseInt(txtNumPagos.getText().toString());
-        int plazo = Math.round(numPagos * numDias / 30);
-        txtPlazo.setText(Integer.toString(plazo));
+        double numPagos = Double.parseDouble(txtNumPagos.getText().toString());
+        double plazo = Math.round((numPagos * numDias / 30.00) * 100.00) / 100.00;
+        txtPlazo.setText(Double.toString(plazo));
     }
 }

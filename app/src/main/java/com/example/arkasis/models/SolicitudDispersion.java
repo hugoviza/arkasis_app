@@ -51,7 +51,7 @@ public class SolicitudDispersion {
     private String strReferenciaBancaria = "";
     private String strBanco = "";
     private String strProducto = "";
-    private int intPlazo;
+    private double dblPlazo;
     private int intQuedateCasa;
     private double dblMontoSolicitadoMejoraVivienda;
     private double dblMontoSolicitadoEquipandoHogar;
@@ -85,7 +85,7 @@ public class SolicitudDispersion {
     public SolicitudDispersion() {
     }
 
-    public SolicitudDispersion(int idSolicitud, String strFechaAlta, String strStatusSolicitud, String idSucursal, String strUsuario, String idPromotor, String strPromotor, String strCordinador, String idCliente, String strApellidoPaterno, String strApellidoMaterno, String strNombre1, String strNombre2, String strFechaNacimiento, String idGenero, String strGenero, String strCURP, String strDomicilio, String strDomicilioCodigoPostal, String strDomicilioNumExt, String strDomicilioNumInt, String strDomicilioColonia, String idDomicilioEstado, String strDomicilioEstado, String idDomicilioMunicipio, String strDomicilioMunicipio, String strEstadoCivil, String idEstadoCivil, String strTelefono, String strCelular, String strOcupacion, String idActividad, String strActividad, String strNumeroINE, String strClaveINE, String strPais, String strEstadoNacimiento, String strNacionalidad, String strEmail, String strNombreConyuge, String strLugarNacimientoConyuge, String strFechaNacimientoConyuge, String strOcupacionConyuge, String strReferenciaBancaria, String strBanco, String strProducto, int intPlazo, int intQuedateCasa, double dblMontoSolicitadoMejoraVivienda, double dblMontoSolicitadoEquipandoHogar, double dblIngresos, double dblEgresos, String strEstatusInserccionServidor, String strCNBV, String strDomicilio_mejoraVivienda, String strCodigoPostal_mejoraVivienda, String strNumExt_mejoraVivienda, String strNumInt_mejoraVivienda, String strColonia_mejoraVivienda, String idEstado_mejoraVivienda, String strEstado_mejoraVivienda, String idMunicipio_mejoraVivienda, String strMunicipio_mejoraVivienda, String strFotoINEFrontal_B64, String strFotoINEFrontal_nombre, String strFotoINEReverso_B64, String strFotoINEReverso_nombre, String strFotoPerfil_B64, String strFotoPerfil_nombre, String strFotoComprobanteDomicilio_B64, String strFotoComprobanteDomicilio_nombre, int idTipoVencimiento, String strTipoVencimiento, String idTipoContratoIndividual, int intNumPagos) {
+    public SolicitudDispersion(int idSolicitud, String strFechaAlta, String strStatusSolicitud, String idSucursal, String strUsuario, String idPromotor, String strPromotor, String strCordinador, String idCliente, String strApellidoPaterno, String strApellidoMaterno, String strNombre1, String strNombre2, String strFechaNacimiento, String idGenero, String strGenero, String strCURP, String strDomicilio, String strDomicilioCodigoPostal, String strDomicilioNumExt, String strDomicilioNumInt, String strDomicilioColonia, String idDomicilioEstado, String strDomicilioEstado, String idDomicilioMunicipio, String strDomicilioMunicipio, String strEstadoCivil, String idEstadoCivil, String strTelefono, String strCelular, String strOcupacion, String idActividad, String strActividad, String strNumeroINE, String strClaveINE, String strPais, String strEstadoNacimiento, String strNacionalidad, String strEmail, String strNombreConyuge, String strLugarNacimientoConyuge, String strFechaNacimientoConyuge, String strOcupacionConyuge, String strReferenciaBancaria, String strBanco, String strProducto, double dblPlazo, int intQuedateCasa, double dblMontoSolicitadoMejoraVivienda, double dblMontoSolicitadoEquipandoHogar, double dblIngresos, double dblEgresos, String strEstatusInserccionServidor, String strCNBV, String strDomicilio_mejoraVivienda, String strCodigoPostal_mejoraVivienda, String strNumExt_mejoraVivienda, String strNumInt_mejoraVivienda, String strColonia_mejoraVivienda, String idEstado_mejoraVivienda, String strEstado_mejoraVivienda, String idMunicipio_mejoraVivienda, String strMunicipio_mejoraVivienda, String strFotoINEFrontal_B64, String strFotoINEFrontal_nombre, String strFotoINEReverso_B64, String strFotoINEReverso_nombre, String strFotoPerfil_B64, String strFotoPerfil_nombre, String strFotoComprobanteDomicilio_B64, String strFotoComprobanteDomicilio_nombre, int idTipoVencimiento, String strTipoVencimiento, String idTipoContratoIndividual, int intNumPagos) {
         this.idSolicitud = idSolicitud;
         this.strFechaAlta = strFechaAlta;
         this.strStatusSolicitud = strStatusSolicitud;
@@ -132,7 +132,7 @@ public class SolicitudDispersion {
         this.strReferenciaBancaria = strReferenciaBancaria;
         this.strBanco = strBanco;
         this.strProducto = strProducto;
-        this.intPlazo = intPlazo;
+        this.dblPlazo = dblPlazo;
         this.intQuedateCasa = intQuedateCasa;
         this.dblMontoSolicitadoMejoraVivienda = dblMontoSolicitadoMejoraVivienda;
         this.dblMontoSolicitadoEquipandoHogar = dblMontoSolicitadoEquipandoHogar;
@@ -212,7 +212,7 @@ public class SolicitudDispersion {
         this.strReferenciaBancaria = treeMap.get("strReferenciaBancaria").toString().trim();
         this.strBanco = treeMap.get("strBanco").toString().trim();
         this.strProducto = treeMap.get("strProducto").toString().trim();
-        this.intPlazo = (int)Double.parseDouble(treeMap.get("intPlazo").toString().trim());
+        this.dblPlazo = Double.parseDouble(treeMap.get("dblPlazo").toString().trim());
         this.intQuedateCasa = (int)Double.parseDouble(treeMap.get("intQuedateCasa").toString().trim());
         this.dblMontoSolicitadoMejoraVivienda = Double.parseDouble(treeMap.get("dblMontoSolicitadoMejoraVivienda").toString().trim());
         this.dblMontoSolicitadoEquipandoHogar = Double.parseDouble(treeMap.get("dblMontoSolicitadoEquipandoHogar").toString().trim());
@@ -619,12 +619,12 @@ public class SolicitudDispersion {
         this.strProducto = strProducto;
     }
 
-    public int getIntPlazo() {
-        return intPlazo;
+    public double getDblPlazo() {
+        return dblPlazo;
     }
 
-    public void setIntPlazo(int intPlazo) {
-        this.intPlazo = intPlazo;
+    public void setDblPlazo(double dblPlazo) {
+        this.dblPlazo = dblPlazo;
     }
 
     public int getIntQuedateCasa() {

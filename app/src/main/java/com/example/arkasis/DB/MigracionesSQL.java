@@ -90,7 +90,7 @@ public class MigracionesSQL {
                     + TableSolicitudesDispersion.col_strReferenciaBancaria + " TEXT,"
                     + TableSolicitudesDispersion.col_strBanco + " TEXT,"
                     + TableSolicitudesDispersion.col_strProducto + " TEXT,"
-                    + TableSolicitudesDispersion.col_intPlazo + " INTEGER,"
+                    + TableSolicitudesDispersion.col_dblPlazo + " REAL,"
                     + TableSolicitudesDispersion.col_intQuedateCasa + " INTEGER,"
                     + TableSolicitudesDispersion.col_dblMontoSolicitadoEquipandoHogar + " REAL,"
                     + TableSolicitudesDispersion.col_dblMontoSolicitadoMejoraVivienda + " REAL,"
