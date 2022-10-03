@@ -1940,11 +1940,7 @@ public class FragmentFormularioRegistro extends Fragment {
         }
 
         String emailPattern = "[a-zA-Z0-9._-]+@[a-zA-Z0-9]+\\.+[a-zA-Z]+";
-        if(txtEmail.getText().toString().trim().length() == 0) {
-            layoutEmail.setError("Ingrese correo electrónico");
-            txtEmail.requestFocus();
-            return false;
-        } else if(!txtEmail.getText().toString().trim().matches(emailPattern)) {
+        if(txtEmail.getText().toString().trim().length() > 0 && !txtEmail.getText().toString().trim().matches(emailPattern)) {
             layoutEmail.setError("Ingrese correo electrónico válido");
             txtEmail.requestFocus();
             return false;
