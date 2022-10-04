@@ -1,6 +1,7 @@
 package com.example.arkasis.adapters;
 
 import android.content.Context;
+import android.opengl.Visibility;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -96,7 +97,7 @@ public class AdaptadorListaSolicitudes extends RecyclerView.Adapter<AdaptadorLis
             if(solicitudDispersion.getStrEstatusInserccionServidor().trim().length() > 0) {
                 txtEstatus.setText("Estatus de solicitud: " + solicitudDispersion.getStrEstatusInserccionServidor());
             } else {
-                txtEstatus.setText("Estatus de solicitud: Pendiente");
+                txtEstatus.setVisibility(View.GONE);
             }
         }
     }

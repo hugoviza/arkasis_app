@@ -757,7 +757,7 @@ public class BottomBarActivity extends AppCompatActivity {
                                 }
 
                                 if(totalErrores > 0) {
-                                    Toast.makeText(BottomBarActivity.this, "Se han encontrado errores en " + totalErrores + " registros de tipo de vincimiento", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(BottomBarActivity.this, "Se han encontrado errores en " + totalErrores + " registros de tipo de vencimiento", Toast.LENGTH_SHORT).show();
                                 }
                             }
                             cerrarLoading();
