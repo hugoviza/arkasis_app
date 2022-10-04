@@ -1,5 +1,6 @@
 package com.example.arkasis.models;
 
+import com.example.arkasis.utilerias.Utileria;
 import com.google.gson.internal.LinkedTreeMap;
 
 public class Estado {
@@ -13,7 +14,7 @@ public class Estado {
 
     public Estado(String idEstado, String strEstado) {
         this.idEstado = idEstado.trim();
-        this.strEstado = strEstado.trim();
+        this.strEstado = Utileria.cleanString(strEstado.trim());
     }
 
     public String getIdEstado() {
@@ -29,6 +30,6 @@ public class Estado {
     }
 
     public void setStrEstado(String strEstado) {
-        this.strEstado = strEstado;
+        this.strEstado = Utileria.cleanString(strEstado);
     }
 }
