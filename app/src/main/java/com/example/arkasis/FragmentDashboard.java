@@ -203,7 +203,7 @@ public class FragmentDashboard extends Fragment {
         pieData.add(new SliceValue(rs.getPorcentajeTramite(), Color.parseColor("#DAF7A6")).setLabel("TRÁMITE: " + rs.getIntTotalTramite())); // verde claro
         pieData.add(new SliceValue(rs.getPorcentajeRechazado(), Color.parseColor("#C70039")).setLabel("COMITÉ: " + rs.getIntTotalRechazado())); // rojo
         pieData.add(new SliceValue(rs.getPorcentajeAutorizado(), Color.parseColor("#283593")).setLabel("AUTORIZADO: " + rs.getIntTotalAutorizado())); //azul
-        pieData.add(new SliceValue(rs.getPorcentajeCancelado(), Color.parseColor("#FFC300")).setLabel("CANCELADO: " + rs.getIntTotalMinistrado())); // amarillo
+        pieData.add(new SliceValue(rs.getPorcentajeCancelado(), Color.parseColor("#FFC300")).setLabel("CANCELADO: " + rs.getIntTotalCancelado())); // amarillo
         pieData.add(new SliceValue(rs.getPorcentajeMinistrado(), Color.parseColor("#2ECC71")).setLabel("MINISTRADO: " + rs.getIntTotalMinistrado())); // verde
 
         PieChartData pieChartData = new PieChartData(pieData);
