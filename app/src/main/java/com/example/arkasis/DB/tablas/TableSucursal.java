@@ -25,7 +25,7 @@ public class TableSucursal extends Conexion implements TableSQLite {
     @Override
     public void insertar(Object o) {
         Sucursal item = (Sucursal)o;
-        String query = "INSERT INTO "+table
+        String query = "REPLACE INTO "+table
                 +" ("+col_idSucursal+", "+col_strClaveSucursal+", "+col_strSucursal+")"
                 + " values"
                 + " ('"+item.getIdSucursal()+"', '"+item.getStrClaveSucursal()+"', '"+item.getStrSucursal()+"')";

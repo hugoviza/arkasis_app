@@ -2,6 +2,7 @@ package com.example.arkasis;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
@@ -15,6 +16,7 @@ import com.example.arkasis.config.Config;
 import com.example.arkasis.interfaces.LoginApiInterface;
 import com.example.arkasis.models.ResponseAPI;
 import com.example.arkasis.models.Usuario;
+import com.example.arkasis.utilerias.SharedPreferencesData;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.gson.internal.LinkedTreeMap;
@@ -34,11 +36,10 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        Usuario usuario = obtenerSesion();
+
+        Usuario usuario = SharedPreferencesData.getUsuario(this.getApplicationContext());
         if(usuario != null) {
-            if(usuario.getPassword() != "" && usuario.getUser() != "") {
-                abrirDashboard();
-            }
+            abrirDashboard();
         }
     }
 
@@ -78,6 +79,8 @@ public class LoginActivity extends AppCompatActivity {
             usuario.setUser(strUsuario);
             usuario.setPassword(strPassword);
 
+            Context context = this.getApplicationContext();
+
             LoginApiInterface api = retrofit.create(LoginApiInterface.class);
             Call<ResponseAPI> call = api.login(usuario);
             call.enqueue(new Callback<ResponseAPI>() {
@@ -90,7 +93,7 @@ public class LoginActivity extends AppCompatActivity {
                             Toast.makeText(LoginActivity.this, "No se puede iniciar sesión", Toast.LENGTH_SHORT).show();
                         } else {
                             LinkedTreeMap<Object, Object> treeMap = (LinkedTreeMap)response.body().getResultado();
-                            guardarSesionUsuario(new Usuario(treeMap));
+                            SharedPreferencesData.setUsuario(new Usuario(treeMap), context);
                             abrirDashboard();
                         }
                     } else {
@@ -108,30 +111,6 @@ public class LoginActivity extends AppCompatActivity {
 
         } catch (Exception e) {
             Toast.makeText(LoginActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
-        }
-    }
-
-    public void guardarSesionUsuario(Usuario usuario) {
-        SharedPreferences sharedPreferences = getSharedPreferences("sesion", Context.MODE_PRIVATE);
-        SharedPreferences.Editor sesion = sharedPreferences.edit();
-        sesion.putString("user", usuario.getUser());
-        sesion.putString("password", usuario.getPassword());
-        sesion.putString("name", usuario.getNombre());
-        sesion.commit();
-    }
-
-    public Usuario obtenerSesion() {
-        SharedPreferences sharedPreferences = getSharedPreferences("sesion", Context.MODE_PRIVATE);
-
-        Usuario usuario = new Usuario();
-        usuario.setUser(sharedPreferences.getString("user", null));
-        usuario.setPassword(sharedPreferences.getString("password", null));
-        usuario.setNombre(sharedPreferences.getString("name", null));
-
-        if(usuario.getUser() != null) {
-            return usuario;
-        } else {
-            return null;
         }
     }
 

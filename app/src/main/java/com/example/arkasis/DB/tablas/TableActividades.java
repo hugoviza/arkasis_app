@@ -25,7 +25,7 @@ public class TableActividades extends Conexion implements TableSQLite {
     @Override
     public void insertar(Object o) {
         Actividad item = (Actividad) o;
-        String query = "INSERT INTO "+ table
+        String query = "REPLACE INTO "+ table
                 +" ("+col_idActividad+", "+col_strActividad+", "+col_strCNBV+")"
                 + " values"
                 + " ('"+item.getIdActividad()+"', '"+item.getStrActividad()+"', '"+item.getStrCNBV()+"')";

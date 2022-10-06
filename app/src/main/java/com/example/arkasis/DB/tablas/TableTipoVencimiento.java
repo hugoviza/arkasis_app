@@ -24,7 +24,7 @@ public class TableTipoVencimiento extends Conexion implements TableSQLite {
     @Override
     public void insertar(Object o) {
         TipoVencimiento item = (TipoVencimiento) o;
-        String query = "INSERT INTO "+ table
+        String query = "REPLACE INTO "+ table
                 +" ("+col_idTipoVencimiento+", "+col_strTipoVencimiento+", "+col_idSucursal+", "+col_intNumDias+")"
                 + " values"
                 + " ('"+item.getIdTipoVencimiento()+"', '"+item.getStrTipoVencimiento()+"', '"+item.getIdSucursal()+"', '"+item.getIntNumDias()+"')";

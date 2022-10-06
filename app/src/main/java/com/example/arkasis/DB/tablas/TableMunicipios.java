@@ -29,7 +29,7 @@ public class TableMunicipios extends Conexion implements TableSQLite {
     @Override
     public void insertar(Object o) {
         Municipio item = (Municipio)o;
-        String query = "INSERT INTO "+table
+        String query = "REPLACE INTO "+table
                 +" ("+col_idEstado_idMunicipio+", "+col_idEstado+", "+col_strEstado+", "+col_idMunicipio+", "+col_strMunicipio+" )"
                 + " values"
                 + " ('"+item.getIdEstado_IdMunicipio()+"', '"+item.getIdEstado()+"', '"+item.getStrEstado()+"', '"+item.getIdMunicipio()+"', '"+item.getStrMunicipio()+"')";

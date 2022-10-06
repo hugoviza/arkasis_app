@@ -41,6 +41,7 @@ import com.example.arkasis.models.Sucursal;
 import com.example.arkasis.models.TipoVencimiento;
 import com.example.arkasis.models.Usuario;
 import com.example.arkasis.utilerias.CustomReceiver;
+import com.example.arkasis.utilerias.SharedPreferencesData;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.gson.internal.LinkedTreeMap;
 
@@ -281,14 +282,7 @@ public class BottomBarActivity extends AppCompatActivity {
     }
 
     public void getUsuarioSesion() {
-        SharedPreferences sharedPreferences = getSharedPreferences("sesion", Context.MODE_PRIVATE);
-
-        Usuario usuario = new Usuario();
-        usuario.setUser(sharedPreferences.getString("user", null));
-        usuario.setPassword(sharedPreferences.getString("password", null));
-        usuario.setNombre(sharedPreferences.getString("name", null));
-
-        Config.USUARIO_SESION = usuario;
+        Config.USUARIO_SESION = SharedPreferencesData.getUsuario(this.getApplicationContext());
     }
 
     public void validarCatalogoActividades() {

@@ -25,7 +25,7 @@ public class TableCoordinadores extends Conexion implements TableSQLite {
     @Override
     public void insertar(Object o) {
         Coordinador item = (Coordinador) o;
-        String query = "INSERT INTO "+ table
+        String query = "REPLACE INTO "+ table
                 +" ("+col_idCoordinador+", "+col_idSucursal+", "+col_strNombre+")"
                 + " values"
                 + " ('"+item.getIdCoordinador()+"', '"+item.getIdSucursal()+"', '"+item.getStrNombre()+"')";
