@@ -100,19 +100,21 @@ public class RegisterActivity extends AppCompatActivity {
         String token2 = txtCodigo2.getText().toString();
         String token3 = txtCodigo3.getText().toString();
 
+        tvResultCodigo.setText("");
+
         if(token1.length() != 4) {
-            Toast.makeText(this, "Cada código debe de contener 4 dígitos", Toast.LENGTH_SHORT).show();
+            tvResultCodigo.setText("Cada código debe de contener 4 dígitos");
             txtCodigo1.requestFocus();
             return;
         }
 
         if(token2.length() != 4) {
-            Toast.makeText(this, "Cada código debe de contener 4 dígitos", Toast.LENGTH_SHORT).show();
+            tvResultCodigo.setText("Cada código debe de contener 4 dígitos");
             txtCodigo2.requestFocus();
             return;
         }
         if(token3.length() != 4) {
-            Toast.makeText(this, "Cada código debe de contener 4 dígitos", Toast.LENGTH_SHORT).show();
+            tvResultCodigo.setText("Cada código debe de contener 4 dígitos");
             txtCodigo3.requestFocus();
             return;
         }
@@ -166,6 +168,7 @@ public class RegisterActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<ResponseAPI> call, Throwable t) {
+                tvResultCodigo.setText("Error de conexión");
                 Toast.makeText(context, t.getMessage(), Toast.LENGTH_SHORT).show();
                 bloquearInputCodigo(false);
             }

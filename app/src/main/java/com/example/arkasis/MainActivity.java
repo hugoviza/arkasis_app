@@ -149,6 +149,8 @@ public class MainActivity extends AppCompatActivity {
                     if(response.body() == null || response.body().getResultado() == null) {
                         // El dispositivo no está registrado en la API
                         // abrirSiguienteVista(context, scope);
+                        Dispositivo dispositivoRegistrado = new Dispositivo();
+                        SharedPreferencesData.setDispositivo(dispositivoRegistrado, context);
                     } else {
                         // El dispositivo ya está registrado en la api
                         for (LinkedTreeMap<Object, Object> treeMap : (ArrayList<LinkedTreeMap<Object, Object>>)response.body().getResultado()) {
